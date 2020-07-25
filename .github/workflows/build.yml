@@ -1,0 +1,25 @@
+name: Try to build
+
+on:
+  pull_request:
+    branches:
+    - sandbox
+    - testnet
+    - mainnet
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install yarn dependencies
+      run: yarn
+
+    - run: echo Build wasm
+    - run: yarn build:sandbox
+      if: github.head_ref == 'sandbox'
+    - run: yarn build:testnet
+      if: github.head_ref == 'testnet'
+    - run: yarn build:mainnet
+      if: github.head_ref == 'mainnet'
