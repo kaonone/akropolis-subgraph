@@ -1,0 +1,7 @@
+{
+  "startBlock": 6890400,
+  "network": "rinkeby",
+  "modules": {
+    "savings": "0xEbc77a8542Afd7340eAa584f5048c3045A11Dadf"
+  }
+}

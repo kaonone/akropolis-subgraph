@@ -1,0 +1,54 @@
+type User @entity {
+  "address"
+  id: ID!
+
+  savingsPools: [SavingsPool!]!
+}
+
+type SavingsPool @entity {
+  "address"
+  id: ID!
+  poolToken: Token!
+  tokens: [Token!]!
+  apr: SPoolApr!
+  balance: SPoolBalance!
+
+  aprHistory: [SPoolApr!]! @derivedFrom(field: "pool")
+  balanceHistory: [SPoolBalance!]! @derivedFrom(field: "pool")
+  users: [User!]! @derivedFrom(field: "savingsPools")
+  distributions: [SPoolYieldDistribution!]! @derivedFrom(field: "pool")
+}
+
+type SPoolApr @entity {
+  id: ID!
+  amount: BigInt!
+  date: BigInt!
+  pool: SavingsPool!
+}
+
+type SPoolBalance @entity {
+  id: ID!
+  amount: BigInt!
+  date: BigInt!
+  pool: SavingsPool!
+}
+
+type SPoolYieldDistribution @entity {
+  id: ID!
+  pool: SavingsPool!
+  amount: BigInt!
+}
+
+type Token @entity {
+  "address"
+  id: ID!
+  name: String!
+  symbol: String!
+  decimals: Int!
+}
+
+type SubgraphConfig @entity {
+  id: ID!
+
+  aprDecimals: Int!
+}
