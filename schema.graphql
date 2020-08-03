@@ -23,6 +23,7 @@ type SPoolApr @entity {
   id: ID!
   amount: BigInt!
   date: BigInt!
+  duration: BigInt!
   pool: SavingsPool!
 }
 
@@ -51,4 +52,8 @@ type SubgraphConfig @entity {
   id: ID!
 
   aprDecimals: Int!
+}
+
+enum SubgraphConfigID {
+  ID
 }

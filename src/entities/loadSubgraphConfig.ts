@@ -11,5 +11,5 @@ export function loadSubgraphConfig(): SubgraphConfig {
     config.save();
   }
 
-  return config;
+  return config as SubgraphConfig;
 }

@@ -7,8 +7,9 @@ export function loadUser(address: Address): User {
 
   if (!user) {
     user = new User(id);
+    user.savingsPools = [];
     user.save();
   }
 
-  return user;
+  return user as User;
 }

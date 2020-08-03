@@ -17,7 +17,12 @@ export function createSavingsPool(
 
   pool.poolToken = createToken(tokenAddress).id;
   pool.tokens = loadSupportedTokens(poolAddress);
-  pool.apr = createSPoolApr(event, BigInt.fromI32(0), pool.id).id;
+  pool.apr = createSPoolApr(
+    event,
+    BigInt.fromI32(0),
+    BigInt.fromI32(0),
+    pool.id
+  ).id;
   pool.balance = createSPoolBalance(event, BigInt.fromI32(0), pool.id).id;
 
   pool.save();
