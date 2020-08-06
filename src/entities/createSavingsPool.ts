@@ -7,12 +7,14 @@ import { createToken } from "./createToken";
 import { createSPoolBalance } from "./createSPoolBalance";
 import { loadToken } from "./loadToken";
 import { createSPoolApr } from "./createSPoolApr";
+import { loadSubgraphConfig } from "./loadSubgraphConfig";
 
 export function createSavingsPool(
   event: ethereum.Event,
   poolAddress: Address,
   tokenAddress: Address
 ): SavingsPool {
+  loadSubgraphConfig(); // create config subgraph if it doesn't exist
   let pool = new SavingsPool(poolAddress.toHex());
 
   pool.poolToken = createToken(tokenAddress).id;

@@ -44,9 +44,14 @@
         "type": "address"
       },
       {
-        "internalType": "uint256[]",
-        "name": "amounts",
-        "type": "uint256[]"
+        "internalType": "address",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
       }
     ],
     "name": "withdraw",
@@ -63,8 +68,46 @@
         "type": "address"
       },
       {
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "withdraw",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "claimRewards",
+    "outputs": [{
+        "internalType": "address[]",
+        "name": "tokens",
+        "type": "address[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "amounts",
+        "type": "uint256[]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [{
         "internalType": "address",
         "name": "token",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "user",
         "type": "address"
       },
       {
@@ -73,7 +116,7 @@
         "type": "uint256"
       }
     ],
-    "name": "withdraw",
+    "name": "withdrawReward",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -143,6 +186,36 @@
       "internalType": "uint256",
       "name": "",
       "type": "uint256"
+    }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "supportedRewardTokens",
+    "outputs": [{
+      "internalType": "address[]",
+      "name": "",
+      "type": "address[]"
+    }],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [{
+      "internalType": "address",
+      "name": "token",
+      "type": "address"
+    }],
+    "name": "isSupportedRewardToken",
+    "outputs": [{
+      "internalType": "bool",
+      "name": "",
+      "type": "bool"
     }],
     "payable": false,
     "stateMutability": "view",
