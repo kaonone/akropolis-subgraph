@@ -1,7 +1,7 @@
 {
-  "startBlock": 10367500,
+  "startBlock": 10644300,
   "network": "mainnet",
   "modules": {
-    "savings": "0x2C6c379F44e9e929F206D115C9d1cd9c2be41562"
+    "savings": "0x73fC3038B4cD8FfD07482b92a52Ea806505e5748"
   }
 }
