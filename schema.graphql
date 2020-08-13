@@ -48,12 +48,16 @@ type Token @entity {
   decimals: Int!
 }
 
+type GlobalStat @entity {
+  id: ID!
+  activeMembersCount: Int!
+}
+
 type SubgraphConfig @entity {
   id: ID!
-
   aprDecimals: Int!
 }
 
-enum SubgraphConfigID {
+enum SingleEntityID {
   ID
 }

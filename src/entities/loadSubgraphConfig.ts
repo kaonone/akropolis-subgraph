@@ -1,11 +1,11 @@
 import { SubgraphConfig } from "../../generated/schema";
-import { SUBGRAPH_CONFIG_ID } from "../utils";
+import { SINGLE_ENTITY_ID } from "../utils";
 
 export function loadSubgraphConfig(): SubgraphConfig {
-  let config = SubgraphConfig.load(SUBGRAPH_CONFIG_ID);
+  let config = SubgraphConfig.load(SINGLE_ENTITY_ID);
 
   if (!config) {
-    config = new SubgraphConfig(SUBGRAPH_CONFIG_ID);
+    config = new SubgraphConfig(SINGLE_ENTITY_ID);
 
     config.aprDecimals = 8;
     config.save();
