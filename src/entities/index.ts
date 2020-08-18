@@ -7,3 +7,4 @@ export * from "./loadSubgraphConfig";
 export * from "./loadToken";
 export * from "./loadUser";
 export * from "./loadSPoolBalance";
+export * from "./createReward";

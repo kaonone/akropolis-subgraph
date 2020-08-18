@@ -29,6 +29,8 @@ dataSources:
           handler: handleDeposit
         - event: Withdraw(indexed address,indexed address,uint256,uint256)
           handler: handleWithdraw
+        - event: RewardDistribution(indexed address,indexed address,uint256,uint256)
+          handler: handleRewardDistribution
       file: ./src/mappings/savingsModule.ts
   - kind: ethereum/contract
     name: StakingPool
