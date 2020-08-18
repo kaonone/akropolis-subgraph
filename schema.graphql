@@ -11,7 +11,7 @@ type SavingsPool @entity {
   poolToken: Token!
   tokens: [Token!]!
   rewardTokens: [Token!]!
-  rewards: [Reward!]! @derivedFrom(field: "pool")
+  rewards: [SReward!]! @derivedFrom(field: "pool")
   apr: SPoolApr!
   balance: SPoolBalance!
 
@@ -21,7 +21,7 @@ type SavingsPool @entity {
   distributions: [SPoolYieldDistribution!]! @derivedFrom(field: "pool")
 }
 
-type Reward @entity {
+type SReward @entity {
   id: ID!
   pool: SavingsPool!
   token: Token!
