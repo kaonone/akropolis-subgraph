@@ -19,6 +19,7 @@ export function createSavingsPool(
 
   pool.poolToken = createToken(tokenAddress).id;
   pool.tokens = loadSupportedTokens(poolAddress);
+  pool.rewardTokens = loadSupportedRewardTokens(poolAddress);
   pool.apr = createSPoolApr(
     event,
     BigInt.fromI32(0),
@@ -37,6 +38,20 @@ function loadSupportedTokens(poolAddress: Address): string[] {
 
   let ids: string[] = [];
   let tokens = contract.supportedTokens();
+
+  for (let i = 0; i < tokens.length; i++) {
+    let token = loadToken(tokens[i]);
+    ids.push(token.id);
+  }
+
+  return ids;
+}
+
+function loadSupportedRewardTokens(poolAddress: Address): string[] {
+  let contract = DefiProtocol.bind(poolAddress);
+
+  let ids: string[] = [];
+  let tokens = contract.supportedRewardTokens();
 
   for (let i = 0; i < tokens.length; i++) {
     let token = loadToken(tokens[i]);

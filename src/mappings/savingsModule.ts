@@ -1,9 +1,10 @@
-import { Address, BigInt, ethereum, log } from "@graphprotocol/graph-ts";
+import { Address, BigInt, ethereum, dataSource } from "@graphprotocol/graph-ts";
 
 import {
   Withdraw,
   Deposit,
   ProtocolRegistered,
+  RewardDistribution,
 } from "../../generated/SavingsModule/SavingsModule";
 import {
   createSavingsPool,
@@ -12,14 +13,24 @@ import {
   loadSPoolBalance,
   loadSubgraphConfig,
   createSPoolApr,
+  createReward,
   loadUser,
 } from "../entities";
 import { DefiProtocol } from "../../generated/SavingsModule/DefiProtocol";
+import { SavingsModule } from "../../generated/SavingsModule/SavingsModule";
 import { calcAPY, addUniq } from "../utils";
 
 export function handleProtocolRegistered(event: ProtocolRegistered): void {
   createSavingsPool(event, event.params.protocol, event.params.poolToken);
 }
+
+export function handleRewardDistribution(event: RewardDistribution): void {
+  let savingsModuleAddress = dataSource.address();
+  let contract = SavingsModule.bind(savingsModuleAddress);
+  let savingsPoolAddress = contract.protocolByPoolToken(event.params.poolToken);
+  createReward(event, savingsPoolAddress);
+}
+
 export function handleWithdraw(event: Withdraw): void {
   // TODO check user balance and exclude the protocol if balance is zero
 
