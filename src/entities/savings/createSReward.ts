@@ -1,9 +1,9 @@
-import { SReward } from "../../generated/schema";
-import { RewardDistribution } from "../../generated/SavingsModule/SavingsModule";
-import { getUniqId } from "../utils";
+import { SReward } from "../../../generated/schema";
+import { RewardDistribution } from "../../../generated/SavingsModule/SavingsModule";
+import { getUniqId } from "../../utils";
 import { Address } from "@graphprotocol/graph-ts";
 
-export function createReward(
+export function createSReward(
   event: RewardDistribution,
   poolAddress: Address
 ): void {

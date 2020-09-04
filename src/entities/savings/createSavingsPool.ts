@@ -1,13 +1,13 @@
 import { ethereum, BigInt, Address } from "@graphprotocol/graph-ts";
 
-import { SavingsPool } from "../../generated/schema";
-import { DefiProtocol } from "../../generated/SavingsModule/DefiProtocol";
+import { SavingsPool } from "../../../generated/schema";
+import { DefiProtocol } from "../../../generated/SavingsModule/DefiProtocol";
 
-import { createToken } from "./createToken";
+import { createToken } from "../createToken";
 import { createSPoolBalance } from "./createSPoolBalance";
-import { loadToken } from "./loadToken";
+import { loadToken } from "../loadToken";
 import { createSPoolApr } from "./createSPoolApr";
-import { loadSubgraphConfig } from "./loadSubgraphConfig";
+import { loadSubgraphConfig } from "../loadSubgraphConfig";
 
 export function createSavingsPool(
   event: ethereum.Event,

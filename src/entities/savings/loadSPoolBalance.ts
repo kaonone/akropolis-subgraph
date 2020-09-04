@@ -1,5 +1,5 @@
 import { log } from "@graphprotocol/graph-ts";
-import { SPoolBalance } from "../../generated/schema";
+import { SPoolBalance } from "../../../generated/schema";
 
 export function loadSPoolBalance(id: string): SPoolBalance {
   let balance = SPoolBalance.load(id);

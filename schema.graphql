@@ -1,9 +1,6 @@
-type User @entity {
-  "address"
-  id: ID!
-
-  savingsPools: [SavingsPool!]!
-}
+###############
+### SAVINGS ###
+###############
 
 type SavingsPool @entity {
   "address"
@@ -11,10 +8,10 @@ type SavingsPool @entity {
   poolToken: Token!
   tokens: [Token!]!
   rewardTokens: [Token!]!
-  rewards: [SReward!]! @derivedFrom(field: "pool")
   apr: SPoolApr!
   balance: SPoolBalance!
 
+  rewards: [SReward!]! @derivedFrom(field: "pool")
   aprHistory: [SPoolApr!]! @derivedFrom(field: "pool")
   balanceHistory: [SPoolBalance!]! @derivedFrom(field: "pool")
   users: [User!]! @derivedFrom(field: "savingsPools")
@@ -48,6 +45,57 @@ type SPoolYieldDistribution @entity {
   id: ID!
   pool: SavingsPool!
   amount: BigInt!
+}
+##################
+### INVESTMENT ###
+##################
+
+type InvestmentPool @entity {
+  "address"
+  id: ID!
+  poolToken: Token!
+  tokens: [Token!]!
+  rewardTokens: [Token!]!
+  apr: IPoolApr!
+
+  rewards: [IReward!]! @derivedFrom(field: "pool")
+  aprHistory: [IPoolApr!]! @derivedFrom(field: "pool")
+  users: [User!]! @derivedFrom(field: "investmentPools")
+  distributions: [IPoolYieldDistribution!]! @derivedFrom(field: "pool")
+}
+
+type IReward @entity {
+  id: ID!
+  pool: InvestmentPool!
+  token: Token!
+  amount: BigInt!
+  date: BigInt!
+}
+
+type IPoolApr @entity {
+  id: ID!
+  amount: BigInt!
+  date: BigInt!
+  duration: BigInt!
+  pool: InvestmentPool!
+}
+
+type IPoolYieldDistribution @entity {
+  id: ID!
+  pool: InvestmentPool!
+  amount: BigInt!
+}
+
+#############
+### OTHER ###
+#############
+
+type User @entity {
+  "address"
+  id: ID!
+
+  savingsPools: [SavingsPool!]!
+  investmentPools: [InvestmentPool!]!
 }
 
 type Token @entity {

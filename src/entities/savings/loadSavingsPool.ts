@@ -1,6 +1,6 @@
 import { Address, log } from "@graphprotocol/graph-ts";
 
-import { SavingsPool } from "../../generated/schema";
+import { SavingsPool } from "../../../generated/schema";
 
 export function loadSavingsPool(poolAddress: Address): SavingsPool {
   let pool = SavingsPool.load(poolAddress.toHex());

@@ -3,6 +3,7 @@
   "network": "rinkeby",
   "modules": {
     "savings": "0xb733994019A4F55CAa3f130400B7978Cc6624c39",
+    "investment": "0x0000000000000000000000000000000000000000",
     "akroStakingPool": "0x6887DF2f4296e8B772cb19479472A16E836dB9e0"
   }
 }

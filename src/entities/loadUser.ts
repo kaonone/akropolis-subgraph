@@ -9,6 +9,7 @@ export function loadUser(address: Address): User {
   if (!user) {
     user = new User(id);
     user.savingsPools = [];
+    user.investmentPools = [];
     user.save();
 
     let stats = loadGlobalStat();

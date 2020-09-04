@@ -1,7 +1,7 @@
 import { ethereum, BigInt } from "@graphprotocol/graph-ts";
 
-import { SPoolApr } from "../../generated/schema";
-import { getUniqId } from "../utils/getUniqId";
+import { SPoolApr } from "../../../generated/schema";
+import { getUniqId } from "../../utils/getUniqId";
 
 export function createSPoolApr(
   event: ethereum.Event,

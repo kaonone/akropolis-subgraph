@@ -5,7 +5,9 @@ import {
   Deposit,
   ProtocolRegistered,
   RewardDistribution,
+  SavingsModule,
 } from "../../generated/SavingsModule/SavingsModule";
+import { DefiProtocol } from "../../generated/SavingsModule/DefiProtocol";
 import {
   createSavingsPool,
   loadSavingsPool,
@@ -13,11 +15,9 @@ import {
   loadSPoolBalance,
   loadSubgraphConfig,
   createSPoolApr,
-  createReward,
+  createSReward,
   loadUser,
 } from "../entities";
-import { DefiProtocol } from "../../generated/SavingsModule/DefiProtocol";
-import { SavingsModule } from "../../generated/SavingsModule/SavingsModule";
 import { calcAPY, addUniq } from "../utils";
 
 export function handleProtocolRegistered(event: ProtocolRegistered): void {
@@ -28,7 +28,7 @@ export function handleRewardDistribution(event: RewardDistribution): void {
   let savingsModuleAddress = dataSource.address();
   let contract = SavingsModule.bind(savingsModuleAddress);
   let savingsPoolAddress = contract.protocolByPoolToken(event.params.poolToken);
-  createReward(event, savingsPoolAddress);
+  createSReward(event, savingsPoolAddress);
 }
 
 export function handleWithdraw(event: Withdraw): void {
