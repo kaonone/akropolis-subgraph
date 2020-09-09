@@ -55,6 +55,10 @@ dataSources:
       eventHandlers:
         - event: ProtocolRegistered(address,address)
           handler: handleProtocolRegistered
+        - event: Deposit(indexed address,indexed address,uint256,uint256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,indexed address,uint256,uint256)
+          handler: handleWithdraw
         - event: RewardDistribution(indexed address,indexed address,uint256,uint256)
           handler: handleRewardDistribution
       file: ./src/mappings/investmentModule.ts
