@@ -1,4 +1,4 @@
 export * from "./createIPoolApr";
 export * from "./createIReward";
-export * from "./createInvestmentPool";
+export * from "./createOrUpdateInvestmentPool";
 export * from "./loadInvestmentPool";

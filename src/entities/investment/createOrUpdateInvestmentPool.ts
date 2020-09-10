@@ -1,36 +1,38 @@
 import { ethereum, BigInt, Address } from "@graphprotocol/graph-ts";
 
-import { SavingsPool } from "../../../generated/schema";
-import { DefiProtocol } from "../../../generated/SavingsModule/DefiProtocol";
+import { InvestmentPool } from "../../../generated/schema";
+import { DefiProtocol } from "../../../generated/InvestmentModule/DefiProtocol";
 
 import { createToken } from "../createToken";
-import { createSPoolBalance } from "./createSPoolBalance";
 import { loadToken } from "../loadToken";
-import { createSPoolApr } from "./createSPoolApr";
 import { loadSubgraphConfig } from "../loadSubgraphConfig";
+import { createIPoolApr } from "./createIPoolApr";
 
-export function createSavingsPool(
+export function createOrUpdateInvestmentPool(
   event: ethereum.Event,
   poolAddress: Address,
   tokenAddress: Address
-): SavingsPool {
+): InvestmentPool {
   loadSubgraphConfig(); // create config subgraph if it doesn't exist
-  let pool = new SavingsPool(poolAddress.toHex());
+  let pool = InvestmentPool.load(poolAddress.toHex());
+
+  if (!pool) {
+    pool = new InvestmentPool(poolAddress.toHex());
+    pool.apr = createIPoolApr(
+      event,
+      BigInt.fromI32(0),
+      BigInt.fromI32(0),
+      pool.id
+    ).id;
+  }
 
   pool.poolToken = createToken(tokenAddress).id;
   pool.tokens = loadSupportedTokens(poolAddress);
   pool.rewardTokens = loadSupportedRewardTokens(poolAddress);
-  pool.apr = createSPoolApr(
-    event,
-    BigInt.fromI32(0),
-    BigInt.fromI32(0),
-    pool.id
-  ).id;
-  pool.balance = createSPoolBalance(event, BigInt.fromI32(0), pool.id).id;
 
   pool.save();
 
-  return pool;
+  return pool as InvestmentPool;
 }
 
 function loadSupportedTokens(poolAddress: Address): string[] {

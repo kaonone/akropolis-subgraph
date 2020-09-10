@@ -9,7 +9,7 @@ import {
 } from "../../generated/InvestmentModule/InvestmentModule";
 import { DefiProtocol } from "../../generated/InvestmentModule/DefiProtocol";
 import {
-  createInvestmentPool,
+  createOrUpdateInvestmentPool,
   loadInvestmentPool,
   loadSubgraphConfig,
   createIPoolApr,
@@ -19,7 +19,7 @@ import {
 import { calcAPY, addUniq } from "../utils";
 
 export function handleProtocolRegistered(event: ProtocolRegistered): void {
-  createInvestmentPool(event, event.params.protocol, event.params.poolToken);
+  createOrUpdateInvestmentPool(event, event.params.protocol, event.params.poolToken);
 }
 
 export function handleRewardDistribution(event: RewardDistribution): void {

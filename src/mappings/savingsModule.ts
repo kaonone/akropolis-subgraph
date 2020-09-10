@@ -9,7 +9,7 @@ import {
 } from "../../generated/SavingsModule/SavingsModule";
 import { DefiProtocol } from "../../generated/SavingsModule/DefiProtocol";
 import {
-  createSavingsPool,
+  createOrUpdateSavingsPool,
   loadSavingsPool,
   createSPoolBalance,
   loadSPoolBalance,
@@ -21,7 +21,7 @@ import {
 import { calcAPY, addUniq } from "../utils";
 
 export function handleProtocolRegistered(event: ProtocolRegistered): void {
-  createSavingsPool(event, event.params.protocol, event.params.poolToken);
+  createOrUpdateSavingsPool(event, event.params.protocol, event.params.poolToken);
 }
 
 export function handleRewardDistribution(event: RewardDistribution): void {
