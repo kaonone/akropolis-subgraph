@@ -1,0 +1,16 @@
+name: 'Build and deploy subgraph'
+inputs:
+  type:
+    description: 'Type of deployment'
+    required: true
+    default: 'sandbox'
+  thegraph_access_token:
+    description: 'Thegraph access token'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - run: yarn build:${{ inputs.type }}
+      shell: bash
+    - run: yarn deploy:${{ inputs.type }} --access-token ${{ inputs.thegraph_access_token }}
+      shell: bash

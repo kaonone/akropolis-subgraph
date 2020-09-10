@@ -1,0 +1,49 @@
+name: Deploy subgraph
+
+on:
+  push:
+    branches:
+      - sandbox
+      - testnet
+      - mainnet
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Build and deploy Sandbox
+        if: github.ref == 'refs/heads/sandbox'
+        uses: ./.github/actions/deploy-subgraph
+        with:
+          thegraph_access_token: ${{ secrets.THEGRAPH_ACCESS_TOKEN }}
+          type: sandbox
+
+      - name: Build and deploy Rinkeby
+        if: github.ref == 'refs/heads/testnet'
+        uses: ./.github/actions/deploy-subgraph
+        with:
+          thegraph_access_token: ${{ secrets.THEGRAPH_ACCESS_TOKEN }}
+          type: rinkeby
+
+      - name: Build and deploy Kovan
+        if: github.ref == 'refs/heads/testnet'
+        uses: ./.github/actions/deploy-subgraph
+        with:
+          thegraph_access_token: ${{ secrets.THEGRAPH_ACCESS_TOKEN }}
+          type: kovan
+
+      - name: Build and deploy Mainnet
+        if: github.ref == 'refs/heads/mainnet'
+        uses: ./.github/actions/deploy-subgraph
+        with:
+          thegraph_access_token: ${{ secrets.THEGRAPH_ACCESS_TOKEN }}
+          type: mainnet
