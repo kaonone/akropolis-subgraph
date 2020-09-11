@@ -63,7 +63,7 @@ dataSources:
           handler: handleRewardDistribution
       file: ./src/mappings/investmentModule.ts
   - kind: ethereum/contract
-    name: StakingPool
+    name: AKROStakingPool
     network: {{network}}
     source:
       address: "{{modules.akroStakingPool}}"
@@ -81,4 +81,24 @@ dataSources:
       eventHandlers:
         - event: Staked(indexed address,uint256,uint256,bytes)
           handler: handleStaked
-      file: ./src/mappings/stakingPool.ts
+      file: ./src/mappings/akroStakingPool.ts
+  - kind: ethereum/contract
+    name: ADELStakingPool
+    network: {{network}}
+    source:
+      address: "{{modules.adelStakingPool}}"
+      abi: StakingPool
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.1
+      language: wasm/assemblyscript
+      entities:
+        - User
+      abis:
+        - name: StakingPool
+          file: ./abis/StakingPool.json
+      eventHandlers:
+        - event: Staked(indexed address,uint256,uint256,bytes)
+          handler: handleStaked
+      file: ./src/mappings/adelStakingPool.ts
