@@ -9,6 +9,7 @@ type SavingsPool @entity {
   tokens: [Token!]!
   rewardTokens: [Token!]!
   apr: SPoolApr!
+  prevBalance: SPoolBalance!
   balance: SPoolBalance!
 
   rewards: [SReward!]! @derivedFrom(field: "pool")
@@ -21,6 +22,7 @@ type SavingsPool @entity {
 type SReward @entity {
   id: ID!
   pool: SavingsPool!
+  poolBalance: SPoolBalance!
   token: Token!
   amount: BigInt!
   date: BigInt!
@@ -32,6 +34,7 @@ type SPoolApr @entity {
   date: BigInt!
   duration: BigInt!
   pool: SavingsPool!
+  txHash: Bytes!
 }
 
 type SPoolBalance @entity {

@@ -1,6 +1,8 @@
 import { BigInt } from "@graphprotocol/graph-ts";
 import { decimalsToWei } from "./decimalsToWei";
 
+let zero = BigInt.fromI32(0);
+
 export function calcAPY(
   duration: BigInt,
   fromAmount: BigInt,
@@ -19,5 +21,5 @@ export function calcAPY(
           .div(fromAmount)
           .div(duration);
 
-  return apy;
+  return apy.gt(zero) ? apy : zero;
 }

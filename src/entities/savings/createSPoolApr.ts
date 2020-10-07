@@ -11,6 +11,7 @@ export function createSPoolApr(
 ): SPoolApr {
   let apr = new SPoolApr(getUniqId(event));
 
+  apr.txHash = event.transaction.hash;
   apr.amount = amount;
   apr.duration = duration;
   apr.date = event.block.timestamp;

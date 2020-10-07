@@ -5,6 +5,7 @@ on:
     branches:
       - sandbox
       - testnet
+      - pre-mainnet
       - mainnet
 
 jobs:
@@ -40,6 +41,13 @@ jobs:
         with:
           thegraph_access_token: ${{ secrets.THEGRAPH_ACCESS_TOKEN }}
           type: kovan
+
+      - name: Build and deploy Mainnet
+        if: github.ref == 'refs/heads/pre-mainnet'
+        uses: ./.github/actions/deploy-subgraph
+        with:
+          thegraph_access_token: ${{ secrets.THEGRAPH_ACCESS_TOKEN }}
+          type: pre-mainnet
 
       - name: Build and deploy Mainnet
         if: github.ref == 'refs/heads/mainnet'
