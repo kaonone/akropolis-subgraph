@@ -42,7 +42,7 @@ jobs:
           thegraph_access_token: ${{ secrets.THEGRAPH_ACCESS_TOKEN }}
           type: kovan
 
-      - name: Build and deploy Mainnet
+      - name: Build and deploy Pre-Mainnet
         if: github.ref == 'refs/heads/pre-mainnet'
         uses: ./.github/actions/deploy-subgraph
         with:

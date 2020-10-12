@@ -9,6 +9,7 @@ export function loadUser(address: Address): User {
   if (!user) {
     user = new User(id);
     user.savingsPools = [];
+    user.vaultPools = [];
     user.investmentPools = [];
     user.save();
 

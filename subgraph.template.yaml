@@ -63,6 +63,36 @@ dataSources:
           handler: handleRewardDistribution
       file: ./src/mappings/investmentModule.ts
   - kind: ethereum/contract
+    name: VaultSavingsModule
+    network: {{network}}
+    source:
+      address: "{{modules.vaultSavings}}"
+      abi: VaultSavingsModule
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.1
+      language: wasm/assemblyscript
+      entities:
+        - User
+      abis:
+        - name: VaultSavingsModule
+          file: ./abis/VaultSavingsModule.json
+        - name: ERC20Detailed
+          file: ./abis/ERC20Detailed.json
+        - name: VaultProtocol
+          file: ./abis/VaultProtocol.json
+      eventHandlers:
+        - event: VaultRegistered(address,address)
+          handler: handleVaultRegistered
+        - event: Deposit(indexed address,indexed address,uint256,uint256)
+          handler: handleDeposit
+        - event: YieldDistribution(indexed address,uint256)
+          handler: handleYieldDistribution
+        # - event: RewardDistribution(indexed address,indexed address,uint256,uint256)
+        #   handler: handleRewardDistribution
+      file: ./src/mappings/vaultSavingsModule.ts
+  - kind: ethereum/contract
     name: AKROStakingPool
     network: {{network}}
     source:

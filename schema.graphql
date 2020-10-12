@@ -49,6 +49,58 @@ type SPoolYieldDistribution @entity {
   pool: SavingsPool!
   amount: BigInt!
 }
+
+#####################
+### VAULT SAVINGS ###
+#####################
+
+type VaultPool @entity {
+  "address"
+  id: ID!
+  poolToken: Token!
+  tokens: [Token!]!
+  apr: VPoolApr!
+  prevBalance: VPoolBalance!
+  balance: VPoolBalance!
+
+  rewards: [VReward!]! @derivedFrom(field: "pool")
+  aprHistory: [VPoolApr!]! @derivedFrom(field: "pool")
+  balanceHistory: [VPoolBalance!]! @derivedFrom(field: "pool")
+  users: [User!]! @derivedFrom(field: "vaultPools")
+  distributions: [VPoolYieldDistribution!]! @derivedFrom(field: "pool")
+}
+
+type VReward @entity {
+  id: ID!
+  pool: VaultPool!
+  poolBalance: VPoolBalance!
+  token: Token!
+  amount: BigInt!
+  date: BigInt!
+}
+
+type VPoolApr @entity {
+  id: ID!
+  amount: BigInt!
+  date: BigInt!
+  duration: BigInt!
+  pool: VaultPool!
+  txHash: Bytes!
+}
+
+type VPoolBalance @entity {
+  id: ID!
+  amount: BigInt!
+  date: BigInt!
+  pool: VaultPool!
+}
+
+type VPoolYieldDistribution @entity {
+  id: ID!
+  pool: VaultPool!
+  amount: BigInt!
+}
+
 ##################
 ### INVESTMENT ###
 ##################
@@ -98,6 +150,7 @@ type User @entity {
   id: ID!
 
   savingsPools: [SavingsPool!]!
+  vaultPools: [VaultPool!]!
   investmentPools: [InvestmentPool!]!
 }
 
