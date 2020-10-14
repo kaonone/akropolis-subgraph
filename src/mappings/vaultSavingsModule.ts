@@ -47,7 +47,7 @@ export function handleYieldDistribution(event: YieldDistribution): void {
 
 export function handleDeposit(event: Deposit): void {
   let user = loadUser(event.params.user);
-  user.savingsPools = addUniq(user.savingsPools, event.params.protocol.toHex());
+  user.vaultPools = addUniq(user.vaultPools, event.params.protocol.toHex());
   user.save();
 }
 

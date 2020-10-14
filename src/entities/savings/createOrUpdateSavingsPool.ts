@@ -27,6 +27,8 @@ export function createOrUpdateSavingsPool(
     ).id;
     pool.balance = createSPoolBalance(event, BigInt.fromI32(0), pool.id).id;
     pool.prevBalance = pool.balance;
+    pool.lastRewardDistributionDate = event.block.timestamp;
+    pool.prevRewardDistributionDate = event.block.timestamp;
   }
 
   pool.poolToken = createToken(tokenAddress).id;

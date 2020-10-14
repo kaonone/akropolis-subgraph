@@ -33,6 +33,8 @@ export function handleRewardDistribution(event: RewardDistribution): void {
   let savingsModuleAddress = dataSource.address();
   let contract = SavingsModule.bind(savingsModuleAddress);
   let savingsPoolAddress = contract.protocolByPoolToken(event.params.poolToken);
+
+  updateRewardDistributionDates(event, savingsPoolAddress);
   createSReward(event, savingsPoolAddress);
 }
 
@@ -107,6 +109,19 @@ function updatePoolBalances(event: ethereum.Event, poolAddress: Address): void {
 
   pool.prevBalance = pool.balance;
   pool.balance = currentBalance.id;
+
+  pool.save();
+}
+
+function updateRewardDistributionDates(event: ethereum.Event, poolAddress: Address): void {
+  let pool = loadSavingsPool(poolAddress);
+
+  if (pool.lastRewardDistributionDate.equals(event.block.timestamp)) {
+    return;
+  }
+
+  pool.prevRewardDistributionDate = pool.lastRewardDistributionDate;
+  pool.lastRewardDistributionDate = event.block.timestamp;
 
   pool.save();
 }

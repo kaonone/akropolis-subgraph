@@ -13,6 +13,7 @@ export function createSReward(
   let reward = new SReward(getUniqId(event));
   reward.pool = poolAddress.toHex();
   reward.poolBalance = pool.balance;
+  reward.duration = event.block.timestamp.minus(pool.prevRewardDistributionDate)
   reward.token = event.params.rewardRoken.toHex();
   reward.amount = event.params.amount;
   reward.date = event.block.timestamp;

@@ -11,6 +11,8 @@ type SavingsPool @entity {
   apr: SPoolApr!
   prevBalance: SPoolBalance!
   balance: SPoolBalance!
+  lastRewardDistributionDate: BigInt!
+  prevRewardDistributionDate: BigInt!
 
   rewards: [SReward!]! @derivedFrom(field: "pool")
   aprHistory: [SPoolApr!]! @derivedFrom(field: "pool")
@@ -22,6 +24,7 @@ type SavingsPool @entity {
 type SReward @entity {
   id: ID!
   pool: SavingsPool!
+  duration: BigInt!
   poolBalance: SPoolBalance!
   token: Token!
   amount: BigInt!
