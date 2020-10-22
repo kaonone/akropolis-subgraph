@@ -10,7 +10,6 @@ export function loadUser(address: Address): User {
     user = new User(id);
     user.savingsPools = [];
     user.vaultPools = [];
-    user.investmentPools = [];
     user.save();
 
     let stats = loadGlobalStat();

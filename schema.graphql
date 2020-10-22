@@ -104,46 +104,6 @@ type VPoolYieldDistribution @entity {
   amount: BigInt!
 }
 
-##################
-### INVESTMENT ###
-##################
-
-type InvestmentPool @entity {
-  "address"
-  id: ID!
-  poolToken: Token!
-  tokens: [Token!]!
-  rewardTokens: [Token!]!
-  apr: IPoolApr!
-
-  rewards: [IReward!]! @derivedFrom(field: "pool")
-  aprHistory: [IPoolApr!]! @derivedFrom(field: "pool")
-  users: [User!]! @derivedFrom(field: "investmentPools")
-  distributions: [IPoolYieldDistribution!]! @derivedFrom(field: "pool")
-}
-
-type IReward @entity {
-  id: ID!
-  pool: InvestmentPool!
-  token: Token!
-  amount: BigInt!
-  date: BigInt!
-}
-
-type IPoolApr @entity {
-  id: ID!
-  amount: BigInt!
-  date: BigInt!
-  duration: BigInt!
-  pool: InvestmentPool!
-}
-
-type IPoolYieldDistribution @entity {
-  id: ID!
-  pool: InvestmentPool!
-  amount: BigInt!
-}
-
 #############
 ### OTHER ###
 #############
@@ -154,7 +114,6 @@ type User @entity {
 
   savingsPools: [SavingsPool!]!
   vaultPools: [VaultPool!]!
-  investmentPools: [InvestmentPool!]!
 }
 
 type Token @entity {

@@ -17,7 +17,7 @@ dataSources:
         - User
       abis:
         - name: SavingsModule
-          file: ./abis/SavingsOrInvestmentModule.json
+          file: ./abis/SavingsModule.json
         - name: ERC20Detailed
           file: ./abis/ERC20Detailed.json
         - name: DefiProtocol
@@ -32,36 +32,6 @@ dataSources:
         - event: RewardDistribution(indexed address,indexed address,uint256,uint256)
           handler: handleRewardDistribution
       file: ./src/mappings/savingsModule.ts
-  - kind: ethereum/contract
-    name: InvestmentModule
-    network: {{network}}
-    source:
-      address: "{{modules.investment}}"
-      abi: InvestmentModule
-      startBlock: {{startBlock}}
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.1
-      language: wasm/assemblyscript
-      entities:
-        - User
-      abis:
-        - name: InvestmentModule
-          file: ./abis/SavingsOrInvestmentModule.json
-        - name: ERC20Detailed
-          file: ./abis/ERC20Detailed.json
-        - name: DefiProtocol
-          file: ./abis/IDefiProtocol.json
-      eventHandlers:
-        - event: ProtocolRegistered(address,address)
-          handler: handleProtocolRegistered
-        - event: Deposit(indexed address,indexed address,uint256,uint256)
-          handler: handleDeposit
-        - event: Withdraw(indexed address,indexed address,uint256,uint256)
-          handler: handleWithdraw
-        - event: RewardDistribution(indexed address,indexed address,uint256,uint256)
-          handler: handleRewardDistribution
-      file: ./src/mappings/investmentModule.ts
   - kind: ethereum/contract
     name: VaultSavingsModule
     network: {{network}}
@@ -89,8 +59,6 @@ dataSources:
           handler: handleDeposit
         - event: YieldDistribution(indexed address,uint256)
           handler: handleYieldDistribution
-        # - event: RewardDistribution(indexed address,indexed address,uint256,uint256)
-        #   handler: handleRewardDistribution
       file: ./src/mappings/vaultSavingsModule.ts
   - kind: ethereum/contract
     name: AKROStakingPool
