@@ -97,7 +97,7 @@ function updatePoolBalances(event: ethereum.Event, poolAddress: Address): void {
 
   let currentBalance = createVPoolBalance(
     event,
-    contract.normalizedBalance(),
+    contract.normalizedBalance().plus(contract.normalizedVaultBalance()),
     pool.id
   );
 
