@@ -5,9 +5,11 @@ import {
   ProtocolRegistered,
   RewardDistribution,
   SavingsModule,
+  Withdraw,
   YieldDistribution,
 } from "../../generated/SavingsModule/SavingsModule";
 import { DefiProtocol } from "../../generated/SavingsModule/DefiProtocol";
+import { SavingsPoolToken } from "../../generated/SavingsModule/SavingsPoolToken";
 import {
   createOrUpdateSavingsPool,
   loadSavingsPool,
@@ -19,7 +21,8 @@ import {
   loadUser,
   loadSPoolApr,
 } from "../entities";
-import { calcAPY, addUniq } from "../utils";
+import { calcAPY, addUniq, exclude } from "../utils";
+import { removeUserIfZeroBalance } from "./removeUserIfZeroBalance";
 
 export function handleProtocolRegistered(event: ProtocolRegistered): void {
   createOrUpdateSavingsPool(
@@ -55,6 +58,24 @@ export function handleDeposit(event: Deposit): void {
   let user = loadUser(event.params.user);
   user.savingsPools = addUniq(user.savingsPools, event.params.protocol.toHex());
   user.save();
+}
+
+export function handleWithdraw(event: Withdraw): void {
+  let user = loadUser(event.params.user);
+  let pool = loadSavingsPool(event.params.protocol);
+  let contract = SavingsPoolToken.bind(Address.fromString(pool.poolToken));
+  let userBalance = contract.fullBalanceOf(event.params.user);
+
+  if (userBalance.le(BigInt.fromI32(0))) {
+    user.savingsPools = exclude(
+      user.savingsPools,
+      event.params.protocol.toHex()
+    );
+
+    user.save();
+  }
+
+  removeUserIfZeroBalance(user);
 }
 
 function createSPoolAprOnYieldDistribution(

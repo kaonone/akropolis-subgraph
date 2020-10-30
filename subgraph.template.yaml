@@ -22,11 +22,15 @@ dataSources:
           file: ./abis/ERC20Detailed.json
         - name: DefiProtocol
           file: ./abis/IDefiProtocol.json
+        - name: SavingsPoolToken
+          file: ./abis/SavingsPoolToken.json
       eventHandlers:
         - event: ProtocolRegistered(address,address)
           handler: handleProtocolRegistered
         - event: Deposit(indexed address,indexed address,uint256,uint256)
           handler: handleDeposit
+        - event: Withdraw(indexed address,indexed address,uint256,uint256)
+          handler: handleWithdraw
         - event: YieldDistribution(indexed address,uint256)
           handler: handleYieldDistribution
         - event: RewardDistribution(indexed address,indexed address,uint256,uint256)
@@ -52,11 +56,15 @@ dataSources:
           file: ./abis/ERC20Detailed.json
         - name: VaultProtocol
           file: ./abis/VaultProtocol.json
+        - name: VaultPoolToken
+          file: ./abis/VaultPoolToken.json
       eventHandlers:
         - event: VaultRegistered(address,address)
           handler: handleVaultRegistered
         - event: Deposit(indexed address,indexed address,uint256,uint256)
           handler: handleDeposit
+        - event: Withdraw(indexed address,indexed address,uint256,uint256)
+          handler: handleWithdraw
         - event: YieldDistribution(indexed address,uint256)
           handler: handleYieldDistribution
       file: ./src/mappings/vaultSavingsModule.ts
@@ -79,6 +87,8 @@ dataSources:
       eventHandlers:
         - event: Staked(indexed address,uint256,uint256,bytes)
           handler: handleStaked
+        - event: Unstaked(indexed address,uint256,uint256,bytes)
+          handler: handleUnstake
       file: ./src/mappings/akroStakingPool.ts
   - kind: ethereum/contract
     name: ADELStakingPool
@@ -99,4 +109,6 @@ dataSources:
       eventHandlers:
         - event: Staked(indexed address,uint256,uint256,bytes)
           handler: handleStaked
+        - event: Unstaked(indexed address,uint256,uint256,bytes)
+          handler: handleUnstake
       file: ./src/mappings/adelStakingPool.ts
