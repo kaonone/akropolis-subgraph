@@ -10,5 +10,6 @@ export function removeUserIfZeroBalance(user: User): void {
     store.remove('User', user.id);
     let globalStat = loadGlobalStat();
     globalStat.activeMembersCount -= 1;
+    globalStat.save();
   }
 }
