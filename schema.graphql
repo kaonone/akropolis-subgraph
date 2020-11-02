@@ -114,6 +114,7 @@ type User @entity {
 
   savingsPools: [SavingsPool!]!
   vaultPools: [VaultPool!]!
+  stakingPools: [String!]!
 }
 
 type Token @entity {

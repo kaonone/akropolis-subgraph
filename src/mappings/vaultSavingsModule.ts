@@ -6,8 +6,10 @@ import {
   RewardDistribution,
   VaultSavingsModule,
   YieldDistribution,
+  Withdraw,
 } from "../../generated/VaultSavingsModule/VaultSavingsModule";
 import { VaultProtocol } from "../../generated/VaultSavingsModule/VaultProtocol";
+import { VaultPoolToken } from "../../generated/VaultSavingsModule/VaultPoolToken";
 import {
   createOrUpdateVaultPool,
   loadVaultPool,
@@ -19,7 +21,8 @@ import {
   loadUser,
   loadVPoolApr,
 } from "../entities";
-import { calcAPY, addUniq } from "../utils";
+import { calcAPY, addUniq, exclude } from "../utils";
+import { removeUserIfZeroBalance } from "./removeUserIfZeroBalance";
 
 export function handleVaultRegistered(event: VaultRegistered): void {
   createOrUpdateVaultPool(event, event.params.protocol, event.params.poolToken);
@@ -49,6 +52,24 @@ export function handleDeposit(event: Deposit): void {
   let user = loadUser(event.params.user);
   user.vaultPools = addUniq(user.vaultPools, event.params.protocol.toHex());
   user.save();
+}
+
+export function handleWithdraw(event: Withdraw): void {
+  let user = loadUser(event.params.user);
+  let pool = loadVaultPool(event.params.protocol);
+  let contract = VaultPoolToken.bind(Address.fromString(pool.poolToken));
+  let userBalance = contract.fullBalanceOf(event.params.user);
+
+  if (userBalance.le(BigInt.fromI32(0))) {
+    user.vaultPools = exclude(
+      user.vaultPools,
+      event.params.protocol.toHex()
+    );
+
+    user.save();
+  }
+
+  removeUserIfZeroBalance(user);
 }
 
 function createSPoolAprOnYieldDistribution(
