@@ -3,11 +3,11 @@ import { ethereum, BigInt, Address } from "@graphprotocol/graph-ts";
 import { VaultPool } from "../../../generated/schema";
 import { VaultProtocol } from "../../../generated/VaultSavingsModule/VaultProtocol";
 
-import { createToken } from "../createToken";
 import { createVPoolBalance } from "./createVPoolBalance";
 import { loadToken } from "../loadToken";
 import { createVPoolApr } from "./createVPoolApr";
 import { loadSubgraphConfig } from "../loadSubgraphConfig";
+import { createPoolToken } from "../createPoolToken";
 
 export function createOrUpdateVaultPool(
   event: ethereum.Event,
@@ -29,7 +29,7 @@ export function createOrUpdateVaultPool(
     pool.prevBalance = pool.balance;
   }
 
-  pool.poolToken = createToken(tokenAddress).id;
+  pool.poolToken = createPoolToken(tokenAddress, null, pool.id).id;
   pool.tokens = loadSupportedTokens(poolAddress);
 
   pool.save();
