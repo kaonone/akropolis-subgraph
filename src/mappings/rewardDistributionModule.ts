@@ -4,8 +4,8 @@ import { RewardDistribution } from "../../generated/RewardDistributionModule/Rew
 import {
   loadPoolToken,
   loadSavingsPool,
-  updateRewardDistributionDates,
-  createDistributionSReward,
+  updateSavingsRewardDistributionDates,
+  createSRewardFromRewardModuleEvent,
 } from "../entities";
 
 export function handleRewardDistribution(event: RewardDistribution): void {
@@ -20,7 +20,7 @@ export function handleRewardDistribution(event: RewardDistribution): void {
   if (token.savingsPool) {
     let pool = loadSavingsPool(Address.fromString(token.savingsPool));
 
-    updateRewardDistributionDates(event, Address.fromString(pool.id));
-    createDistributionSReward(event, Address.fromString(pool.id));
+    updateSavingsRewardDistributionDates(event, Address.fromString(pool.id));
+    createSRewardFromRewardModuleEvent(event, Address.fromString(pool.id));
   }
 }

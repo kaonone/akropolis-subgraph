@@ -7,7 +7,7 @@ export function loadPoolToken(address: Address): PoolToken {
   let token = PoolToken.load(address.toHex());
 
   if (!token) {
-    return createPoolToken(address, null, null);
+    throw new Error("Pool token is not found. Id" + address.toHex());
   }
 
   return token as PoolToken;

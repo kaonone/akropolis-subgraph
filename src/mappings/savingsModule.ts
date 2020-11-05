@@ -19,8 +19,8 @@ import {
   createSPoolApr,
   loadUser,
   loadSPoolApr,
-  updateRewardDistributionDates,
-  createSavingsModuleSReward,
+  updateSavingsRewardDistributionDates,
+  createSRewardFromSavingsModuleEvent,
 } from "../entities";
 import { calcAPY, addUniq, exclude } from "../utils";
 import { removeUserIfZeroBalance } from "./removeUserIfZeroBalance";
@@ -38,8 +38,8 @@ export function handleRewardDistribution(event: RewardDistribution): void {
   let contract = SavingsModule.bind(savingsModuleAddress);
   let savingsPoolAddress = contract.protocolByPoolToken(event.params.poolToken);
 
-  updateRewardDistributionDates(event, savingsPoolAddress);
-  createSavingsModuleSReward(event, savingsPoolAddress);
+  updateSavingsRewardDistributionDates(event, savingsPoolAddress);
+  createSRewardFromSavingsModuleEvent(event, savingsPoolAddress);
 }
 
 export function handleYieldDistribution(event: YieldDistribution): void {

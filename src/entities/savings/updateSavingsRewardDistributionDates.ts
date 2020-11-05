@@ -1,8 +1,8 @@
 import { Address, ethereum } from "@graphprotocol/graph-ts";
 
-import { loadSavingsPool } from "./savings";
+import { loadSavingsPool } from ".";
 
-export function updateRewardDistributionDates(
+export function updateSavingsRewardDistributionDates(
   event: ethereum.Event,
   poolAddress: Address
 ): void {

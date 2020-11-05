@@ -5,6 +5,3 @@ export * from "./loadUser";
 export * from "./savings";
 export * from "./vaultSavings";
 export * from "./loadPoolToken";
-export * from "./updateRewardDistributionDates";
-export * from "./createSReward";
-export * from "./createDistributionSReward";
