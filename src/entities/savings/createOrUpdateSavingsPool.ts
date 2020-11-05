@@ -3,11 +3,11 @@ import { ethereum, BigInt, Address } from "@graphprotocol/graph-ts";
 import { SavingsPool } from "../../../generated/schema";
 import { DefiProtocol } from "../../../generated/SavingsModule/DefiProtocol";
 
-import { createToken } from "../createToken";
 import { createSPoolBalance } from "./createSPoolBalance";
 import { loadToken } from "../loadToken";
 import { createSPoolApr } from "./createSPoolApr";
 import { loadSubgraphConfig } from "../loadSubgraphConfig";
+import { createPoolToken } from "../createPoolToken";
 
 export function createOrUpdateSavingsPool(
   event: ethereum.Event,
@@ -31,7 +31,7 @@ export function createOrUpdateSavingsPool(
     pool.prevRewardDistributionDate = event.block.timestamp;
   }
 
-  pool.poolToken = createToken(tokenAddress).id;
+  pool.poolToken = createPoolToken(tokenAddress, pool.id, null).id;
   pool.tokens = loadSupportedTokens(poolAddress);
   pool.rewardTokens = loadSupportedRewardTokens(poolAddress);
 

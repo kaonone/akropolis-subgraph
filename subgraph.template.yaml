@@ -112,3 +112,23 @@ dataSources:
         - event: Unstaked(indexed address,uint256,uint256,bytes)
           handler: handleUnstake
       file: ./src/mappings/adelStakingPool.ts
+  - kind: ethereum/contract
+    name: RewardDistributionModule
+    network: {{network}}
+    source:
+      address: "{{modules.rewardDistribution}}"
+      abi: RewardDistributionModule
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.1
+      language: wasm/assemblyscript
+      entities:
+        - User
+      abis:
+        - name: RewardDistributionModule
+          file: ./abis/RewardDistributionModule.json
+      eventHandlers:
+        - event: RewardDistribution(indexed address,indexed address,uint256,uint256)
+          handler: handleRewardDistribution
+      file: ./src/mappings/rewardDistributionModule.ts

@@ -3,7 +3,6 @@ import { Address, BigInt, ethereum, dataSource } from "@graphprotocol/graph-ts";
 import {
   Deposit,
   VaultRegistered,
-  RewardDistribution,
   VaultSavingsModule,
   YieldDistribution,
   Withdraw,
@@ -17,7 +16,6 @@ import {
   loadVPoolBalance,
   loadSubgraphConfig,
   createVPoolApr,
-  createVReward,
   loadUser,
   loadVPoolApr,
 } from "../entities";
@@ -26,13 +24,6 @@ import { removeUserIfZeroBalance } from "./removeUserIfZeroBalance";
 
 export function handleVaultRegistered(event: VaultRegistered): void {
   createOrUpdateVaultPool(event, event.params.protocol, event.params.poolToken);
-}
-
-export function handleRewardDistribution(event: RewardDistribution): void {
-  let savingsModuleAddress = dataSource.address();
-  let contract = VaultSavingsModule.bind(savingsModuleAddress);
-  let savingsPoolAddress = contract.protocolByPoolToken(event.params.poolToken);
-  createVReward(event, savingsPoolAddress);
 }
 
 export function handleYieldDistribution(event: YieldDistribution): void {
