@@ -5,7 +5,7 @@
 type SavingsPool @entity {
   "address"
   id: ID!
-  poolToken: Token!
+  poolToken: PoolToken!
   tokens: [Token!]!
   rewardTokens: [Token!]!
   apr: SPoolApr!
@@ -60,26 +60,16 @@ type SPoolYieldDistribution @entity {
 type VaultPool @entity {
   "address"
   id: ID!
-  poolToken: Token!
+  poolToken: PoolToken!
   tokens: [Token!]!
   apr: VPoolApr!
   prevBalance: VPoolBalance!
   balance: VPoolBalance!
 
-  rewards: [VReward!]! @derivedFrom(field: "pool")
   aprHistory: [VPoolApr!]! @derivedFrom(field: "pool")
   balanceHistory: [VPoolBalance!]! @derivedFrom(field: "pool")
   users: [User!]! @derivedFrom(field: "vaultPools")
   distributions: [VPoolYieldDistribution!]! @derivedFrom(field: "pool")
-}
-
-type VReward @entity {
-  id: ID!
-  pool: VaultPool!
-  poolBalance: VPoolBalance!
-  token: Token!
-  amount: BigInt!
-  date: BigInt!
 }
 
 type VPoolApr @entity {
@@ -123,6 +113,16 @@ type Token @entity {
   name: String!
   symbol: String!
   decimals: Int!
+}
+
+type PoolToken @entity {
+  "address"
+  id: ID!
+  name: String!
+  symbol: String!
+  decimals: Int!
+  savingsPool: SavingsPool
+  vaultPool: VaultPool
 }
 
 type GlobalStat @entity {

@@ -17,9 +17,10 @@ import {
   loadSPoolBalance,
   loadSubgraphConfig,
   createSPoolApr,
-  createSReward,
   loadUser,
   loadSPoolApr,
+  updateSavingsRewardDistributionDates,
+  createSRewardFromSavingsModuleEvent,
 } from "../entities";
 import { calcAPY, addUniq, exclude } from "../utils";
 import { removeUserIfZeroBalance } from "./removeUserIfZeroBalance";
@@ -37,8 +38,8 @@ export function handleRewardDistribution(event: RewardDistribution): void {
   let contract = SavingsModule.bind(savingsModuleAddress);
   let savingsPoolAddress = contract.protocolByPoolToken(event.params.poolToken);
 
-  updateRewardDistributionDates(event, savingsPoolAddress);
-  createSReward(event, savingsPoolAddress);
+  updateSavingsRewardDistributionDates(event, savingsPoolAddress);
+  createSRewardFromSavingsModuleEvent(event, savingsPoolAddress);
 }
 
 export function handleYieldDistribution(event: YieldDistribution): void {
@@ -130,19 +131,6 @@ function updatePoolBalances(event: ethereum.Event, poolAddress: Address): void {
 
   pool.prevBalance = pool.balance;
   pool.balance = currentBalance.id;
-
-  pool.save();
-}
-
-function updateRewardDistributionDates(event: ethereum.Event, poolAddress: Address): void {
-  let pool = loadSavingsPool(poolAddress);
-
-  if (pool.lastRewardDistributionDate.equals(event.block.timestamp)) {
-    return;
-  }
-
-  pool.prevRewardDistributionDate = pool.lastRewardDistributionDate;
-  pool.lastRewardDistributionDate = event.block.timestamp;
 
   pool.save();
 }
