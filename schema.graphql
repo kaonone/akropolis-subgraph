@@ -128,6 +128,7 @@ type PoolToken @entity {
 type GlobalStat @entity {
   id: ID!
   activeMembersCount: Int!
+  totalYieldEarned: BigInt!
 }
 
 type SubgraphConfig @entity {
