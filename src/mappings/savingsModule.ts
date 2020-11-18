@@ -21,6 +21,7 @@ import {
   loadSPoolApr,
   updateSavingsRewardDistributionDates,
   createSRewardFromSavingsModuleEvent,
+  loadGlobalStat,
 } from "../entities";
 import { calcAPY, addUniq, exclude } from "../utils";
 import { removeUserIfZeroBalance } from "./removeUserIfZeroBalance";
@@ -53,6 +54,10 @@ export function handleYieldDistribution(event: YieldDistribution): void {
     savingsPoolAddress,
     event.params.amount
   );
+
+  let globalStat = loadGlobalStat();
+  globalStat.totalYieldEarned = globalStat.totalYieldEarned.plus(event.params.amount);
+  globalStat.save();
 }
 
 export function handleDeposit(event: Deposit): void {
@@ -121,13 +126,19 @@ function updatePoolBalances(event: ethereum.Event, poolAddress: Address): void {
     return;
   }
 
+  let poolTokenContract = SavingsPoolToken.bind(
+    Address.fromString(pool.poolToken)
+  );
   let contract = DefiProtocol.bind(poolAddress);
 
-  let currentBalance = createSPoolBalance(
-    event,
-    contract.normalizedBalance(),
-    pool.id
-  );
+  let totalSupply = poolTokenContract.totalSupply();
+  let normalizedBalance = contract.normalizedBalance();
+
+  let balance = totalSupply.gt(normalizedBalance)
+    ? totalSupply
+    : normalizedBalance;
+
+  let currentBalance = createSPoolBalance(event, balance, pool.id);
 
   pool.prevBalance = pool.balance;
   pool.balance = currentBalance.id;
