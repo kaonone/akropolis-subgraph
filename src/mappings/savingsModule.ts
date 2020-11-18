@@ -21,6 +21,7 @@ import {
   loadSPoolApr,
   updateSavingsRewardDistributionDates,
   createSRewardFromSavingsModuleEvent,
+  loadGlobalStat,
 } from "../entities";
 import { calcAPY, addUniq, exclude } from "../utils";
 import { removeUserIfZeroBalance } from "./removeUserIfZeroBalance";
@@ -53,6 +54,10 @@ export function handleYieldDistribution(event: YieldDistribution): void {
     savingsPoolAddress,
     event.params.amount
   );
+
+  let globalStat = loadGlobalStat();
+  globalStat.totalYieldEarned = globalStat.totalYieldEarned.plus(event.params.amount);
+  globalStat.save();
 }
 
 export function handleDeposit(event: Deposit): void {
