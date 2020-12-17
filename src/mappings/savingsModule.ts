@@ -17,7 +17,7 @@ import {
   loadSPoolBalance,
   loadSubgraphConfig,
   createSPoolApr,
-  loadUser,
+  loadOrCreateUser,
   loadSPoolApr,
   updateSavingsRewardDistributionDates,
   createSRewardFromSavingsModuleEvent,
@@ -61,13 +61,13 @@ export function handleYieldDistribution(event: YieldDistribution): void {
 }
 
 export function handleDeposit(event: Deposit): void {
-  let user = loadUser(event.params.user);
+  let user = loadOrCreateUser(event.params.user);
   user.savingsPools = addUniq(user.savingsPools, event.params.protocol.toHex());
   user.save();
 }
 
 export function handleWithdraw(event: Withdraw): void {
-  let user = loadUser(event.params.user);
+  let user = loadOrCreateUser(event.params.user);
   let pool = loadSavingsPool(event.params.protocol);
   let contract = SavingsPoolToken.bind(Address.fromString(pool.poolToken));
   let userBalance = contract.fullBalanceOf(event.params.user);

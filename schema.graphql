@@ -61,37 +61,9 @@ type VaultPool @entity {
   "address"
   id: ID!
   poolToken: PoolToken!
-  tokens: [Token!]!
-  apr: VPoolApr!
-  prevBalance: VPoolBalance!
-  balance: VPoolBalance!
+  underlyingToken: Token!
 
-  aprHistory: [VPoolApr!]! @derivedFrom(field: "pool")
-  balanceHistory: [VPoolBalance!]! @derivedFrom(field: "pool")
   users: [User!]! @derivedFrom(field: "vaultPools")
-  distributions: [VPoolYieldDistribution!]! @derivedFrom(field: "pool")
-}
-
-type VPoolApr @entity {
-  id: ID!
-  amount: BigInt!
-  date: BigInt!
-  duration: BigInt!
-  pool: VaultPool!
-  txHash: Bytes!
-}
-
-type VPoolBalance @entity {
-  id: ID!
-  amount: BigInt!
-  date: BigInt!
-  pool: VaultPool!
-}
-
-type VPoolYieldDistribution @entity {
-  id: ID!
-  pool: VaultPool!
-  amount: BigInt!
 }
 
 #############
