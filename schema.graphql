@@ -62,8 +62,23 @@ type VaultPool @entity {
   id: ID!
   poolToken: PoolToken!
   underlyingToken: Token!
+  controller: VaultController!
+  strategy: VaultStrategy!
 
   users: [User!]! @derivedFrom(field: "vaultPools")
+}
+
+type VaultStrategy @entity {
+  "address"
+  id: ID!
+  withdrawFee: BigInt!
+  withdrawFeeDenominator: BigInt!
+}
+
+type VaultController @entity {
+  "address"
+  id: ID!
+  vaults: [VaultPool!]! @derivedFrom(field: "controller")
 }
 
 #############

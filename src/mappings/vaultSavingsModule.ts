@@ -7,7 +7,7 @@ import { createOrUpdateVaultPool, loadOrCreateUser } from "../entities";
 import { addUniq } from "../utils";
 
 export function handleVaultRegistered(event: VaultRegistered): void {
-  createOrUpdateVaultPool(event, event.params.vault, event.params.baseToken);
+  createOrUpdateVaultPool(event.params.vault, event.params.baseToken);
   YVault.create(event.params.vault);
 }
 
