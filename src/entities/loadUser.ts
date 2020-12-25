@@ -11,6 +11,7 @@ export function loadOrCreateUser(address: Address): User {
     user.savingsPools = [];
     user.vaultPools = [];
     user.stakingPools = [];
+    user.tvl = [];
     user.save();
 
     let stats = loadGlobalStat();
