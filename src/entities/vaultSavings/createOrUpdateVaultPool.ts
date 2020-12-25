@@ -1,52 +1,35 @@
-import { ethereum, BigInt, Address } from "@graphprotocol/graph-ts";
+import { Address, BigInt } from "@graphprotocol/graph-ts";
 
 import { VaultPool } from "../../../generated/schema";
-import { VaultProtocol } from "../../../generated/VaultSavingsModule/VaultProtocol";
 
-import { createVPoolBalance } from "./createVPoolBalance";
-import { loadToken } from "../loadToken";
-import { createVPoolApr } from "./createVPoolApr";
 import { loadSubgraphConfig } from "../loadSubgraphConfig";
 import { createPoolToken } from "../createPoolToken";
+import { createToken } from "../createToken";
+import { loadOrCreateVaultController } from "./vaultController";
+import { YVault } from "../../../generated/VaultSavingsModule/YVault";
+import { getStrategyAddress, loadOrCreateVaultStrategy } from "./vaultStrategy";
 
 export function createOrUpdateVaultPool(
-  event: ethereum.Event,
-  poolAddress: Address,
-  tokenAddress: Address
+  vaultAddress: Address,
+  underlyingTokenAddress: Address
 ): VaultPool {
   loadSubgraphConfig(); // create config subgraph if it doesn't exist
-  let pool = VaultPool.load(poolAddress.toHex());
+  let pool = VaultPool.load(vaultAddress.toHex());
+  let yVaultContract = YVault.bind(vaultAddress);
+  let controllerAddress = yVaultContract.controller();
 
   if (!pool) {
-    pool = new VaultPool(poolAddress.toHex());
-    pool.apr = createVPoolApr(
-      event,
-      BigInt.fromI32(0),
-      BigInt.fromI32(0),
-      pool.id
-    ).id;
-    pool.balance = createVPoolBalance(event, BigInt.fromI32(0), pool.id).id;
-    pool.prevBalance = pool.balance;
+    pool = new VaultPool(vaultAddress.toHex());
+    pool.totalTVL = BigInt.fromI32(0);
   }
 
-  pool.poolToken = createPoolToken(tokenAddress, null, pool.id).id;
-  pool.tokens = loadSupportedTokens(poolAddress);
-
+  pool.poolToken = createPoolToken(vaultAddress, null, pool.id).id;
+  pool.underlyingToken = createToken(underlyingTokenAddress).id;
+  pool.controller = loadOrCreateVaultController(controllerAddress).id;
+  pool.strategy = loadOrCreateVaultStrategy(
+    getStrategyAddress(controllerAddress, underlyingTokenAddress)
+  ).id;
   pool.save();
 
   return pool as VaultPool;
-}
-
-function loadSupportedTokens(poolAddress: Address): string[] {
-  let contract = VaultProtocol.bind(poolAddress);
-
-  let ids: string[] = [];
-  let tokens = contract.supportedTokens();
-
-  for (let i = 0; i < tokens.length; i++) {
-    let token = loadToken(tokens[i]);
-    ids.push(token.id);
-  }
-
-  return ids;
 }

@@ -8,5 +8,6 @@
     "rewardDistribution": "0x84056675382c851cf42FAAFCeC3FCa90E21AE645",
     "akroStakingPool": "0x3501Ec11d205fa249f2C42f5470e137b529b35D0",
     "adelStakingPool": "0x1A547c3dd03c39Fb2b5aEaFC524033879bD28F13"
-  }
+  },
+  "callSupported": true
 }
