@@ -1,4 +1,4 @@
-import { ethereum, Address } from "@graphprotocol/graph-ts";
+import { Address, BigInt } from "@graphprotocol/graph-ts";
 
 import { VaultPool } from "../../../generated/schema";
 
@@ -20,6 +20,7 @@ export function createOrUpdateVaultPool(
 
   if (!pool) {
     pool = new VaultPool(vaultAddress.toHex());
+    pool.totalTVL = BigInt.fromI32(0);
   }
 
   pool.poolToken = createPoolToken(vaultAddress, null, pool.id).id;
