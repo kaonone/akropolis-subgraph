@@ -7,7 +7,7 @@ export function loadOrCreateTVL(vaultId: string, userId: string): UserVaultTVL {
   let tvl = UserVaultTVL.load(tvlAddress);
 
   if (!tvl) {
-    tvl = new UserVaultTVL(vaultId + userId);
+    tvl = new UserVaultTVL(tvlAddress);
     tvl.amount = BigInt.fromI32(0);
     tvl.vault = vaultId;
     tvl.user = userId;
