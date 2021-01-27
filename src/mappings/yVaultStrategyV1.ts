@@ -1,8 +1,8 @@
 import { dataSource } from "@graphprotocol/graph-ts";
 
-import { updateStrategy } from "../entities";
+import { updateStrategyV1 } from "../entities";
 
 export function handleSetWithdrawalFee(): void {
   let yVaultStrategyAddress = dataSource.address();
-  updateStrategy(yVaultStrategyAddress);
+  updateStrategyV1(yVaultStrategyAddress);
 }

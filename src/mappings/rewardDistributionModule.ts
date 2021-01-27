@@ -11,7 +11,7 @@ import {
 export function handleRewardDistribution(event: RewardDistribution): void {
   let token = loadPoolToken(event.params.poolToken);
 
-  if (!token.savingsPool && !token.vaultPool) {
+  if (!token.savingsPool && !token.vaultPoolV1) {
     throw new Error(
       "token.savingsPool and token.vaultPool fields are not defined!"
     );

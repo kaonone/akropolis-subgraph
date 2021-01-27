@@ -1,10 +1,10 @@
 import { BigInt, dataSource } from "@graphprotocol/graph-ts";
 
 import { User } from "../../generated/schema";
-import { Transfer, YVault } from "../../generated/templates/YVault/YVault";
-import { loadUser, loadVaultPool } from "../entities";
-import { createTVLChangedEvent } from "../entities/vaultSavings/createTVLChangedEvent";
-import { loadOrCreateTVL } from "../entities/vaultSavings/loadOrCreateTVL";
+import { Transfer, YVaultV1 } from "../../generated/templates/YVaultV1/YVaultV1";
+import { loadUser, loadVaultPoolV1 } from "../entities";
+import { createV1TVLChangedEvent } from "../entities/vaultSavingsV1/createTVLChangedEvent";
+import { loadOrCreateV1TVL } from "../entities/vaultSavingsV1/loadOrCreateTVL";
 import { exclude } from "../utils";
 import { removeUserIfZeroBalance } from "./removeUserIfZeroBalance";
 
@@ -17,17 +17,17 @@ export function handleTransfer(event: Transfer): void {
   }
 
   let yVaultAddress = dataSource.address();
-  let contract = YVault.bind(yVaultAddress);
+  let contract = YVaultV1.bind(yVaultAddress);
   let userBalance = contract.balanceOf(userAddress);
 
   if (userBalance.le(BigInt.fromI32(0))) {
-    user.vaultPools = exclude(user.vaultPools, yVaultAddress.toHex());
+    user.vaultPoolsV1 = exclude(user.vaultPoolsV1, yVaultAddress.toHex());
 
     user.save();
   }
 
   // TODO what if there is multiple withdraws in one transaction
-  let tvl = loadOrCreateTVL(yVaultAddress.toHex(), userAddress.toHex());
+  let tvl = loadOrCreateV1TVL(yVaultAddress.toHex(), userAddress.toHex());
 
   let balanceBeforeTransfer = userBalance.plus(event.params.value);
   let shareMultiplier = BigInt.fromI32(1000000000);
@@ -37,11 +37,11 @@ export function handleTransfer(event: Transfer): void {
   tvl.amount = tvl.amount.minus(withdrawTVLAmount);
   tvl.save();
 
-  let pool = loadVaultPool(yVaultAddress);
+  let pool = loadVaultPoolV1(yVaultAddress);
   pool.totalTVL = pool.totalTVL.minus(withdrawTVLAmount);
   pool.save();
 
-  createTVLChangedEvent(
+  createV1TVLChangedEvent(
     event,
     event.params.value,
     yVaultAddress.toHex(),
