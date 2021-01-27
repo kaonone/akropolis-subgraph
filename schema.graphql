@@ -83,6 +83,36 @@ type VaultControllerV1 @entity {
   vaults: [VaultPoolV1!]! @derivedFrom(field: "controller")
 }
 
+########################
+### VAULT SAVINGS V2 ###
+########################
+
+type VaultPoolV2 @entity {
+  "address"
+  id: ID!
+  poolToken: PoolToken!
+  underlyingToken: Token!
+  controller: VaultControllerV2!
+  strategy: VaultStrategyV2!
+  totalTVL: BigInt!
+
+  users: [User!]! @derivedFrom(field: "vaultPoolsV2")
+  userV2TVLs: [UserVaultV2TVL!]! @derivedFrom(field: "vault")
+}
+
+type VaultStrategyV2 @entity {
+  "address"
+  id: ID!
+  withdrawFee: BigInt!
+  withdrawFeeDenominator: BigInt!
+}
+
+type VaultControllerV2 @entity {
+  "address"
+  id: ID!
+  vaults: [VaultPoolV2!]! @derivedFrom(field: "controller")
+}
+
 ############
 ### USER ###
 ############
@@ -91,10 +121,13 @@ type User @entity {
   "address"
   id: ID!
 
-  vaultV1TVLs: [UserVaultV1TVL!]! @derivedFrom(field: "user")
   savingsPools: [SavingsPool!]!
   vaultPoolsV1: [VaultPoolV1!]!
+  vaultPoolsV2: [VaultPoolV2!]!
   stakingPools: [String!]!
+
+  vaultV1TVLs: [UserVaultV1TVL!]! @derivedFrom(field: "user")
+  vaultV2TVLs: [UserVaultV2TVL!]! @derivedFrom(field: "user")
 }
 
 type UserVaultV1TVL @entity {
@@ -111,6 +144,25 @@ type UserVaultV1TVLChanged @entity {
   amount: BigInt!
   blockNumber: BigInt!
   vault: VaultPoolV1!
+  user: User!
+  "increase | decrease"
+  eventType: String!
+}
+
+type UserVaultV2TVL @entity {
+  "vaultAddress + userAddress"
+  id: ID!
+  amount: BigInt!
+  vault: VaultPoolV2!
+  user: User!
+}
+
+type UserVaultV2TVLChanged @entity {
+  "address"
+  id: ID!
+  amount: BigInt!
+  blockNumber: BigInt!
+  vault: VaultPoolV2!
   user: User!
   "increase | decrease"
   eventType: String!
@@ -136,6 +188,7 @@ type PoolToken @entity {
   decimals: Int!
   savingsPool: SavingsPool
   vaultPoolV1: VaultPoolV1
+  vaultPoolV2: VaultPoolV2
 }
 
 type GlobalStat @entity {

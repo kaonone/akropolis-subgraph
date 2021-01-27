@@ -31,7 +31,7 @@ export function createOrUpdateSavingsPool(
     pool.prevRewardDistributionDate = event.block.timestamp;
   }
 
-  pool.poolToken = createPoolToken(tokenAddress, pool.id, null).id;
+  pool.poolToken = createPoolToken(tokenAddress, pool.id, null, null).id;
   pool.tokens = loadSupportedTokens(poolAddress);
   pool.rewardTokens = loadSupportedRewardTokens(poolAddress);
 

@@ -23,7 +23,7 @@ export function createOrUpdateVaultPoolV1(
     pool.totalTVL = BigInt.fromI32(0);
   }
 
-  pool.poolToken = createPoolToken(vaultAddress, null, pool.id).id;
+  pool.poolToken = createPoolToken(vaultAddress, null, pool.id, null).id;
   pool.underlyingToken = createToken(underlyingTokenAddress).id;
   pool.controller = loadOrCreateVaultControllerV1(controllerAddress).id;
   pool.strategy = loadOrCreateVaultStrategyV1(
