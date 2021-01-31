@@ -86,10 +86,6 @@ dataSources:
           file: ./abis/ERC20Detailed.json
         - name: YVaultV2
           file: ./abis/YVaultV2.json
-        - name: YVaultControllerV2
-          file: ./abis/YVaultControllerV2.json
-        - name: YVaultStrategyV2
-          file: ./abis/YVaultStrategyV2.json
       eventHandlers:
         - event: VaultRegistered(indexed address,address)
           handler: handleVaultRegistered
@@ -199,41 +195,3 @@ templates:
           handler: handleSetWithdrawalFee
       {{/callSupported}}
       file: ./src/mappings/yVaultStrategyV1.ts
-  - kind: ethereum/contract
-    name: YVaultV2
-    network: {{network}}
-    source:
-      abi: YVaultV2
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.1
-      language: wasm/assemblyscript
-      entities:
-        - User
-      abis:
-        - name: YVaultV2
-          file: ./abis/YVaultV2.json
-      eventHandlers:
-        - event: Transfer(indexed address,indexed address,uint256)
-          handler: handleTransfer
-      file: ./src/mappings/yVaultV2.ts
-  - kind: ethereum/contract
-    name: YVaultStrategyV2
-    network: {{network}}
-    source:
-      abi: YVaultStrategyV2
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.1
-      language: wasm/assemblyscript
-      entities:
-        - User
-      abis:
-        - name: YVaultStrategyV2
-          file: ./abis/YVaultStrategyV2.json
-      {{#callSupported}}
-      callHandlers:
-        - function: setWithdrawalFee(uint256)
-          handler: handleSetWithdrawalFee
-      {{/callSupported}}
-      file: ./src/mappings/yVaultStrategyV2.ts

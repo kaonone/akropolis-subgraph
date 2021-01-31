@@ -2,7 +2,6 @@ import {
   Deposit,
   VaultRegistered,
 } from "../../generated/VaultSavingsV2/VaultSavingsV2";
-import { YVaultV2 } from "../../generated/templates";
 import {
   createOrUpdateVaultPoolV2,
   loadOrCreateUser,
@@ -14,7 +13,6 @@ import { createV2TVLChangedEvent } from "../entities/vaultSavingsV2/createTVLCha
 
 export function handleVaultRegistered(event: VaultRegistered): void {
   createOrUpdateVaultPoolV2(event.params.vault, event.params.baseToken);
-  YVaultV2.create(event.params.vault);
 }
 
 export function handleDeposit(event: Deposit): void {
