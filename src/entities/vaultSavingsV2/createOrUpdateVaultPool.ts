@@ -16,6 +16,7 @@ export function createOrUpdateVaultPoolV2(
   if (!pool) {
     pool = new VaultPoolV2(vaultAddress.toHex());
     pool.totalTVL = BigInt.fromI32(0);
+    pool.isActive = true;
   }
 
   pool.poolToken = createPoolToken(vaultAddress, null, null, pool.id).id;

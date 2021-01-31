@@ -1,5 +1,7 @@
 import {
   Deposit,
+  VaultActivated,
+  VaultDisabled,
   VaultRegistered,
 } from "../../generated/VaultSavingsV1/VaultSavingsV1";
 import { YVaultV1 } from "../../generated/templates";
@@ -15,6 +17,18 @@ import { createV1TVLChangedEvent } from "../entities/vaultSavingsV1/createTVLCha
 export function handleVaultRegistered(event: VaultRegistered): void {
   createOrUpdateVaultPoolV1(event.params.vault, event.params.baseToken);
   YVaultV1.create(event.params.vault);
+}
+
+export function handleVaultDisabled(event: VaultDisabled): void {
+  let vault = loadVaultPoolV1(event.params.vault);
+  vault.isActive = false;
+  vault.save();
+}
+
+export function handleVaultActivated(event: VaultActivated): void {
+  let vault = loadVaultPoolV1(event.params.vault);
+  vault.isActive = true;
+  vault.save();
 }
 
 export function handleDeposit(event: Deposit): void {

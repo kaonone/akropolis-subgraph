@@ -63,6 +63,10 @@ dataSources:
       eventHandlers:
         - event: VaultRegistered(indexed address,address)
           handler: handleVaultRegistered
+        - event: VaultDisabled(indexed address)
+          handler: handleVaultDisabled
+        - event: VaultActivated(indexed address)
+          handler: handleVaultActivated
         - event: Deposit(indexed address,indexed address,uint256,uint256)
           handler: handleDeposit
       file: ./src/mappings/vaultSavingsV1.ts
@@ -89,6 +93,10 @@ dataSources:
       eventHandlers:
         - event: VaultRegistered(indexed address,address)
           handler: handleVaultRegistered
+        - event: VaultDisabled(indexed address)
+          handler: handleVaultDisabled
+        - event: VaultActivated(indexed address)
+          handler: handleVaultActivated
         - event: Deposit(indexed address,indexed address,uint256,uint256)
           handler: handleDeposit
       file: ./src/mappings/vaultSavingsV2.ts

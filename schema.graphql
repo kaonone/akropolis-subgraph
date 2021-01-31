@@ -60,6 +60,7 @@ type SPoolYieldDistribution @entity {
 type VaultPoolV1 @entity {
   "address"
   id: ID!
+  isActive: Boolean!
   poolToken: PoolToken!
   underlyingToken: Token!
   controller: VaultControllerV1!
@@ -90,6 +91,7 @@ type VaultControllerV1 @entity {
 type VaultPoolV2 @entity {
   "address"
   id: ID!
+  isActive: Boolean!
   poolToken: PoolToken!
   underlyingToken: Token!
   totalTVL: BigInt!

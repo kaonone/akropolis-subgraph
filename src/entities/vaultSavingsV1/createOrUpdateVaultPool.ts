@@ -7,7 +7,10 @@ import { createPoolToken } from "../createPoolToken";
 import { createToken } from "../createToken";
 import { loadOrCreateVaultControllerV1 } from "./vaultController";
 import { YVaultV1 } from "../../../generated/VaultSavingsV1/YVaultV1";
-import { getStrategyV1Address, loadOrCreateVaultStrategyV1 } from "./vaultStrategy";
+import {
+  getStrategyV1Address,
+  loadOrCreateVaultStrategyV1,
+} from "./vaultStrategy";
 
 export function createOrUpdateVaultPoolV1(
   vaultAddress: Address,
@@ -21,6 +24,7 @@ export function createOrUpdateVaultPoolV1(
   if (!pool) {
     pool = new VaultPoolV1(vaultAddress.toHex());
     pool.totalTVL = BigInt.fromI32(0);
+    pool.isActive = true;
   }
 
   pool.poolToken = createPoolToken(vaultAddress, null, pool.id, null).id;
