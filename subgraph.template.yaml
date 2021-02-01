@@ -37,11 +37,11 @@ dataSources:
           handler: handleRewardDistribution
       file: ./src/mappings/savingsModule.ts
   - kind: ethereum/contract
-    name: VaultSavingsV1
+    name: VaultSavingsModule
     network: {{network}}
     source:
-      address: "{{modules.vaultSavingsV1}}"
-      abi: VaultSavingsV1
+      address: "{{modules.vaultSavings}}"
+      abi: VaultSavingsModule
       startBlock: {{startBlock}}
     mapping:
       kind: ethereum/events
@@ -50,56 +50,22 @@ dataSources:
       entities:
         - User
       abis:
-        - name: VaultSavingsV1
-          file: ./abis/VaultSavingsV1.json
+        - name: VaultSavingsModule
+          file: ./abis/VaultSavingsModule.json
         - name: ERC20Detailed
           file: ./abis/ERC20Detailed.json
-        - name: YVaultV1
-          file: ./abis/YVaultV1.json
-        - name: YVaultControllerV1
-          file: ./abis/YVaultControllerV1.json
-        - name: YVaultStrategyV1
-          file: ./abis/YVaultStrategyV1.json
+        - name: YVault
+          file: ./abis/YVault.json
+        - name: YVaultController
+          file: ./abis/YVaultController.json
+        - name: YVaultStrategy
+          file: ./abis/YVaultStrategy.json
       eventHandlers:
         - event: VaultRegistered(indexed address,address)
           handler: handleVaultRegistered
-        - event: VaultDisabled(indexed address)
-          handler: handleVaultDisabled
-        - event: VaultActivated(indexed address)
-          handler: handleVaultActivated
         - event: Deposit(indexed address,indexed address,uint256,uint256)
           handler: handleDeposit
-      file: ./src/mappings/vaultSavingsV1.ts
-  - kind: ethereum/contract
-    name: VaultSavingsV2
-    network: {{network}}
-    source:
-      address: "{{modules.vaultSavingsV2}}"
-      abi: VaultSavingsV2
-      startBlock: {{startBlock}}
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.1
-      language: wasm/assemblyscript
-      entities:
-        - User
-      abis:
-        - name: VaultSavingsV2
-          file: ./abis/VaultSavingsV2.json
-        - name: ERC20Detailed
-          file: ./abis/ERC20Detailed.json
-        - name: YVaultV2
-          file: ./abis/YVaultV2.json
-      eventHandlers:
-        - event: VaultRegistered(indexed address,address)
-          handler: handleVaultRegistered
-        - event: VaultDisabled(indexed address)
-          handler: handleVaultDisabled
-        - event: VaultActivated(indexed address)
-          handler: handleVaultActivated
-        - event: Deposit(indexed address,indexed address,uint256,uint256)
-          handler: handleDeposit
-      file: ./src/mappings/vaultSavingsV2.ts
+      file: ./src/mappings/vaultSavingsModule.ts
   - kind: ethereum/contract
     name: AKROStakingPool
     network: {{network}}
@@ -166,10 +132,10 @@ dataSources:
       file: ./src/mappings/rewardDistributionModule.ts
 templates:
   - kind: ethereum/contract
-    name: YVaultV1
+    name: YVault
     network: {{network}}
     source:
-      abi: YVaultV1
+      abi: YVault
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.1
@@ -177,17 +143,17 @@ templates:
       entities:
         - User
       abis:
-        - name: YVaultV1
-          file: ./abis/YVaultV1.json
+        - name: YVault
+          file: ./abis/YVault.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      file: ./src/mappings/yVaultV1.ts
+      file: ./src/mappings/yVault.ts
   - kind: ethereum/contract
-    name: YVaultStrategyV1
+    name: YVaultStrategy
     network: {{network}}
     source:
-      abi: YVaultStrategyV1
+      abi: YVaultStrategy
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.1
@@ -195,29 +161,11 @@ templates:
       entities:
         - User
       abis:
-        - name: YVaultStrategyV1
-          file: ./abis/YVaultStrategyV1.json
+        - name: YVaultStrategy
+          file: ./abis/YVaultStrategy.json
       {{#callSupported}}
       callHandlers:
         - function: setWithdrawalFee(uint256)
           handler: handleSetWithdrawalFee
       {{/callSupported}}
-      file: ./src/mappings/yVaultStrategyV1.ts
-  - kind: ethereum/contract
-    name: YVaultV2
-    network: {{network}}
-    source:
-      abi: YVaultV2
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.1
-      language: wasm/assemblyscript
-      entities:
-        - User
-      abis:
-        - name: YVaultV2
-          file: ./abis/YVaultV2.json
-      eventHandlers:
-        - event: Transfer(indexed address,indexed address,uint256)
-          handler: handleTransfer
-      file: ./src/mappings/yVaultV2.ts
+      file: ./src/mappings/yVaultStrategy.ts
