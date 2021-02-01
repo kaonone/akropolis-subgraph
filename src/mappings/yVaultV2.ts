@@ -9,7 +9,7 @@ import { exclude } from "../utils";
 import { removeUserIfZeroBalance } from "./removeUserIfZeroBalance";
 
 export function handleTransfer(event: Transfer): void {
-  let userAddress = event.params.from;
+  let userAddress = event.params.sender;
   let user = loadUser(userAddress);
 
   if (!user) {
