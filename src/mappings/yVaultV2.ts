@@ -1,15 +1,15 @@
 import { BigInt, dataSource } from "@graphprotocol/graph-ts";
 
 import { User } from "../../generated/schema";
-import { Transfer, YVault } from "../../generated/templates/YVault/YVault";
-import { loadUser, loadVaultPool } from "../entities";
-import { createTVLChangedEvent } from "../entities/vaultSavings/createTVLChangedEvent";
-import { loadOrCreateTVL } from "../entities/vaultSavings/loadOrCreateTVL";
+import { Transfer, YVaultV2 } from "../../generated/templates/YVaultV2/YVaultV2";
+import { loadUser, loadVaultPoolV2 } from "../entities";
+import { createV2TVLChangedEvent } from "../entities/vaultSavingsV2/createTVLChangedEvent";
+import { loadOrCreateV2TVL } from "../entities/vaultSavingsV2/loadOrCreateTVL";
 import { exclude } from "../utils";
 import { removeUserIfZeroBalance } from "./removeUserIfZeroBalance";
 
 export function handleTransfer(event: Transfer): void {
-  let userAddress = event.params.from;
+  let userAddress = event.params.sender;
   let user = loadUser(userAddress);
 
   if (!user) {
@@ -17,17 +17,17 @@ export function handleTransfer(event: Transfer): void {
   }
 
   let yVaultAddress = dataSource.address();
-  let contract = YVault.bind(yVaultAddress);
+  let contract = YVaultV2.bind(yVaultAddress);
   let userBalance = contract.balanceOf(userAddress);
 
   if (userBalance.le(BigInt.fromI32(0))) {
-    user.vaultPools = exclude(user.vaultPools, yVaultAddress.toHex());
+    user.vaultPoolsV2 = exclude(user.vaultPoolsV2, yVaultAddress.toHex());
 
     user.save();
   }
 
   // TODO what if there is multiple withdraws in one transaction
-  let tvl = loadOrCreateTVL(yVaultAddress.toHex(), userAddress.toHex());
+  let tvl = loadOrCreateV2TVL(yVaultAddress.toHex(), userAddress.toHex());
 
   let balanceBeforeTransfer = userBalance.plus(event.params.value);
   let shareMultiplier = BigInt.fromI32(1000000000);
@@ -37,11 +37,11 @@ export function handleTransfer(event: Transfer): void {
   tvl.amount = tvl.amount.minus(withdrawTVLAmount);
   tvl.save();
 
-  let pool = loadVaultPool(yVaultAddress);
+  let pool = loadVaultPoolV2(yVaultAddress);
   pool.totalTVL = pool.totalTVL.minus(withdrawTVLAmount);
   pool.save();
 
-  createTVLChangedEvent(
+  createV2TVLChangedEvent(
     event,
     event.params.value,
     yVaultAddress.toHex(),
