@@ -6,7 +6,8 @@ import { ERC20Detailed } from "../../generated/SavingsModule/ERC20Detailed";
 export function createPoolToken(
   tokenAddress: Address,
   savingsPool: string | null,
-  vaultPool: string | null
+  vaultPoolV1: string | null,
+  vaultPoolV2: string | null
 ): PoolToken {
   let token = new PoolToken(tokenAddress.toHex());
 
@@ -16,7 +17,8 @@ export function createPoolToken(
   token.decimals = contract.decimals();
   token.symbol = contract.symbol();
   token.savingsPool = savingsPool;
-  token.vaultPool = vaultPool;
+  token.vaultPoolV1 = vaultPoolV1;
+  token.vaultPoolV2 = vaultPoolV2;
 
   token.save();
 

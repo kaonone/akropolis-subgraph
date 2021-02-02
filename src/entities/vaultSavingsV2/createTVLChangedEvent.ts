@@ -1,16 +1,16 @@
 import { BigInt, ethereum } from "@graphprotocol/graph-ts";
 
-import { UserVaultTVLChanged } from "../../../generated/schema";
+import { UserVaultV2TVLChanged } from "../../../generated/schema";
 import { getUniqId } from "../../utils";
 
-export function createTVLChangedEvent(
+export function createV2TVLChangedEvent(
   event: ethereum.Event,
   amount: BigInt,
   vaultId: string,
   userId: string,
   tvlEventType: string,
-): UserVaultTVLChanged {
-  let tvlChangedEvent = new UserVaultTVLChanged(getUniqId(event));
+): UserVaultV2TVLChanged {
+  let tvlChangedEvent = new UserVaultV2TVLChanged(getUniqId(event));
 
   tvlChangedEvent.amount = amount;
   tvlChangedEvent.blockNumber = event.block.number;
@@ -20,5 +20,5 @@ export function createTVLChangedEvent(
 
   tvlChangedEvent.save();
 
-  return tvlChangedEvent as UserVaultTVLChanged;
+  return tvlChangedEvent as UserVaultV2TVLChanged;
 }
