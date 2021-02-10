@@ -24,7 +24,8 @@ import {
   loadGlobalStat,
 } from "../entities";
 import { calcAPY, addUniq, exclude } from "../utils";
-import { removeUserIfZeroBalance } from "./removeUserIfZeroBalance";
+import { deactivateUserIfZeroBalance } from "./deactivateUserIfZeroBalance";
+import { activateUser } from "./activateUser";
 
 export function handleProtocolRegistered(event: ProtocolRegistered): void {
   createOrUpdateSavingsPool(
@@ -64,6 +65,7 @@ export function handleDeposit(event: Deposit): void {
   let user = loadOrCreateUser(event.params.user);
   user.savingsPools = addUniq(user.savingsPools, event.params.protocol.toHex());
   user.save();
+  activateUser(user);
 }
 
 export function handleWithdraw(event: Withdraw): void {
@@ -81,7 +83,7 @@ export function handleWithdraw(event: Withdraw): void {
     user.save();
   }
 
-  removeUserIfZeroBalance(user);
+  deactivateUserIfZeroBalance(user);
 }
 
 function createSPoolAprOnYieldDistribution(

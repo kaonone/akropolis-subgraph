@@ -12,6 +12,7 @@ import {
 import { addUniq } from "../utils";
 import { loadOrCreateV2TVL } from "../entities/vaultSavingsV2/loadOrCreateTVL";
 import { createV2TVLChangedEvent } from "../entities/vaultSavingsV2/createTVLChangedEvent";
+import { activateUser } from "./activateUser";
 
 export function handleVaultRegistered(event: VaultRegistered): void {
   createOrUpdateVaultPoolV2(event.params.vault, event.params.baseToken);
@@ -32,7 +33,9 @@ export function handleVaultActivated(event: VaultActivated): void {
 export function handleDeposit(event: Deposit): void {
   let user = loadOrCreateUser(event.params.user);
   user.vaultPoolsV2 = addUniq(user.vaultPoolsV2, event.params.vault.toHex());
+  user.visitedVaultPoolsV2 = addUniq(user.visitedVaultPoolsV2, event.params.vault.toHex());
   user.save();
+  activateUser(user);
 
   let tvl = loadOrCreateV2TVL(
     event.params.vault.toHex(),

@@ -107,11 +107,15 @@ type VaultPoolV2 @entity {
 type User @entity {
   "address"
   id: ID!
+  active: Boolean!
 
   savingsPools: [SavingsPool!]!
+  stakingPools: [String!]!
   vaultPoolsV1: [VaultPoolV1!]!
   vaultPoolsV2: [VaultPoolV2!]!
-  stakingPools: [String!]!
+
+  visitedVaultPoolsV1: [VaultPoolV1!]!
+  visitedVaultPoolsV2: [VaultPoolV2!]!
 
   vaultV1TVLs: [UserVaultV1TVL!]! @derivedFrom(field: "user")
   vaultV2TVLs: [UserVaultV2TVL!]! @derivedFrom(field: "user")
@@ -130,6 +134,7 @@ type UserVaultV1TVLChanged @entity {
   id: ID!
   amount: BigInt!
   blockNumber: BigInt!
+  date: Int!
   vault: VaultPoolV1!
   user: User!
   "increase | decrease"
@@ -149,6 +154,7 @@ type UserVaultV2TVLChanged @entity {
   id: ID!
   amount: BigInt!
   blockNumber: BigInt!
+  date: Int!
   vault: VaultPoolV2!
   user: User!
   "increase | decrease"

@@ -6,7 +6,7 @@ import { loadUser, loadVaultPoolV2 } from "../entities";
 import { createV2TVLChangedEvent } from "../entities/vaultSavingsV2/createTVLChangedEvent";
 import { loadOrCreateV2TVL } from "../entities/vaultSavingsV2/loadOrCreateTVL";
 import { exclude } from "../utils";
-import { removeUserIfZeroBalance } from "./removeUserIfZeroBalance";
+import { deactivateUserIfZeroBalance } from "./deactivateUserIfZeroBalance";
 
 export function handleTransfer(event: Transfer): void {
   let userAddress = event.params.sender;
@@ -49,5 +49,5 @@ export function handleTransfer(event: Transfer): void {
     'decrease',
   );
 
-  removeUserIfZeroBalance(user as User);
+  deactivateUserIfZeroBalance(user as User);
 }

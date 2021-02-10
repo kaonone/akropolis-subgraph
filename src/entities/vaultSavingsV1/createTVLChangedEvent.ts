@@ -14,6 +14,7 @@ export function createV1TVLChangedEvent(
 
   tvlChangedEvent.amount = amount;
   tvlChangedEvent.blockNumber = event.block.number;
+  tvlChangedEvent.date = event.block.timestamp.toI32();
   tvlChangedEvent.vault = vaultId;
   tvlChangedEvent.user = userId;
   tvlChangedEvent.eventType = tvlEventType;
