@@ -12,6 +12,5 @@ export function deactivateUserIfZeroBalance(user: User): void {
     globalStat.save();
 
     user.active = false;
-    user.save();
   }
 }

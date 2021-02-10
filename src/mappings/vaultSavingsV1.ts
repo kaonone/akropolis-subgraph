@@ -36,8 +36,8 @@ export function handleDeposit(event: Deposit): void {
   let user = loadOrCreateUser(event.params.user);
   user.vaultPoolsV1 = addUniq(user.vaultPoolsV1, event.params.vault.toHex());
   user.visitedVaultPoolsV1 = addUniq(user.visitedVaultPoolsV1, event.params.vault.toHex());
-  user.save();
   activateUser(user);
+  user.save();
 
   let tvl = loadOrCreateV1TVL(
     event.params.vault.toHex(),

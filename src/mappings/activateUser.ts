@@ -8,6 +8,5 @@ export function activateUser(user: User): void {
     globalStat.save();
 
     user.active = true;
-    user.save();
   }
 }

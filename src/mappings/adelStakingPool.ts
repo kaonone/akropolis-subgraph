@@ -9,13 +9,13 @@ import { deactivateUserIfZeroBalance } from "./deactivateUserIfZeroBalance";
 export function handleStaked(event: Staked): void {
   let user = loadOrCreateUser(event.params.user);
   user.stakingPools = addUniq(user.stakingPools, dataSource.address().toHex());
-  user.save();
   activateUser(user);
+  user.save();
 }
 
 export function handleUnstake(event: Unstaked): void {
   let user = loadOrCreateUser(event.params.user);
   user.stakingPools = exclude(user.stakingPools, dataSource.address().toHex());
-  user.save();
   deactivateUserIfZeroBalance(user);
+  user.save();
 }

@@ -25,7 +25,7 @@ export function handleTransfer(event: Transfer): void {
 
   if (userBalance.le(BigInt.fromI32(0))) {
     user.vaultPoolsV1 = exclude(user.vaultPoolsV1, yVaultAddress.toHex());
-
+    deactivateUserIfZeroBalance(user as User);
     user.save();
   }
 
@@ -54,5 +54,4 @@ export function handleTransfer(event: Transfer): void {
     "decrease"
   );
 
-  deactivateUserIfZeroBalance(user as User);
 }

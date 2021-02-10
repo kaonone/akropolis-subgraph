@@ -64,8 +64,8 @@ export function handleYieldDistribution(event: YieldDistribution): void {
 export function handleDeposit(event: Deposit): void {
   let user = loadOrCreateUser(event.params.user);
   user.savingsPools = addUniq(user.savingsPools, event.params.protocol.toHex());
-  user.save();
   activateUser(user);
+  user.save();
 }
 
 export function handleWithdraw(event: Withdraw): void {
@@ -79,11 +79,10 @@ export function handleWithdraw(event: Withdraw): void {
       user.savingsPools,
       event.params.protocol.toHex()
     );
-
+    deactivateUserIfZeroBalance(user);
     user.save();
   }
 
-  deactivateUserIfZeroBalance(user);
 }
 
 function createSPoolAprOnYieldDistribution(
