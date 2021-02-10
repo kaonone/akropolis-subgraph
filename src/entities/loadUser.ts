@@ -8,10 +8,13 @@ export function loadOrCreateUser(address: Address): User {
 
   if (!user) {
     user = new User(id);
+    user.active = false;
     user.savingsPools = [];
+    user.stakingPools = [];
     user.vaultPoolsV1 = [];
     user.vaultPoolsV2 = [];
-    user.stakingPools = [];
+    user.visitedVaultPoolsV1 = [];
+    user.visitedVaultPoolsV2 = [];
     user.save();
 
     let stats = loadGlobalStat();
