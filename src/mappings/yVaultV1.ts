@@ -1,7 +1,10 @@
 import { BigInt, dataSource } from "@graphprotocol/graph-ts";
 
 import { User } from "../../generated/schema";
-import { Transfer, YVaultV1 } from "../../generated/templates/YVaultV1/YVaultV1";
+import {
+  Transfer,
+  YVaultV1,
+} from "../../generated/templates/YVaultV1/YVaultV1";
 import { loadUser, loadVaultPoolV1 } from "../entities";
 import { createV1TVLChangedEvent } from "../entities/vaultSavingsV1/createTVLChangedEvent";
 import { loadOrCreateV1TVL } from "../entities/vaultSavingsV1/loadOrCreateTVL";
@@ -31,7 +34,9 @@ export function handleTransfer(event: Transfer): void {
 
   let balanceBeforeTransfer = userBalance.plus(event.params.value);
   let shareMultiplier = BigInt.fromI32(1000000000);
-  let share = event.params.value.times(shareMultiplier).div(balanceBeforeTransfer);
+  let share = balanceBeforeTransfer.isZero()
+    ? BigInt.fromI32(0)
+    : event.params.value.times(shareMultiplier).div(balanceBeforeTransfer);
   let withdrawTVLAmount = tvl.amount.times(share).div(shareMultiplier);
 
   tvl.amount = tvl.amount.minus(withdrawTVLAmount);
@@ -46,7 +51,7 @@ export function handleTransfer(event: Transfer): void {
     event.params.value,
     yVaultAddress.toHex(),
     userAddress.toHex(),
-    'decrease',
+    "decrease"
   );
 
   deactivateUserIfZeroBalance(user as User);
