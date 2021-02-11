@@ -15,7 +15,7 @@ export function handleTransfer(event: Transfer): void {
   let userAddress = event.params.from;
   let user = loadUser(userAddress);
 
-  if (!user) {
+  if (!user || !user.vaultPoolsV1.length) {
     return;
   }
 
@@ -48,7 +48,7 @@ export function handleTransfer(event: Transfer): void {
 
   createV1TVLChangedEvent(
     event,
-    event.params.value,
+    withdrawTVLAmount,
     yVaultAddress.toHex(),
     userAddress.toHex(),
     "decrease"
