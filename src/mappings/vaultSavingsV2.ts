@@ -4,6 +4,7 @@ import {
   VaultDisabled,
   VaultRegistered,
 } from "../../generated/VaultSavingsV2/VaultSavingsV2";
+import { YVaultV2 } from "../../generated/templates";
 import {
   createOrUpdateVaultPoolV2,
   loadOrCreateUser,
@@ -16,6 +17,7 @@ import { activateUser } from "./activateUser";
 
 export function handleVaultRegistered(event: VaultRegistered): void {
   createOrUpdateVaultPoolV2(event.params.vault, event.params.baseToken);
+  YVaultV2.create(event.params.vault);
 }
 
 export function handleVaultDisabled(event: VaultDisabled): void {
