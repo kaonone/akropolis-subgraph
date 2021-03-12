@@ -16,13 +16,13 @@ import { exclude, SUPPORTED_VAULTS, isAddressEquals } from "../utils";
 import { deactivateUserIfZeroBalance } from "./deactivateUserIfZeroBalance";
 
 export function handleTransfer(event: Transfer): void {
-  let userAddress = event.params.from;
-  let user = loadUser(userAddress);
+  let isSupportedDeposit = isAddressEquals(event.params.to, SUPPORTED_VAULTS);
+  let isSupportedWithdraw = isAddressEquals(
+    event.params.from,
+    SUPPORTED_VAULTS
+  );
 
-  if (
-    isAddressEquals(event.params.from, SUPPORTED_VAULTS) ||
-    isAddressEquals(event.params.to, SUPPORTED_VAULTS)
-  ) {
+  if (isSupportedDeposit || isSupportedWithdraw) {
     let user = loadUser(event.params.from) || loadUser(event.params.to);
 
     if (!user) {
@@ -32,9 +32,12 @@ export function handleTransfer(event: Transfer): void {
     createOrUpdateUserBalance(
       Address.fromString(user.id),
       dataSource.address(),
-      event.params.value
+      isSupportedDeposit ? event.params.value : event.params.value.neg()
     );
   }
+
+  let userAddress = event.params.from;
+  let user = loadUser(userAddress);
 
   if (!user || !user.vaultPoolsV1.length) {
     return;

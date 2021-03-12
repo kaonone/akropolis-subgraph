@@ -95,7 +95,7 @@ export function handleWithdraw(event: Withdraw): void {
   createOrUpdateUserBalance(
     event.params.user,
     event.params.protocol,
-    event.params.nAmount
+    event.params.nAmount.neg()
   );
 }
 

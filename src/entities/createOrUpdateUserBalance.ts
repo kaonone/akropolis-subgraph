@@ -9,7 +9,7 @@ export function createOrUpdateUserBalance(
   userAddress: Address,
   poolAddress: Address,
   amountIncrease: BigInt
-) {
+): void {
   loadSubgraphConfig(); // create config subgraph if it doesn't exist
 
   let id = getUserBalanceId(userAddress, poolAddress);
@@ -25,9 +25,7 @@ export function createOrUpdateUserBalance(
     balance.value = BigInt.fromI32(0);
   }
 
-  balance.value = amountIncrease.lt(BigInt.fromI32(0))
-    ? balance.value.plus(amountIncrease)
-    : balance.value.minus(amountIncrease);
+  balance.value = balance.value.plus(amountIncrease);
   balance.pool = poolAddress;
   balance.user = user.id;
   balance.save();
