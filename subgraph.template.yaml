@@ -164,6 +164,28 @@ dataSources:
         - event: RewardDistribution(indexed address,indexed address,uint256,uint256)
           handler: handleRewardDistribution
       file: ./src/mappings/rewardDistributionModule.ts
+  {{#supportedUnderlyingTokens}}
+  - kind: ethereum/contract
+    name: {{name}}
+    network: {{network}}
+    source:
+      address: "{{address}}"
+      abi: ERC20Detailed
+      startBlock: {{startBlock}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.1
+      language: wasm/assemblyscript
+      entities:
+        - User
+      abis:
+        - name: ERC20Detailed
+          file: ./abis/ERC20Detailed.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/mappings/{{module}}.ts
+  {{/supportedUnderlyingTokens}}
 templates:
   - kind: ethereum/contract
     name: YVaultV1

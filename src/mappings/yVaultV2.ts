@@ -1,19 +1,40 @@
-import { BigInt, dataSource } from "@graphprotocol/graph-ts";
+import { Address, BigInt, dataSource } from "@graphprotocol/graph-ts";
 
 import { User } from "../../generated/schema";
 import {
   Transfer,
   YVaultV2,
 } from "../../generated/templates/YVaultV2/YVaultV2";
-import { loadUser, loadVaultPoolV2 } from "../entities";
+import {
+  createOrUpdateUserBalance,
+  loadUser,
+  loadVaultPoolV2,
+} from "../entities";
 import { createV2TVLChangedEvent } from "../entities/vaultSavingsV2/createTVLChangedEvent";
 import { loadOrCreateV2TVL } from "../entities/vaultSavingsV2/loadOrCreateTVL";
-import { exclude } from "../utils";
+import { exclude, isAddressEquals, SUPPORTED_VAULTS } from "../utils";
 import { deactivateUserIfZeroBalance } from "./deactivateUserIfZeroBalance";
 
 export function handleTransfer(event: Transfer): void {
   let userAddress = event.params.sender;
   let user = loadUser(userAddress);
+
+  if (
+    isAddressEquals(event.params.sender, SUPPORTED_VAULTS) ||
+    isAddressEquals(event.params.receiver, SUPPORTED_VAULTS)
+  ) {
+    let user = loadUser(event.params.sender) || loadUser(event.params.receiver);
+
+    if (!user) {
+      return;
+    }
+
+    createOrUpdateUserBalance(
+      Address.fromString(user.id),
+      dataSource.address(),
+      event.params.value
+    );
+  }
 
   if (!user || !user.vaultPoolsV2.length) {
     return;
@@ -53,5 +74,4 @@ export function handleTransfer(event: Transfer): void {
     userAddress.toHex(),
     "decrease"
   );
-
 }

@@ -7,3 +7,4 @@ export * from "./vaultSavingsV1";
 export * from "./vaultSavingsV2";
 export * from "./loadPoolToken";
 export * from "./loadGlobalStats";
+export * from "./createOrUpdateUserBalance";

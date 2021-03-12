@@ -10,5 +10,49 @@
     "akroStakingPool": "0x6887DF2f4296e8B772cb19479472A16E836dB9e0",
     "adelStakingPool": "0x1a80540930B869df525981c4231Cd06b0Dcbf668"
   },
-  "callSupported": false
+  "callSupported": false,
+  "supportedUnderlyingTokens": [
+    {
+      "address": "0x4dbcdf9b62e891a7cec5a2568c3f4faf9e8abe2b",
+      "startBlock": 7978792,
+      "module": "yVaultV2",
+      "name": "USDC"
+    },
+    {
+      "address": "0x5592ec0cfb4dbc12d3ab100b257153436a1f0fea",
+      "startBlock": 7984237,
+      "module": "yVaultV2",
+      "name": "DAI"
+    },
+    {
+      "address": "0x117e5604fdc0640b8bfbfe9440fa331737a656dc",
+      "startBlock": 7881466,
+      "module": "yVaultV1",
+      "name": "3Crv"
+    },
+    {
+      "address": "0xb7c7f91a37eca579caa18b552e5f09570069be40",
+      "startBlock": 7881484,
+      "module": "yVaultV1",
+      "name": "crvSBTC"
+    },
+    {
+      "address": "0xcc10f4c0a2c3cdd0f5cb5c316e4ae53af9d273d0",
+      "startBlock": 7881478,
+      "module": "yVaultV1",
+      "name": "yCRV"
+    },
+    {
+      "address": "0xdf38690f2e79de963663547dcdec5d44db33fe68",
+      "startBlock": 7881490,
+      "module": "yVaultV1",
+      "name": "crvCOMP"
+    },
+    {
+      "address": "0x93a5b332ceeace255a82484930a7fec5b89dd7c2",
+      "startBlock": 7881472,
+      "module": "yVaultV1",
+      "name": "crvBUSD"
+    }
+  ]
 }

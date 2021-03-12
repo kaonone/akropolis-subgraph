@@ -161,6 +161,14 @@ type UserVaultV2TVLChanged @entity {
   eventType: String!
 }
 
+type UserBalance @entity {
+  "user address + pool address"
+  id: ID!
+  value: BigInt!
+  user: User!
+  pool: Bytes!
+}
+
 #############
 ### OTHER ###
 #############
