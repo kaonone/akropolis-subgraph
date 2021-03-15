@@ -5,37 +5,13 @@ import {
   Transfer,
   YVaultV1,
 } from "../../generated/templates/YVaultV1/YVaultV1";
-import {
-  createOrUpdateUserBalance,
-  loadUser,
-  loadVaultPoolV1,
-} from "../entities";
+import { loadUser, loadVaultPoolV1 } from "../entities";
 import { createV1TVLChangedEvent } from "../entities/vaultSavingsV1/createTVLChangedEvent";
 import { loadOrCreateV1TVL } from "../entities/vaultSavingsV1/loadOrCreateTVL";
-import { exclude, SUPPORTED_VAULTS, isAddressEquals } from "../utils";
+import { exclude } from "../utils";
 import { deactivateUserIfZeroBalance } from "./deactivateUserIfZeroBalance";
 
 export function handleTransfer(event: Transfer): void {
-  let isSupportedDeposit = isAddressEquals(event.params.to, SUPPORTED_VAULTS);
-  let isSupportedWithdraw = isAddressEquals(
-    event.params.from,
-    SUPPORTED_VAULTS
-  );
-
-  if (isSupportedDeposit || isSupportedWithdraw) {
-    let user = loadUser(event.params.from) || loadUser(event.params.to);
-
-    if (!user) {
-      return;
-    }
-
-    createOrUpdateUserBalance(
-      Address.fromString(user.id),
-      dataSource.address(),
-      isSupportedDeposit ? event.params.value : event.params.value.neg()
-    );
-  }
-
   let userAddress = event.params.from;
   let user = loadUser(userAddress);
 

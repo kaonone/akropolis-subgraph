@@ -8,7 +8,8 @@ import { loadUser } from "./loadUser";
 export function createOrUpdateUserBalance(
   userAddress: Address,
   poolAddress: Address,
-  amountIncrease: BigInt
+  amountIncrease: BigInt,
+  module: string
 ): void {
   loadSubgraphConfig(); // create config subgraph if it doesn't exist
 
@@ -27,6 +28,7 @@ export function createOrUpdateUserBalance(
 
   balance.value = balance.value.plus(amountIncrease);
   balance.pool = poolAddress;
+  balance.module = module;
   balance.user = user.id;
   balance.save();
 }

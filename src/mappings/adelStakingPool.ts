@@ -15,7 +15,8 @@ export function handleStaked(event: Staked): void {
   createOrUpdateUserBalance(
     event.params.user,
     dataSource.address(),
-    event.params.amount
+    event.params.amount,
+    "staking"
   );
 }
 
@@ -28,6 +29,7 @@ export function handleUnstake(event: Unstaked): void {
   createOrUpdateUserBalance(
     event.params.user,
     dataSource.address(),
-    event.params.amount.neg()
+    event.params.amount.neg(),
+    "staking"
   );
 }

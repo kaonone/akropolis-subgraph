@@ -73,7 +73,8 @@ export function handleDeposit(event: Deposit): void {
   createOrUpdateUserBalance(
     event.params.user,
     event.params.protocol,
-    event.params.nAmount
+    event.params.nAmount,
+    "savings"
   );
 }
 
@@ -95,7 +96,8 @@ export function handleWithdraw(event: Withdraw): void {
   createOrUpdateUserBalance(
     event.params.user,
     event.params.protocol,
-    event.params.nAmount.neg()
+    event.params.nAmount.neg(),
+    "savings"
   );
 }
 

@@ -5,4 +5,3 @@ export * from "./decimalsToWei";
 export * from "./exclude";
 export * from "./getUniqId";
 export * from "./getUserBalanceId";
-export * from "./isAddressEquals";
