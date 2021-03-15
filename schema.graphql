@@ -172,7 +172,7 @@ type UserBalance @entity {
   "user address + pool address"
   id: ID!
   value: BigInt!
-  user: User!
+  user: Bytes!
   pool: Bytes!
   "savings | staking | vaultsV1 | vaultsV2"
   module: Module!

@@ -15,11 +15,6 @@ export function createOrUpdateUserBalance(
 
   let id = getUserBalanceId(userAddress, poolAddress);
   let balance = UserBalance.load(id);
-  let user = loadUser(userAddress);
-
-  if (!user) {
-    return;
-  }
 
   if (!balance) {
     balance = new UserBalance(id);
@@ -28,7 +23,7 @@ export function createOrUpdateUserBalance(
 
   balance.value = balance.value.plus(amountIncrease);
   balance.pool = poolAddress;
+  balance.user = userAddress;
   balance.module = module;
-  balance.user = user.id;
   balance.save();
 }
