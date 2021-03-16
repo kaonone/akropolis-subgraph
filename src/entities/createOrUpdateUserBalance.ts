@@ -3,7 +3,6 @@ import { Address, BigInt } from "@graphprotocol/graph-ts";
 import { UserBalance } from "../../generated/schema";
 import { loadSubgraphConfig } from "./loadSubgraphConfig";
 import { getUserBalanceId } from "../utils";
-import { loadUser } from "./loadUser";
 
 export function createOrUpdateUserBalance(
   userAddress: Address,
