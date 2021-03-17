@@ -161,6 +161,23 @@ type UserVaultV2TVLChanged @entity {
   eventType: String!
 }
 
+enum Module {
+  savings
+  staking
+  vaultsV1
+  vaultsV2
+}
+
+type UserBalance @entity {
+  "user address + pool address"
+  id: ID!
+  value: BigInt!
+  user: User!
+  pool: Bytes!
+  "savings | staking | vaultsV1 | vaultsV2"
+  module: Module!
+}
+
 #############
 ### OTHER ###
 #############

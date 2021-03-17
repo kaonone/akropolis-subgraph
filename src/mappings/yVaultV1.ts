@@ -1,4 +1,4 @@
-import { BigInt, dataSource } from "@graphprotocol/graph-ts";
+import { Address, BigInt, dataSource } from "@graphprotocol/graph-ts";
 
 import { User } from "../../generated/schema";
 import {
@@ -53,5 +53,4 @@ export function handleTransfer(event: Transfer): void {
     userAddress.toHex(),
     "decrease"
   );
-
 }

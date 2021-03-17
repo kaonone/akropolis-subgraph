@@ -22,6 +22,7 @@ import {
   updateSavingsRewardDistributionDates,
   createSRewardFromSavingsModuleEvent,
   loadGlobalStat,
+  createOrUpdateUserBalance,
 } from "../entities";
 import { calcAPY, addUniq, exclude } from "../utils";
 import { deactivateUserIfZeroBalance } from "./deactivateUserIfZeroBalance";
@@ -57,7 +58,9 @@ export function handleYieldDistribution(event: YieldDistribution): void {
   );
 
   let globalStat = loadGlobalStat();
-  globalStat.totalYieldEarned = globalStat.totalYieldEarned.plus(event.params.amount);
+  globalStat.totalYieldEarned = globalStat.totalYieldEarned.plus(
+    event.params.amount
+  );
   globalStat.save();
 }
 
@@ -66,6 +69,13 @@ export function handleDeposit(event: Deposit): void {
   user.savingsPools = addUniq(user.savingsPools, event.params.protocol.toHex());
   activateUser(user);
   user.save();
+
+  createOrUpdateUserBalance(
+    event.params.user,
+    event.params.protocol,
+    event.params.nAmount,
+    "savings"
+  );
 }
 
 export function handleWithdraw(event: Withdraw): void {
@@ -83,6 +93,12 @@ export function handleWithdraw(event: Withdraw): void {
     user.save();
   }
 
+  createOrUpdateUserBalance(
+    event.params.user,
+    event.params.protocol,
+    event.params.nAmount.neg(),
+    "savings"
+  );
 }
 
 function createSPoolAprOnYieldDistribution(
