@@ -18,11 +18,11 @@ export function createOrUpdateUserBalance(
   if (!balance) {
     balance = new UserBalance(id);
     balance.value = BigInt.fromI32(0);
+    balance.pool = poolAddress;
+    balance.user = userAddress;
+    balance.module = module;
   }
 
   balance.value = balance.value.plus(amountIncrease);
-  balance.pool = poolAddress;
-  balance.user = userAddress;
-  balance.module = module;
   balance.save();
 }
