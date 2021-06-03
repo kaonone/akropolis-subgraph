@@ -1,2 +1,2 @@
-export * from "./createOrUpdateVaultPool";
+export * from "./createVault";
 export * from "./loadVaultPool";

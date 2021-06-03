@@ -7,15 +7,18 @@ import {
 import { YVaultV1 } from "../../../generated/templates";
 import {
   createOrUpdateDepositedBalance,
-  createOrUpdateVault,
+  createVault,
   loadOrCreateUser,
   loadVault,
 } from "../../entities";
 import { addUniq } from "../../utils";
 import { activateUser } from "./../activateUser";
 
-export function handleVaultRegistered(event: VaultRegistered, module: string): void {
-  createOrUpdateVault(event.params.vault, event.params.baseToken, module);
+export function handleVaultRegistered(
+  event: VaultRegistered,
+  module: string
+): void {
+  createVault(event.block, event.params.vault, event.params.baseToken, module);
   YVaultV1.create(event.params.vault);
 }
 
@@ -41,7 +44,7 @@ export function handleDeposit(event: Deposit, module: string): void {
     event.params.user,
     event.params.vault,
     event.params.lpAmount,
-    module,
+    module
   );
 
   let vaultPool = loadVault(event.params.vault);

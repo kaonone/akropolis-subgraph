@@ -1,11 +1,12 @@
-import { Address, BigInt } from "@graphprotocol/graph-ts";
+import { Address, BigInt, ethereum, log } from "@graphprotocol/graph-ts";
 
 import { Vault } from "../../../generated/schema";
 
 import { loadSubgraphConfig } from "../loadSubgraphConfig";
 import { createToken } from "../createToken";
 
-export function createOrUpdateVault(
+export function createVault(
+  block: ethereum.Block,
   vaultAddress: Address,
   underlyingTokenAddress: Address,
   module: string,
@@ -18,6 +19,9 @@ export function createOrUpdateVault(
     vault.totalTVL = BigInt.fromI32(0);
     vault.isActive = true;
     vault.module = module;
+    vault.createdAt = block.timestamp;
+  } else {
+    log.warning('Vault {} already exist. Module: {}', [vault.id, module]);
   }
 
   vault.lpToken = createToken(vaultAddress).id;

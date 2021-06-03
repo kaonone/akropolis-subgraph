@@ -13,6 +13,7 @@ type SavingsPool @entity {
   balance: SPoolBalance!
   lastRewardDistributionDate: BigInt!
   prevRewardDistributionDate: BigInt!
+  createdAt: BigInt!
 
   rewards: [SReward!]! @derivedFrom(field: "pool")
   aprHistory: [SPoolApr!]! @derivedFrom(field: "pool")
@@ -74,6 +75,7 @@ type Vault @entity {
   lpToken: Token!
   depositToken: Token!
   totalTVL: BigInt!
+  createdAt: BigInt!
 
   users: [User!]! @derivedFrom(field: "vaults")
 }
