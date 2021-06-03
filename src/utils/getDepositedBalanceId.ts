@@ -1,6 +1,6 @@
 import { Address } from "@graphprotocol/graph-ts";
 
-export function getUserBalanceId(
+export function getDepositedBalanceId(
   userAddress: Address,
   poolAddress: Address
 ): string {

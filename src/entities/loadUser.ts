@@ -10,10 +10,7 @@ export function loadOrCreateUser(address: Address): User {
     user.active = false;
     user.savingsPools = [];
     user.stakingPools = [];
-    user.vaultPoolsV1 = [];
-    user.vaultPoolsV2 = [];
-    user.visitedVaultPoolsV1 = [];
-    user.visitedVaultPoolsV2 = [];
+    user.vaults = [];
     user.save();
   }
 

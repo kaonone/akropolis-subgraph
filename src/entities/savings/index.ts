@@ -6,3 +6,4 @@ export * from "./updateSavingsRewardDistributionDates";
 export * from "./loadSPoolBalance";
 export * from "./loadSavingsPool";
 export * from "./loadSPoolApr";
+export * from "./loadSPoolToken";
