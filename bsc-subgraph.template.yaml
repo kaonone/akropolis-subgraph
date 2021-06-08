@@ -24,10 +24,9 @@ dataSources:
           file: ./abis/RewardDistributionModule.json
         - name: DefiProtocol
           file: ./abis/IDefiProtocol.json
-      blockHandlers:
-        - handler: handleBlockWithCall
-          filter:
-            kind: call
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
       file: ./src/mappings/shared.ts
   - kind: ethereum/contract
     name: VaultSavings
@@ -45,6 +44,8 @@ dataSources:
       abis:
         - name: VaultSavings
           file: ./abis/VaultSavings.json
+        - name: ERC20Detailed
+          file: ./abis/ERC20Detailed.json
       eventHandlers:
         - event: VaultRegistered(indexed address,address)
           handler: handleVaultRegistered

@@ -24,10 +24,9 @@ dataSources:
           file: ./abis/RewardDistributionModule.json
         - name: DefiProtocol
           file: ./abis/IDefiProtocol.json
-      blockHandlers:
-        - handler: handleBlockWithCall
-          filter:
-            kind: call
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
       file: ./src/mappings/shared.ts
   - kind: ethereum/contract
     name: SavingsModule
@@ -43,10 +42,14 @@ dataSources:
       entities:
         - User
       abis:
+        - name: ERC20Detailed
+          file: ./abis/ERC20Detailed.json
         - name: SavingsModule
           file: ./abis/SavingsModule.json
         - name: SavingsPoolToken
           file: ./abis/SavingsPoolToken.json
+        - name: DefiProtocol
+          file: ./abis/IDefiProtocol.json
       eventHandlers:
         - event: ProtocolRegistered(address,address)
           handler: handleProtocolRegistered
@@ -75,6 +78,8 @@ dataSources:
       abis:
         - name: VaultSavings
           file: ./abis/VaultSavings.json
+        - name: ERC20Detailed
+          file: ./abis/ERC20Detailed.json
       eventHandlers:
         - event: VaultRegistered(indexed address,address)
           handler: handleVaultRegistered
@@ -101,6 +106,8 @@ dataSources:
       abis:
         - name: VaultSavings
           file: ./abis/VaultSavings.json
+        - name: ERC20Detailed
+          file: ./abis/ERC20Detailed.json
       eventHandlers:
         - event: VaultRegistered(indexed address,address)
           handler: handleVaultRegistered
