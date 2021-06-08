@@ -1,7 +1,7 @@
 import { Address } from "@graphprotocol/graph-ts";
 
 import { SPoolToken } from "../../../generated/schema";
-import { ERC20Detailed } from "../../../generated/SavingsModule/ERC20Detailed";
+import { ERC20Detailed } from "../../../generated/Contracts/ERC20Detailed";
 
 export function createSPoolToken(
   tokenAddress: Address,

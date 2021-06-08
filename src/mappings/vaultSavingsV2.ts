@@ -3,7 +3,7 @@ import {
   VaultActivated,
   VaultDisabled,
   VaultRegistered,
-} from "../../generated/EthVaultSavingsV1/VaultSavings";
+} from "../../generated/VaultSavings/VaultSavings";
 import { Modules } from "../utils";
 import * as handlers from "./vaultHandlers/vaultSavings";
 

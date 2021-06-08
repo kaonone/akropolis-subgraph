@@ -3,12 +3,39 @@ schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum/contract
+    name: Contracts
+    network: {{network.eth}}
+    source:
+      address: "0x0000000000000000000000000000000000000000"
+      abi: ERC20Detailed
+      startBlock: {{startBlock.bsc}}
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.1
+      language: wasm/assemblyscript
+      entities:
+        - User
+      abis:
+        - name: ERC20Detailed
+          file: ./abis/ERC20Detailed.json
+        - name: SavingsModule
+          file: ./abis/SavingsModule.json
+        - name: RewardDistributionModule
+          file: ./abis/RewardDistributionModule.json
+        - name: DefiProtocol
+          file: ./abis/IDefiProtocol.json
+      blockHandlers:
+        - handler: handleBlockWithCall
+          filter:
+            kind: call
+      file: ./src/mappings/shared.ts
+  - kind: ethereum/contract
     name: SavingsModule
-    network: {{network}}
+    network: {{network.eth}}
     source:
       address: "{{modules.savings}}"
       abi: SavingsModule
-      startBlock: {{startBlock}}
+      startBlock: {{startBlock.eth}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.1
@@ -18,10 +45,6 @@ dataSources:
       abis:
         - name: SavingsModule
           file: ./abis/SavingsModule.json
-        - name: ERC20Detailed
-          file: ./abis/ERC20Detailed.json
-        - name: DefiProtocol
-          file: ./abis/IDefiProtocol.json
         - name: SavingsPoolToken
           file: ./abis/SavingsPoolToken.json
       eventHandlers:
@@ -37,12 +60,12 @@ dataSources:
           handler: handleRewardDistribution
       file: ./src/mappings/savingsModule.ts
   - kind: ethereum/contract
-    name: EthVaultSavingsV1
-    network: {{network}}
+    name: VaultSavings
+    network: {{network.eth}}
     source:
       address: "{{modules.vaultSavingsV1}}"
       abi: VaultSavings
-      startBlock: {{startBlock}}
+      startBlock: {{startBlock.eth}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.1
@@ -52,8 +75,6 @@ dataSources:
       abis:
         - name: VaultSavings
           file: ./abis/VaultSavings.json
-        - name: ERC20Detailed
-          file: ./abis/ERC20Detailed.json
       eventHandlers:
         - event: VaultRegistered(indexed address,address)
           handler: handleVaultRegistered
@@ -66,11 +87,11 @@ dataSources:
       file: ./src/mappings/vaultSavingsV1.ts
   - kind: ethereum/contract
     name: EthVaultSavingsV2
-    network: {{network}}
+    network: {{network.eth}}
     source:
       address: "{{modules.vaultSavingsV2}}"
       abi: VaultSavings
-      startBlock: {{startBlock}}
+      startBlock: {{startBlock.eth}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.1
@@ -80,8 +101,6 @@ dataSources:
       abis:
         - name: VaultSavings
           file: ./abis/VaultSavings.json
-        - name: ERC20Detailed
-          file: ./abis/ERC20Detailed.json
       eventHandlers:
         - event: VaultRegistered(indexed address,address)
           handler: handleVaultRegistered
@@ -94,11 +113,11 @@ dataSources:
       file: ./src/mappings/vaultSavingsV2.ts
   - kind: ethereum/contract
     name: AKROStakingPool
-    network: {{network}}
+    network: {{network.eth}}
     source:
       address: "{{modules.akroStakingPool}}"
       abi: StakingPool
-      startBlock: {{startBlock}}
+      startBlock: {{startBlock.eth}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.1
@@ -116,11 +135,11 @@ dataSources:
       file: ./src/mappings/akroStakingPool.ts
   - kind: ethereum/contract
     name: ADELStakingPool
-    network: {{network}}
+    network: {{network.eth}}
     source:
       address: "{{modules.adelStakingPool}}"
       abi: StakingPool
-      startBlock: {{startBlock}}
+      startBlock: {{startBlock.eth}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.1
@@ -138,11 +157,11 @@ dataSources:
       file: ./src/mappings/adelStakingPool.ts
   - kind: ethereum/contract
     name: RewardDistributionModule
-    network: {{network}}
+    network: {{network.eth}}
     source:
       address: "{{modules.rewardDistribution}}"
       abi: RewardDistributionModule
-      startBlock: {{startBlock}}
+      startBlock: {{startBlock.eth}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.1
@@ -158,8 +177,8 @@ dataSources:
       file: ./src/mappings/rewardDistributionModule.ts
 templates:
   - kind: ethereum/contract
-    name: YVaultV1
-    network: {{network}}
+    name: Vault
+    network: {{network.eth}}
     source:
       abi: ERC20Detailed
     mapping:
@@ -174,10 +193,10 @@ templates:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      file: ./src/mappings/yVaultV1.ts
+      file: ./src/mappings/vaultV1.ts
   - kind: ethereum/contract
     name: YVaultV2
-    network: {{network}}
+    network: {{network.eth}}
     source:
       abi: ERC20Detailed
     mapping:
@@ -192,4 +211,4 @@ templates:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      file: ./src/mappings/yVaultV2.ts
+      file: ./src/mappings/vaultV2.ts

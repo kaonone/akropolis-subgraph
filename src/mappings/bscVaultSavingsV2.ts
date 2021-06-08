@@ -8,7 +8,7 @@ import { Modules } from "../utils";
 import * as handlers from "./vaultHandlers/vaultSavings";
 
 export function handleVaultRegistered(event: VaultRegistered): void {
-  handlers.handleVaultRegistered(event, Modules.ethVaultsV1);
+  handlers.handleVaultRegistered(event, Modules.bscVaultsV2);
 }
 
 export function handleVaultDisabled(event: VaultDisabled): void {
@@ -20,5 +20,5 @@ export function handleVaultActivated(event: VaultActivated): void {
 }
 
 export function handleDeposit(event: Deposit): void {
-  handlers.handleDeposit(event, Modules.ethVaultsV1);
+  handlers.handleDeposit(event, Modules.bscVaultsV2);
 }

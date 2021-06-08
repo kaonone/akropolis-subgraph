@@ -1,7 +1,7 @@
 import { ethereum, BigInt, Address } from "@graphprotocol/graph-ts";
 
 import { SavingsPool } from "../../../generated/schema";
-import { DefiProtocol } from "../../../generated/SavingsModule/DefiProtocol";
+import { DefiProtocol } from "../../../generated/Contracts/DefiProtocol";
 
 import { createSPoolBalance } from "./createSPoolBalance";
 import { loadToken } from "../loadToken";

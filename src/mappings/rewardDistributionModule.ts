@@ -1,6 +1,6 @@
 import { Address, log } from "@graphprotocol/graph-ts";
 
-import { RewardDistribution } from "../../generated/RewardDistributionModule/RewardDistributionModule";
+import { RewardDistribution } from "../../generated/Contracts/RewardDistributionModule";
 import {
   loadSPoolToken,
   loadSavingsPool,

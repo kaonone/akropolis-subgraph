@@ -7,8 +7,8 @@ import {
   SavingsModule,
   Withdraw,
   YieldDistribution,
-} from "../../generated/SavingsModule/SavingsModule";
-import { DefiProtocol } from "../../generated/SavingsModule/DefiProtocol";
+} from "../../generated/Contracts/SavingsModule";
+import { DefiProtocol } from "../../generated/Contracts/DefiProtocol";
 import { SavingsPoolToken } from "../../generated/SavingsModule/SavingsPoolToken";
 import {
   createOrUpdateSavingsPool,

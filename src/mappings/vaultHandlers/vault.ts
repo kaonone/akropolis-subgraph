@@ -4,7 +4,7 @@ import { User } from "../../../generated/schema";
 import {
   Transfer,
   ERC20Detailed,
-} from "../../../generated/templates/YVaultV1/ERC20Detailed";
+} from "../../../generated/Contracts/ERC20Detailed";
 import {
   createOrUpdateDepositedBalance,
   loadDepositedBalance,
@@ -33,11 +33,7 @@ export function handleTransfer(event: Transfer, module: string): void {
   }
 
   // TODO what if there is multiple withdraws in one transaction
-  let deposited = loadDepositedBalance(
-    userAddress,
-    vaultAddress,
-    module
-  );
+  let deposited = loadDepositedBalance(userAddress, vaultAddress, module);
 
   let balanceBeforeTransfer = userBalance.plus(event.params.value);
   let shareMultiplier = BigInt.fromI32(1000000000);

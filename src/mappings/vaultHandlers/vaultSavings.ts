@@ -3,8 +3,8 @@ import {
   VaultActivated,
   VaultDisabled,
   VaultRegistered,
-} from "../../../generated/EthVaultSavingsV1/VaultSavings";
-import { YVaultV1 } from "../../../generated/templates";
+} from "../../../generated/VaultSavings/VaultSavings";
+import { Vault } from "../../../generated/templates";
 import {
   createOrUpdateDepositedBalance,
   createVault,
@@ -19,7 +19,7 @@ export function handleVaultRegistered(
   module: string
 ): void {
   createVault(event.block, event.params.vault, event.params.baseToken, module);
-  YVaultV1.create(event.params.vault);
+  Vault.create(event.params.vault);
 }
 
 export function handleVaultDisabled(event: VaultDisabled): void {
