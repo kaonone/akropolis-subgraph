@@ -1,18 +1,18 @@
 import { ethereum, BigInt, Address } from "@graphprotocol/graph-ts";
 
 import { SavingsPool } from "../../../generated/schema";
-import { DefiProtocol } from "../../../generated/SavingsModule/DefiProtocol";
+import { DefiProtocol } from "../../../generated/Contracts/DefiProtocol";
 
 import { createSPoolBalance } from "./createSPoolBalance";
 import { loadToken } from "../loadToken";
 import { createSPoolApr } from "./createSPoolApr";
 import { loadSubgraphConfig } from "../loadSubgraphConfig";
-import { createPoolToken } from "../createPoolToken";
+import { createSPoolToken } from "./createSPoolToken";
 
 export function createOrUpdateSavingsPool(
   event: ethereum.Event,
   poolAddress: Address,
-  tokenAddress: Address
+  lpTokenAddress: Address
 ): SavingsPool {
   loadSubgraphConfig(); // create config subgraph if it doesn't exist
   let pool = SavingsPool.load(poolAddress.toHex());
@@ -29,10 +29,11 @@ export function createOrUpdateSavingsPool(
     pool.prevBalance = pool.balance;
     pool.lastRewardDistributionDate = event.block.timestamp;
     pool.prevRewardDistributionDate = event.block.timestamp;
+    pool.createdAt = event.block.timestamp;
   }
 
-  pool.poolToken = createPoolToken(tokenAddress, pool.id, null, null).id;
-  pool.tokens = loadSupportedTokens(poolAddress);
+  pool.lpToken = createSPoolToken(lpTokenAddress, poolAddress).id;
+  pool.depositTokens = loadSupportedTokens(poolAddress);
   pool.rewardTokens = loadSupportedRewardTokens(poolAddress);
 
   pool.save();

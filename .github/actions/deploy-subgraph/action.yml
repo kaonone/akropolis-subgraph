@@ -10,7 +10,16 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run: yarn build:${{ inputs.type }}
+    - name: Set yarn default shell
+      run: yarn config set script-shell /bin/bash
       shell: bash
-    - run: yarn deploy:${{ inputs.type }} --access-token ${{ inputs.thegraph_access_token }}
+    - run: TYPE=${{ inputs.type }} yarn prepare-env
       shell: bash
+    - run: yarn deploy:eth
+      shell: bash
+      env:
+        THEGRAPH_ACCESS_TOKEN: ${{ inputs.thegraph_access_token }}
+    - run: yarn deploy:bsc
+      shell: bash
+      env:
+        THEGRAPH_ACCESS_TOKEN: ${{ inputs.thegraph_access_token }}

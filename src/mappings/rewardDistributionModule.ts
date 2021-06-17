@@ -1,23 +1,21 @@
-import { Address } from "@graphprotocol/graph-ts";
+import { Address, log } from "@graphprotocol/graph-ts";
 
-import { RewardDistribution } from "../../generated/RewardDistributionModule/RewardDistributionModule";
+import { RewardDistribution } from "../../generated/Contracts/RewardDistributionModule";
 import {
-  loadPoolToken,
+  loadSPoolToken,
   loadSavingsPool,
   updateSavingsRewardDistributionDates,
   createSRewardFromRewardModuleEvent,
 } from "../entities";
 
 export function handleRewardDistribution(event: RewardDistribution): void {
-  let token = loadPoolToken(event.params.poolToken);
+  let token = loadSPoolToken(event.params.poolToken);
 
-  if (!token.savingsPool && !token.vaultPoolV1 && !token.vaultPoolV2) {
-    throw new Error(
-      "token.savingsPool, token.vaultPool and token.vaultPoolV2 fields are not defined!"
-    );
+  if (!token) {
+    log.warning("Savings pool token are not defined!", []);
   }
 
-  if (token.savingsPool) {
+  if (token) {
     let pool = loadSavingsPool(Address.fromString(token.savingsPool));
 
     updateSavingsRewardDistributionDates(event, Address.fromString(pool.id));

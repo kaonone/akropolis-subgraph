@@ -7,8 +7,8 @@ import {
   SavingsModule,
   Withdraw,
   YieldDistribution,
-} from "../../generated/SavingsModule/SavingsModule";
-import { DefiProtocol } from "../../generated/SavingsModule/DefiProtocol";
+} from "../../generated/Contracts/SavingsModule";
+import { DefiProtocol } from "../../generated/Contracts/DefiProtocol";
 import { SavingsPoolToken } from "../../generated/SavingsModule/SavingsPoolToken";
 import {
   createOrUpdateSavingsPool,
@@ -22,9 +22,9 @@ import {
   updateSavingsRewardDistributionDates,
   createSRewardFromSavingsModuleEvent,
   loadGlobalStat,
-  createOrUpdateUserBalance,
+  createOrUpdateDepositedBalance,
 } from "../entities";
-import { calcAPY, addUniq, exclude } from "../utils";
+import { calcAPY, addUniq, exclude, Modules } from "../utils";
 import { deactivateUserIfZeroBalance } from "./deactivateUserIfZeroBalance";
 import { activateUser } from "./activateUser";
 
@@ -70,18 +70,18 @@ export function handleDeposit(event: Deposit): void {
   activateUser(user);
   user.save();
 
-  createOrUpdateUserBalance(
+  createOrUpdateDepositedBalance(
     event.params.user,
     event.params.protocol,
     event.params.nAmount,
-    "savings"
+    Modules.savings
   );
 }
 
 export function handleWithdraw(event: Withdraw): void {
   let user = loadOrCreateUser(event.params.user);
   let pool = loadSavingsPool(event.params.protocol);
-  let contract = SavingsPoolToken.bind(Address.fromString(pool.poolToken));
+  let contract = SavingsPoolToken.bind(Address.fromString(pool.lpToken));
   let userBalance = contract.fullBalanceOf(event.params.user);
 
   if (userBalance.le(BigInt.fromI32(0))) {
@@ -93,11 +93,11 @@ export function handleWithdraw(event: Withdraw): void {
     user.save();
   }
 
-  createOrUpdateUserBalance(
+  createOrUpdateDepositedBalance(
     event.params.user,
     event.params.protocol,
     event.params.nAmount.neg(),
-    "savings"
+    Modules.savings
   );
 }
 
@@ -143,12 +143,12 @@ function updatePoolBalances(event: ethereum.Event, poolAddress: Address): void {
     return;
   }
 
-  let poolTokenContract = SavingsPoolToken.bind(
-    Address.fromString(pool.poolToken)
+  let lpTokenContract = SavingsPoolToken.bind(
+    Address.fromString(pool.lpToken)
   );
   let contract = DefiProtocol.bind(poolAddress);
 
-  let totalSupply = poolTokenContract.totalSupply();
+  let totalSupply = lpTokenContract.totalSupply();
   let normalizedBalance = contract.normalizedBalance();
 
   let balance = totalSupply.gt(normalizedBalance)

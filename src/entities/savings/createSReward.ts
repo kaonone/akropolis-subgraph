@@ -1,7 +1,7 @@
 import { BigInt, Address, ethereum } from "@graphprotocol/graph-ts";
 
-import { RewardDistribution as SavingsRewardDistribution } from "../../../generated/SavingsModule/SavingsModule";
-import { RewardDistribution as RewardDistributionFromReward } from "../../../generated/RewardDistributionModule/RewardDistributionModule";
+import { RewardDistribution as SavingsRewardDistribution } from "../../../generated/Contracts/SavingsModule";
+import { RewardDistribution as RewardDistributionFromReward } from "../../../generated/Contracts/RewardDistributionModule";
 import { SReward } from "../../../generated/schema";
 import { getUniqId } from "../../utils";
 import { loadSavingsPool } from "./loadSavingsPool";

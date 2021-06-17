@@ -1,8 +1,8 @@
 import { dataSource } from "@graphprotocol/graph-ts";
 
 import { Staked, Unstaked } from "../../generated/AKROStakingPool/StakingPool";
-import { createOrUpdateUserBalance, loadOrCreateUser } from "../entities";
-import { addUniq, exclude } from "../utils";
+import { createOrUpdateDepositedBalance, loadOrCreateUser } from "../entities";
+import { addUniq, exclude, Modules } from "../utils";
 import { activateUser } from "./activateUser";
 import { deactivateUserIfZeroBalance } from "./deactivateUserIfZeroBalance";
 
@@ -12,11 +12,11 @@ export function handleStaked(event: Staked): void {
   activateUser(user);
   user.save();
 
-  createOrUpdateUserBalance(
+  createOrUpdateDepositedBalance(
     event.params.user,
     dataSource.address(),
     event.params.amount,
-    "staking"
+    Modules.staking
   );
 }
 
@@ -26,10 +26,10 @@ export function handleUnstake(event: Unstaked): void {
   deactivateUserIfZeroBalance(user);
   user.save();
 
-  createOrUpdateUserBalance(
+  createOrUpdateDepositedBalance(
     event.params.user,
     dataSource.address(),
     event.params.amount.neg(),
-    "staking"
+    Modules.staking
   );
 }
