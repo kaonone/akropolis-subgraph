@@ -20,6 +20,8 @@ dataSources:
           file: ./abis/ERC20Detailed.json
         - name: SavingsModule
           file: ./abis/SavingsModule.json
+        - name: StakingPool
+          file: ./abis/StakingPool.json
         - name: RewardDistributionModule
           file: ./abis/RewardDistributionModule.json
         - name: DefiProtocol

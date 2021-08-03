@@ -1,4 +1,17 @@
 ###############
+### STAKING ###
+###############
+
+type StakingPool @entity {
+  "address"
+  id: ID!
+  depositToken: Token!
+  usersCount: Int!
+
+  users: [User!]! @derivedFrom(field: "stakingPools")
+}
+
+###############
 ### SAVINGS ###
 ###############
 
@@ -90,7 +103,7 @@ type User @entity {
   active: Boolean!
 
   savingsPools: [SavingsPool!]!
-  stakingPools: [String!]!
+  stakingPools: [StakingPool!]!
   vaults: [Vault!]!
 
   depositedBalances: [DepositedBalance!]! @derivedFrom(field: "user")

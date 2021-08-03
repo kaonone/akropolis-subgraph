@@ -10,9 +10,9 @@ import {
   createVault,
   loadOrCreateUser,
   loadVault,
+  activateUser,
 } from "../../entities";
 import { addUniq } from "../../utils";
-import { activateUser } from "./../activateUser";
 
 export function handleVaultRegistered(
   event: VaultRegistered,

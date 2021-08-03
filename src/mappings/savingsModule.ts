@@ -23,10 +23,10 @@ import {
   createSRewardFromSavingsModuleEvent,
   loadGlobalStat,
   createOrUpdateDepositedBalance,
+  activateUser,
+  deactivateUserIfZeroBalance,
 } from "../entities";
 import { calcAPY, addUniq, exclude, Modules } from "../utils";
-import { deactivateUserIfZeroBalance } from "./deactivateUserIfZeroBalance";
-import { activateUser } from "./activateUser";
 
 export function handleProtocolRegistered(event: ProtocolRegistered): void {
   createOrUpdateSavingsPool(
@@ -143,9 +143,7 @@ function updatePoolBalances(event: ethereum.Event, poolAddress: Address): void {
     return;
   }
 
-  let lpTokenContract = SavingsPoolToken.bind(
-    Address.fromString(pool.lpToken)
-  );
+  let lpTokenContract = SavingsPoolToken.bind(Address.fromString(pool.lpToken));
   let contract = DefiProtocol.bind(poolAddress);
 
   let totalSupply = lpTokenContract.totalSupply();

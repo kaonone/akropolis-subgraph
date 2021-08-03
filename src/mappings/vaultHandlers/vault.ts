@@ -10,9 +10,9 @@ import {
   loadDepositedBalance,
   loadUser,
   loadVault,
+  deactivateUserIfZeroBalance,
 } from "../../entities";
 import { exclude } from "../../utils";
-import { deactivateUserIfZeroBalance } from "./../deactivateUserIfZeroBalance";
 
 export function handleTransfer(event: Transfer, module: string): void {
   let vaultAddress = dataSource.address();
