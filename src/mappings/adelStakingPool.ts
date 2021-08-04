@@ -1,4 +1,4 @@
-import { dataSource } from "@graphprotocol/graph-ts";
+import { dataSource, log } from "@graphprotocol/graph-ts";
 
 import { Staked, Unstaked } from "../../generated/ADELStakingPool/StakingPool";
 import {
@@ -16,6 +16,12 @@ export function handleStaked(event: Staked): void {
 
   let user = loadOrCreateUser(event.params.user);
   let isFirstStake = !user.stakingPools.includes(stakingPoolAddress);
+
+  log.warning("pools: {}; pool: {}; isFirstStake: {}", [
+    user.stakingPools.join(", "),
+    stakingPoolAddress,
+    isFirstStake ? 'true' : 'false',
+  ]);
 
   user.stakingPools = addUniq(user.stakingPools, stakingPoolAddress);
   activateUser(user);
