@@ -20,6 +20,8 @@ dataSources:
           file: ./abis/ERC20Detailed.json
         - name: SavingsModule
           file: ./abis/SavingsModule.json
+        - name: StakingPool
+          file: ./abis/StakingPool.json
         - name: RewardDistributionModule
           file: ./abis/RewardDistributionModule.json
         - name: DefiProtocol
@@ -132,6 +134,8 @@ dataSources:
       entities:
         - User
       abis:
+        - name: ERC20Detailed
+          file: ./abis/ERC20Detailed.json
         - name: StakingPool
           file: ./abis/StakingPool.json
       eventHandlers:
@@ -154,6 +158,8 @@ dataSources:
       entities:
         - User
       abis:
+        - name: ERC20Detailed
+          file: ./abis/ERC20Detailed.json
         - name: StakingPool
           file: ./abis/StakingPool.json
       eventHandlers:

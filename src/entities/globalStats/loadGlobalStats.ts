@@ -1,7 +1,7 @@
 import { BigInt } from "@graphprotocol/graph-ts";
 
-import { GlobalStat } from "../../generated/schema";
-import { SINGLE_ENTITY_ID } from "../utils";
+import { GlobalStat } from "../../../generated/schema";
+import { SINGLE_ENTITY_ID } from "../../utils";
 
 export function loadGlobalStat(): GlobalStat {
   let stats = GlobalStat.load(SINGLE_ENTITY_ID);

@@ -1,5 +1,5 @@
-import { User } from "../../generated/schema";
-import { loadGlobalStat } from "../entities/loadGlobalStats";
+import { User } from "../../../generated/schema";
+import { loadGlobalStat } from "./loadGlobalStats";
 
 export function activateUser(user: User): void {
   if (!user.active) {
@@ -8,5 +8,6 @@ export function activateUser(user: User): void {
     globalStat.save();
 
     user.active = true;
+    user.save();
   }
 }
