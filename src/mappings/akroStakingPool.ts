@@ -8,6 +8,7 @@ import {
   deactivateUserIfZeroBalance,
   increaseStakingUsersCount,
   decreaseStakingUsersCount,
+  loadDepositedBalance,
 } from "../entities";
 import { addUniq, exclude, Modules } from "../utils";
 
@@ -15,7 +16,12 @@ export function handleStaked(event: Staked): void {
   let stakingPoolAddress = dataSource.address().toHex();
 
   let user = loadOrCreateUser(event.params.user);
-  let isFirstStake = !user.stakingPools.includes(stakingPoolAddress);
+  let deposited = loadDepositedBalance(
+    event.params.user,
+    dataSource.address(),
+    Modules.staking
+  );
+  let isFirstStake = deposited.value.isZero();
 
   user.stakingPools = addUniq(user.stakingPools, stakingPoolAddress);
   activateUser(user);
@@ -39,12 +45,16 @@ export function handleUnstake(event: Unstaked): void {
   deactivateUserIfZeroBalance(user);
   user.save();
 
-  decreaseStakingUsersCount(dataSource.address());
-
-  createOrUpdateDepositedBalance(
+  let deposited = createOrUpdateDepositedBalance(
     event.params.user,
     dataSource.address(),
     event.params.amount.neg(),
     Modules.staking
   );
+
+  let isLastUnstake = deposited.value.isZero();
+
+  if (isLastUnstake) {
+    decreaseStakingUsersCount(dataSource.address());
+  }
 }
