@@ -2,16 +2,13 @@
   "name": "delphi",
   "license": "UNLICENSED",
   "scripts": {
-    "prepare-env": "mustache ./config/${TYPE}.json .env.template > .env",
-    "with-env": "MANIFEST_TEMPLATE_PATH_VAR=$(echo \"${NETWORK}_MANIFEST_TEMPLATE_PATH\") SUBGRAPH_NAME_VAR=$(echo \"${NETWORK}_SUBGRAPH_NAME\") dotenv",
-    "build:eth": "NETWORK=ETH yarn with-env yarn build",
-    "build:bsc": "NETWORK=BSC yarn with-env yarn build",
+    "prepare-env": "mustache ./config/${NETWORK}/${TYPE}.json .env.template > .env",
+    "build:eth:sandbox-rinkeby": "NETWORK=eth TYPE=sandbox-rinkeby yarn build",
+    "build:bsc:sandbox-rinkeby": "NETWORK=bsc TYPE=sandbox-rinkeby yarn build",
     "build": "yarn pre-build && graph build",
-    "deploy:eth": "NETWORK=ETH yarn with-env yarn deploy-thegraph",
-    "deploy:bsc": "NETWORK=BSC yarn with-env yarn deploy-thegraph",
-    "deploy-thegraph": "yarn pre-build && graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ ${!SUBGRAPH_NAME_VAR} --access-token ${THEGRAPH_ACCESS_TOKEN}",
+    "deploy-thegraph": "yarn pre-build && yarn dotenv graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ ${SUBGRAPH_NAME} --access-token ${THEGRAPH_ACCESS_TOKEN}",
     "pre-build": "yarn prepare-manifest && yarn codegen",
-    "prepare-manifest": "mustache ./config/${TYPE}.json ${!MANIFEST_TEMPLATE_PATH_VAR} > subgraph.yaml",
+    "prepare-manifest": "mustache ./config/${NETWORK}/${TYPE}.json ${NETWORK}-subgraph.template.yaml > subgraph.yaml",
     "codegen": "rm -rf ./generated && graph codegen"
   },
   "dependencies": {
