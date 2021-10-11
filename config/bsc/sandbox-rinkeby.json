@@ -1,0 +1,9 @@
+{
+  "subgraphName": "in19farkt/delphi-sandbox-staging-bsc",
+  "startBlock": 8085500,
+  "network": "bsc",
+  "modules": {
+    "vaultSavingsV2": "0x29518a29a32454f4145d4cffea726f9d49cdc055"
+  },
+  "callSupported": false
+}
