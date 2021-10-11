@@ -12,8 +12,8 @@ jobs:
 
     strategy:
       matrix:
-        network: ['eth', 'bsc'],
-        type: ${{ github.ref == 'refs/heads/stable' && ['stable-mainnet', 'stable-testnet'] || github.ref == 'refs/heads/sandbox' && ['sandbox-mainnet', 'sandbox-testnet'] || ['unknown-type'] }},
+        network: ['eth', 'bsc']
+        type: ${{ github.ref == 'refs/heads/stable' && ['stable-mainnet', 'stable-testnet'] || github.ref == 'refs/heads/sandbox' && ['sandbox-mainnet', 'sandbox-testnet'] || ['unknown-type'] }}
 
     env:
       NETWORK: ${{ matrix.network }}
