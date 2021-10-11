@@ -32,5 +32,8 @@ jobs:
 
       - run: yarn prepare-env
 
+      - name: Load .env file
+        uses: xom9ikk/dotenv@v1.0.2
+
       - name: Build and deploy ${{ matrix.network }} ${{ matrix.type }}
         run: yarn deploy
