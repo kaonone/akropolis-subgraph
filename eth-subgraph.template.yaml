@@ -4,11 +4,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: Contracts
-    network: {{network.eth}}
+    network: {{network}}
     source:
       address: "0x0000000000000000000000000000000000000000"
       abi: ERC20Detailed
-      startBlock: {{startBlock.bsc}}
+      startBlock: {{startBlock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.1
@@ -32,11 +32,11 @@ dataSources:
       file: ./src/mappings/shared.ts
   - kind: ethereum/contract
     name: SavingsModule
-    network: {{network.eth}}
+    network: {{network}}
     source:
       address: "{{modules.savings}}"
       abi: SavingsModule
-      startBlock: {{startBlock.eth}}
+      startBlock: {{startBlock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.1
@@ -66,11 +66,11 @@ dataSources:
       file: ./src/mappings/savingsModule.ts
   - kind: ethereum/contract
     name: VaultSavings
-    network: {{network.eth}}
+    network: {{network}}
     source:
       address: "{{modules.vaultSavingsV1}}"
       abi: VaultSavings
-      startBlock: {{startBlock.eth}}
+      startBlock: {{startBlock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.1
@@ -94,11 +94,11 @@ dataSources:
       file: ./src/mappings/vaultSavingsV1.ts
   - kind: ethereum/contract
     name: EthVaultSavingsV2
-    network: {{network.eth}}
+    network: {{network}}
     source:
       address: "{{modules.vaultSavingsV2}}"
       abi: VaultSavings
-      startBlock: {{startBlock.eth}}
+      startBlock: {{startBlock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.1
@@ -122,11 +122,11 @@ dataSources:
       file: ./src/mappings/vaultSavingsV2.ts
   - kind: ethereum/contract
     name: AKROStakingPool
-    network: {{network.eth}}
+    network: {{network}}
     source:
       address: "{{modules.akroStakingPool}}"
       abi: StakingPool
-      startBlock: {{startBlock.eth}}
+      startBlock: {{startBlock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.1
@@ -146,11 +146,11 @@ dataSources:
       file: ./src/mappings/akroStakingPool.ts
   - kind: ethereum/contract
     name: ADELStakingPool
-    network: {{network.eth}}
+    network: {{network}}
     source:
       address: "{{modules.adelStakingPool}}"
       abi: StakingPool
-      startBlock: {{startBlock.eth}}
+      startBlock: {{startBlock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.1
@@ -170,11 +170,11 @@ dataSources:
       file: ./src/mappings/adelStakingPool.ts
   - kind: ethereum/contract
     name: RewardDistributionModule
-    network: {{network.eth}}
+    network: {{network}}
     source:
       address: "{{modules.rewardDistribution}}"
       abi: RewardDistributionModule
-      startBlock: {{startBlock.eth}}
+      startBlock: {{startBlock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.1
@@ -191,7 +191,7 @@ dataSources:
 templates:
   - kind: ethereum/contract
     name: Vault
-    network: {{network.eth}}
+    network: {{network}}
     source:
       abi: ERC20Detailed
     mapping:
@@ -209,7 +209,7 @@ templates:
       file: ./src/mappings/vaultV1.ts
   - kind: ethereum/contract
     name: YVaultV2
-    network: {{network.eth}}
+    network: {{network}}
     source:
       abi: ERC20Detailed
     mapping:
