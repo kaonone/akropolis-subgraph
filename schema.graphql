@@ -11,71 +11,6 @@ type StakingPool @entity {
   users: [User!]! @derivedFrom(field: "stakingPools")
 }
 
-###############
-### SAVINGS ###
-###############
-
-type SavingsPool @entity {
-  "address"
-  id: ID!
-  lpToken: SPoolToken!
-  depositTokens: [Token!]!
-  rewardTokens: [Token!]!
-  apr: SPoolApr!
-  prevBalance: SPoolBalance!
-  balance: SPoolBalance!
-  lastRewardDistributionDate: BigInt!
-  prevRewardDistributionDate: BigInt!
-  createdAt: BigInt!
-
-  rewards: [SReward!]! @derivedFrom(field: "pool")
-  aprHistory: [SPoolApr!]! @derivedFrom(field: "pool")
-  balanceHistory: [SPoolBalance!]! @derivedFrom(field: "pool")
-  users: [User!]! @derivedFrom(field: "savingsPools")
-  distributions: [SPoolYieldDistribution!]! @derivedFrom(field: "pool")
-}
-
-type SReward @entity {
-  id: ID!
-  pool: SavingsPool!
-  duration: BigInt!
-  poolBalance: SPoolBalance!
-  token: Token!
-  amount: BigInt!
-  date: BigInt!
-}
-
-type SPoolApr @entity {
-  id: ID!
-  amount: BigInt!
-  date: BigInt!
-  duration: BigInt!
-  pool: SavingsPool!
-  txHash: Bytes!
-}
-
-type SPoolBalance @entity {
-  id: ID!
-  amount: BigInt!
-  date: BigInt!
-  pool: SavingsPool!
-}
-
-type SPoolYieldDistribution @entity {
-  id: ID!
-  pool: SavingsPool!
-  amount: BigInt!
-}
-
-type SPoolToken @entity {
-  "address"
-  id: ID!
-  name: String!
-  symbol: String!
-  decimals: Int!
-  savingsPool: SavingsPool!
-}
-
 ##############
 ### VAULTS ###
 ##############
@@ -110,7 +45,6 @@ type User @entity {
   id: ID!
   active: Boolean!
 
-  savingsPools: [SavingsPool!]!
   stakingPools: [StakingPool!]!
   vaults: [Vault!]!
   basisVaults: [BasisVault!]!
@@ -124,27 +58,13 @@ type DepositedBalance @entity {
   value: BigInt!
   user: User!
   pool: Bytes!
-  "savings | staking | ethVaultsV1 | ethVaultsV2 | bscVaultsV2"
+  "staking | ethVaultsV1 | ethVaultsV2 | bscVaultsV2"
   module: Module!
 }
 
 #############
 ### OTHER ###
 #############
-
-enum VaultModule {
-  ethVaultsV1
-  ethVaultsV2
-  bscVaultsV2
-}
-
-enum Module {
-  savings
-  staking
-  ethVaultsV1
-  ethVaultsV2
-  bscVaultsV2
-}
 
 type Token @entity {
   "address"
