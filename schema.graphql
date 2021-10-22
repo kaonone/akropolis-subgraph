@@ -93,6 +93,14 @@ type Vault @entity {
   users: [User!]! @derivedFrom(field: "vaults")
 }
 
+type BasisVault @entity {
+  "address"
+  id: ID!
+  isActive: Boolean!
+
+  users: [User!]! @derivedFrom(field: "basisVaults")
+}
+
 ############
 ### USER ###
 ############
@@ -105,6 +113,7 @@ type User @entity {
   savingsPools: [SavingsPool!]!
   stakingPools: [StakingPool!]!
   vaults: [Vault!]!
+  basisVaults: [BasisVault!]!
 
   depositedBalances: [DepositedBalance!]! @derivedFrom(field: "user")
 }

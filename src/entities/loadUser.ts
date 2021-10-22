@@ -11,6 +11,7 @@ export function loadOrCreateUser(address: Address): User {
     user.savingsPools = [];
     user.stakingPools = [];
     user.vaults = [];
+    user.basisVaults = [];
     user.save();
   }
 
