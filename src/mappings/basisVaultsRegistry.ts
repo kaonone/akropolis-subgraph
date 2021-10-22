@@ -1,4 +1,4 @@
-import { VaultDeactivated, VaultRegistered } from "../../generated/BasisVaultRegistry/BasisVaultRegistry";
+import { VaultDeactivated, VaultRegistered } from "../../generated/BasisVaultsRegistry/BasisVaultsRegistry";
 import { BasisVault } from "../../generated/templates";
 import { createOrUpdateBasisVault } from "../entities/basisVaults/createOrUpdateBasisVault";
 

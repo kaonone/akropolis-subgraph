@@ -3,8 +3,7 @@
   "startBlock": 13466938,
   "network": "arbitrum",
   "modules": {
-    "basisVault": "0x0000000000000000000000000000000000000000",
-    "basisVaultRegistry": "0x0000000000000000000000000000000000000000"
+    "basisVaultsRegistry": "0x0000000000000000000000000000000000000000"
   },
   "callSupported": true
 }

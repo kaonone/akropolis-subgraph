@@ -20,16 +20,18 @@ dataSources:
           file: ./abis/ERC20Detailed.json
         - name: StakingPool
           file: ./abis/StakingPool.json
+        - name: BasisVaultContract
+          file: ./abis/BasisVault.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
       file: ./src/mappings/shared.ts
   - kind: ethereum/contract
-    name: BasisVaultRegistry
+    name: BasisVaultsRegistry
     network: {{network}}
     source:
-      address: "{{modules.basisVaultRegistry}}"
-      abi: BasisVaultRegistry
+      address: "{{modules.basisVaultsRegistry}}"
+      abi: BasisVaultsRegistry
       startBlock: {{startBlock}}
     mapping:
       kind: ethereum/events
@@ -38,8 +40,8 @@ dataSources:
       entities:
         - User
       abis:
-        - name: BasisVaultRegistry
-          file: ./abis/BasisVaultRegistry.json
+        - name: BasisVaultsRegistry
+          file: ./abis/BasisVaultsRegistry.json
         - name: ERC20Detailed
           file: ./abis/ERC20Detailed.json
       eventHandlers:
@@ -47,7 +49,7 @@ dataSources:
           handler: handleBasisVaultRegistered
         - event: VaultDeactivated(indexed address)
           handler: handleBasisVaultDeactivated
-      file: ./src/mappings/basisVaultRegistry.ts
+      file: ./src/mappings/basisVaultsRegistry.ts
 templates:
   - kind: ethereum/contract
     name: BasisVault
