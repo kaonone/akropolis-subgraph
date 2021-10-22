@@ -1,20 +1,20 @@
 import { BigInt, dataSource } from "@graphprotocol/graph-ts";
 
-import { User } from "../../../generated/schema";
+import { User } from "../../generated/schema";
 import {
   Transfer,
   ERC20Detailed,
-} from "../../../generated/Contracts/ERC20Detailed";
+} from "../../generated/Contracts/ERC20Detailed";
 import {
   createOrUpdateDepositedBalance,
   loadDepositedBalance,
   loadUser,
   loadVault,
   deactivateUserIfZeroBalance,
-} from "../../entities";
-import { exclude } from "../../utils";
+} from "../entities";
+import { exclude } from "../utils";
 
-export function handleTransfer(event: Transfer, module: string): void {
+export function handleTransfer(event: Transfer): void {
   let vaultAddress = dataSource.address();
   let userAddress = event.params.from;
   let user = loadUser(userAddress);
@@ -33,7 +33,7 @@ export function handleTransfer(event: Transfer, module: string): void {
   }
 
   // TODO what if there is multiple withdraws in one transaction
-  let deposited = loadDepositedBalance(userAddress, vaultAddress, module);
+  let deposited = loadDepositedBalance(userAddress, vaultAddress);
 
   let balanceBeforeTransfer = userBalance.plus(event.params.value);
   let shareMultiplier = BigInt.fromI32(1000000000);
@@ -45,8 +45,7 @@ export function handleTransfer(event: Transfer, module: string): void {
   createOrUpdateDepositedBalance(
     userAddress,
     vaultAddress,
-    withdrawTVLAmount.neg(),
-    module
+    withdrawTVLAmount.neg()
   );
 
   let pool = loadVault(vaultAddress);

@@ -20,6 +20,8 @@ dataSources:
           file: ./abis/ERC20Detailed.json
         - name: StakingPool
           file: ./abis/StakingPool.json
+        - name: VaultSavings
+          file: ./abis/VaultSavings.json
         - name: DefiProtocol
           file: ./abis/IDefiProtocol.json
       eventHandlers:
@@ -28,34 +30,6 @@ dataSources:
       file: ./src/mappings/shared.ts
   - kind: ethereum/contract
     name: VaultSavings
-    network: {{network}}
-    source:
-      address: "{{modules.vaultSavingsV1}}"
-      abi: VaultSavings
-      startBlock: {{startBlock}}
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.1
-      language: wasm/assemblyscript
-      entities:
-        - User
-      abis:
-        - name: VaultSavings
-          file: ./abis/VaultSavings.json
-        - name: ERC20Detailed
-          file: ./abis/ERC20Detailed.json
-      eventHandlers:
-        - event: VaultRegistered(indexed address,address)
-          handler: handleVaultRegistered
-        - event: VaultDisabled(indexed address)
-          handler: handleVaultDisabled
-        - event: VaultActivated(indexed address)
-          handler: handleVaultActivated
-        - event: Deposit(indexed address,indexed address,uint256,uint256)
-          handler: handleDeposit
-      file: ./src/mappings/vaultSavingsV1.ts
-  - kind: ethereum/contract
-    name: EthVaultSavingsV2
     network: {{network}}
     source:
       address: "{{modules.vaultSavingsV2}}"
@@ -81,7 +55,7 @@ dataSources:
           handler: handleVaultActivated
         - event: Deposit(indexed address,indexed address,uint256,uint256)
           handler: handleDeposit
-      file: ./src/mappings/vaultSavingsV2.ts
+      file: ./src/mappings/yEarnVaultSavingsV2.ts
   - kind: ethereum/contract
     name: AKROStakingPool
     network: {{network}}
@@ -132,7 +106,7 @@ dataSources:
       file: ./src/mappings/adelStakingPool.ts
 templates:
   - kind: ethereum/contract
-    name: Vault
+    name: YEarnVaultV2
     network: {{network}}
     source:
       abi: ERC20Detailed
@@ -148,22 +122,4 @@ templates:
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      file: ./src/mappings/vaultV1.ts
-  - kind: ethereum/contract
-    name: YVaultV2
-    network: {{network}}
-    source:
-      abi: ERC20Detailed
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.1
-      language: wasm/assemblyscript
-      entities:
-        - User
-      abis:
-        - name: ERC20Detailed
-          file: ./abis/ERC20Detailed.json
-      eventHandlers:
-        - event: Transfer(indexed address,indexed address,uint256)
-          handler: handleTransfer
-      file: ./src/mappings/vaultV2.ts
+      file: ./src/mappings/yEarnVaultV2.ts

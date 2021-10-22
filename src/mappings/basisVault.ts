@@ -1,7 +1,7 @@
 import { BigInt, dataSource } from "@graphprotocol/graph-ts";
-import { Deposit, Withdraw } from "../../generated/BasisVault/BasisVault";
-import { ERC20Detailed } from "../../generated/BasisVault/ERC20Detailed";
+import { ERC20Detailed } from "../../generated/Contracts/ERC20Detailed";
 import { User } from "../../generated/schema";
+import { Deposit, Withdraw } from "../../generated/templates/BasisVault/BasisVault";
 import {
   activateUser,
   deactivateUserIfZeroBalance,

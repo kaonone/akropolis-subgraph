@@ -9,7 +9,6 @@ export function createVault(
   block: ethereum.Block,
   vaultAddress: Address,
   underlyingTokenAddress: Address,
-  module: string,
 ): Vault {
   loadSubgraphConfig(); // create config subgraph if it doesn't exist
   let vault = Vault.load(vaultAddress.toHex());
@@ -18,10 +17,9 @@ export function createVault(
     vault = new Vault(vaultAddress.toHex());
     vault.totalTVL = BigInt.fromI32(0);
     vault.isActive = true;
-    vault.module = module;
     vault.createdAt = block.timestamp;
   } else {
-    log.warning('Vault {} already exist. Module: {}', [vault.id, module]);
+    log.warning('Vault {} already exist.', [vault.id]);
   }
 
   vault.lpToken = createToken(vaultAddress).id;

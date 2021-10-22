@@ -6,7 +6,6 @@ import { getDepositedBalanceId } from "../utils";
 export function loadDepositedBalance(
   userAddress: Address,
   poolAddress: Address,
-  module: string
 ): DepositedBalance {
   let id = getDepositedBalanceId(userAddress, poolAddress);
   let balance = DepositedBalance.load(id);
@@ -16,7 +15,6 @@ export function loadDepositedBalance(
     balance.value = BigInt.fromI32(0);
     balance.pool = poolAddress;
     balance.user = userAddress.toHex();
-    balance.module = module;
   }
 
   balance.save();

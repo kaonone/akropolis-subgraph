@@ -3,7 +3,6 @@
   "startBlock": 7004100,
   "network": "rinkeby",
   "modules": {
-    "vaultSavingsV1": "0x141d9BdA509ED6F2C59672eb503c521b9F6cD344",
     "vaultSavingsV2": "0x90AA1e10C11B3B97CC82C17478acbf51DaDFbb3d",
     "akroStakingPool": "0x6887DF2f4296e8B772cb19479472A16E836dB9e0",
     "adelStakingPool": "0x1a80540930B869df525981c4231Cd06b0Dcbf668"

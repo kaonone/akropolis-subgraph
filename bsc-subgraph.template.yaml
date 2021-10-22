@@ -20,38 +20,10 @@ dataSources:
           file: ./abis/ERC20Detailed.json
         - name: StakingPool
           file: ./abis/StakingPool.json
-        - name: DefiProtocol
-          file: ./abis/IDefiProtocol.json
-        - name: BasisVault
-          file: ./abis/BasisVault.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
-      file: ./src/mappings/basisVault.ts
-  - kind: ethereum/contract
-    name: BasisVault
-    network: {{network}}
-    source:
-      address: "{{modules.basisVault}}"
-      abi: BasisVault
-      startBlock: {{startBlock}}
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.1
-      language: wasm/assemblyscript
-      entities:
-        - User
-      abis:
-        - name: BasisVault
-          file: ./abis/BasisVault.json
-        - name: ERC20Detailed
-          file: ./abis/ERC20Detailed.json
-      eventHandlers:
-        - event: Deposit(indexed address,uint256,uint256)
-          handler: handleDeposit
-        - event: Withdraw(indexed address,uint256,uint256)
-          handler: handleWithdraw
-      file: ./src/mappings/basisVault.ts
+      file: ./src/mappings/shared.ts
   - kind: ethereum/contract
     name: BasisVaultRegistry
     network: {{network}}
@@ -76,3 +48,24 @@ dataSources:
         - event: VaultDeactivated(indexed address)
           handler: handleBasisVaultDeactivated
       file: ./src/mappings/basisVaultRegistry.ts
+templates:
+  - kind: ethereum/contract
+    name: BasisVault
+    network: {{network}}
+    source:
+      abi: BasisVault
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.1
+      language: wasm/assemblyscript
+      entities:
+        - User
+      abis:
+        - name: BasisVault
+          file: ./abis/BasisVault.json
+      eventHandlers:
+        - event: Deposit(indexed address,uint256,uint256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,uint256,uint256)
+          handler: handleWithdraw
+      file: ./src/mappings/basisVault.ts
