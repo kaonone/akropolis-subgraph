@@ -20,6 +20,8 @@ dataSources:
           file: ./abis/ERC20Detailed.json
         - name: StakingPool
           file: ./abis/StakingPool.json
+        - name: BasisVaultContract
+          file: ./abis/BasisVault.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer

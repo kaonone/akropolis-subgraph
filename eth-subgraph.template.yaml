@@ -20,20 +20,18 @@ dataSources:
           file: ./abis/ERC20Detailed.json
         - name: StakingPool
           file: ./abis/StakingPool.json
-        - name: VaultSavings
-          file: ./abis/VaultSavings.json
-        - name: DefiProtocol
-          file: ./abis/IDefiProtocol.json
+        - name: YEarnVaultSavings
+          file: ./abis/YEarnVaultSavings.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
       file: ./src/mappings/shared.ts
   - kind: ethereum/contract
-    name: VaultSavings
+    name: YEarnVaultSavings
     network: {{network}}
     source:
-      address: "{{modules.vaultSavingsV2}}"
-      abi: VaultSavings
+      address: "{{modules.yEarnVaultSavingsV2}}"
+      abi: YEarnVaultSavings
       startBlock: {{startBlock}}
     mapping:
       kind: ethereum/events
@@ -42,8 +40,8 @@ dataSources:
       entities:
         - User
       abis:
-        - name: VaultSavings
-          file: ./abis/VaultSavings.json
+        - name: YEarnVaultSavings
+          file: ./abis/YEarnVaultSavings.json
         - name: ERC20Detailed
           file: ./abis/ERC20Detailed.json
       eventHandlers:

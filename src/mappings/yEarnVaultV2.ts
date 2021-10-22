@@ -19,7 +19,7 @@ export function handleTransfer(event: Transfer): void {
   let userAddress = event.params.from;
   let user = loadUser(userAddress);
 
-  if (!user || !user.vaults.includes(vaultAddress.toHex())) {
+  if (!user || !user.yEarnVaults.includes(vaultAddress.toHex())) {
     return;
   }
 
@@ -27,7 +27,7 @@ export function handleTransfer(event: Transfer): void {
   let userBalance = contract.balanceOf(userAddress);
 
   if (userBalance.le(BigInt.fromI32(0))) {
-    user.vaults = exclude(user.vaults, vaultAddress.toHex());
+    user.yEarnVaults = exclude(user.yEarnVaults, vaultAddress.toHex());
     deactivateUserIfZeroBalance(user as User);
     user.save();
   }

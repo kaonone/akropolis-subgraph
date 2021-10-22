@@ -1,6 +1,6 @@
 import { Address, BigInt, ethereum, log } from "@graphprotocol/graph-ts";
 
-import { Vault } from "../../../generated/schema";
+import { YEarnVault } from "../../../generated/schema";
 
 import { loadSubgraphConfig } from "../loadSubgraphConfig";
 import { createToken } from "../createToken";
@@ -9,12 +9,12 @@ export function createVault(
   block: ethereum.Block,
   vaultAddress: Address,
   underlyingTokenAddress: Address,
-): Vault {
+): YEarnVault {
   loadSubgraphConfig(); // create config subgraph if it doesn't exist
-  let vault = Vault.load(vaultAddress.toHex());
+  let vault = YEarnVault.load(vaultAddress.toHex());
 
   if (!vault) {
-    vault = new Vault(vaultAddress.toHex());
+    vault = new YEarnVault(vaultAddress.toHex());
     vault.totalTVL = BigInt.fromI32(0);
     vault.isActive = true;
     vault.createdAt = block.timestamp;
@@ -26,5 +26,5 @@ export function createVault(
   vault.depositToken = createToken(underlyingTokenAddress).id;
   vault.save();
 
-  return vault as Vault;
+  return vault as YEarnVault;
 }

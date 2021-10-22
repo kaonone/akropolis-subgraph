@@ -9,7 +9,7 @@ export function loadOrCreateUser(address: Address): User {
     user = new User(id);
     user.active = false;
     user.stakingPools = [];
-    user.vaults = [];
+    user.yEarnVaults = [];
     user.basisVaults = [];
     user.save();
   }

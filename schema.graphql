@@ -15,7 +15,7 @@ type StakingPool @entity {
 ### VAULTS ###
 ##############
 
-type Vault @entity {
+type YEarnVault @entity {
   "address"
   id: ID!
   isActive: Boolean!
@@ -24,13 +24,16 @@ type Vault @entity {
   totalTVL: BigInt!
   createdAt: BigInt!
 
-  users: [User!]! @derivedFrom(field: "vaults")
+  users: [User!]! @derivedFrom(field: "yEarnVaults")
 }
 
 type BasisVault @entity {
   "address"
   id: ID!
   isActive: Boolean!
+  lpToken: Token!
+  depositToken: Token!
+  createdAt: BigInt!
 
   users: [User!]! @derivedFrom(field: "basisVaults")
 }
@@ -45,7 +48,7 @@ type User @entity {
   active: Boolean!
 
   stakingPools: [StakingPool!]!
-  vaults: [Vault!]!
+  yEarnVaults: [YEarnVault!]!
   basisVaults: [BasisVault!]!
 
   depositedBalances: [DepositedBalance!]! @derivedFrom(field: "user")

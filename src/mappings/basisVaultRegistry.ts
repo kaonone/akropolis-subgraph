@@ -5,12 +5,12 @@ import { createOrUpdateBasisVault } from "../entities/basisVaults/createOrUpdate
 export function handleVaultRegistered(
   event: VaultRegistered,
 ): void {
-  createOrUpdateBasisVault(event.params.vault, true);
+  createOrUpdateBasisVault(event.block, event.params.vault, true);
   BasisVault.create(event.params.vault);
 }
 
 export function handleBasisVaultDeactivated(
   event: VaultDeactivated,
 ): void {
-  createOrUpdateBasisVault(event.params.vault, false);
+  createOrUpdateBasisVault(event.block, event.params.vault, false);
 }
