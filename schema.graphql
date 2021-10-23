@@ -34,6 +34,7 @@ type BasisVault @entity {
   lpToken: Token!
   depositToken: Token!
   createdAt: BigInt!
+  createdBlock: BigInt!
 
   users: [User!]! @derivedFrom(field: "basisVaults")
 }

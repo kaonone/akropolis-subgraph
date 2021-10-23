@@ -18,6 +18,7 @@ export function createOrUpdateBasisVault(
     basisVault.lpToken = createToken(basisVaultAddress).id;
     basisVault.depositToken = createToken(contract.want()).id;
     basisVault.createdAt = block.timestamp;
+    basisVault.createdBlock = block.number;
   }
 
   basisVault.isActive = isActive;
