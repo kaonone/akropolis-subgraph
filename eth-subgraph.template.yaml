@@ -18,10 +18,6 @@ dataSources:
       abis:
         - name: ERC20Detailed
           file: ./abis/ERC20Detailed.json
-        - name: StakingPool
-          file: ./abis/StakingPool.json
-        - name: YearnVaultSavings
-          file: ./abis/YearnVaultSavings.json
       eventHandlers:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
@@ -68,40 +64,16 @@ dataSources:
       entities:
         - User
       abis:
-        - name: ERC20Detailed
-          file: ./abis/ERC20Detailed.json
         - name: StakingPool
           file: ./abis/StakingPool.json
+        - name: ERC20Detailed
+          file: ./abis/ERC20Detailed.json
       eventHandlers:
         - event: Staked(indexed address,uint256,uint256,bytes)
           handler: handleStaked
         - event: Unstaked(indexed address,uint256,uint256,bytes)
           handler: handleUnstake
       file: ./src/mappings/akroStakingPool.ts
-  - kind: ethereum/contract
-    name: ADELStakingPool
-    network: {{network}}
-    source:
-      address: "{{modules.adelStakingPool}}"
-      abi: StakingPool
-      startBlock: {{startBlock}}
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.1
-      language: wasm/assemblyscript
-      entities:
-        - User
-      abis:
-        - name: ERC20Detailed
-          file: ./abis/ERC20Detailed.json
-        - name: StakingPool
-          file: ./abis/StakingPool.json
-      eventHandlers:
-        - event: Staked(indexed address,uint256,uint256,bytes)
-          handler: handleStaked
-        - event: Unstaked(indexed address,uint256,uint256,bytes)
-          handler: handleUnstake
-      file: ./src/mappings/adelStakingPool.ts
 templates:
   - kind: ethereum/contract
     name: YearnVaultV2

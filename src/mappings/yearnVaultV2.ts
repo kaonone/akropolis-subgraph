@@ -9,9 +9,9 @@ import {
   createOrUpdateDepositedBalance,
   loadDepositedBalance,
   loadUser,
-  loadVault,
-  deactivateUserIfZeroBalance,
-} from "../entities";
+} from "../entities/shared";
+import { deactivateUserIfZeroBalance } from "../entities/globalStats";
+import { loadVault } from "../entities/yearnVaultSavings";
 import { exclude } from "../utils";
 
 export function handleTransfer(event: Transfer): void {

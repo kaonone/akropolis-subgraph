@@ -1,6 +1,6 @@
 import { VaultDeactivated, VaultRegistered } from "../../generated/BasisVaultsRegistry/BasisVaultsRegistry";
 import { BasisVault } from "../../generated/templates";
-import { createOrUpdateBasisVault } from "../entities/basisVaults/createOrUpdateBasisVault";
+import { createOrUpdateBasisVault } from "../entities/basisVaults";
 
 export function handleVaultRegistered(
   event: VaultRegistered,

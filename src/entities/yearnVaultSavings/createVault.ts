@@ -2,13 +2,12 @@ import { Address, BigInt, ethereum, log } from "@graphprotocol/graph-ts";
 
 import { YearnVault } from "../../../generated/schema";
 
-import { loadSubgraphConfig } from "../loadSubgraphConfig";
-import { createToken } from "../createToken";
+import { loadSubgraphConfig, createToken } from "../shared";
 
 export function createVault(
   block: ethereum.Block,
   vaultAddress: Address,
-  underlyingTokenAddress: Address,
+  underlyingTokenAddress: Address
 ): YearnVault {
   loadSubgraphConfig(); // create config subgraph if it doesn't exist
   let vault = YearnVault.load(vaultAddress.toHex());
@@ -19,7 +18,7 @@ export function createVault(
     vault.isActive = true;
     vault.createdAt = block.timestamp;
   } else {
-    log.warning('Vault {} already exist.', [vault.id]);
+    log.warning("Vault {} already exist.", [vault.id]);
   }
 
   vault.lpToken = createToken(vaultAddress).id;

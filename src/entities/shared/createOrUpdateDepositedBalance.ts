@@ -1,7 +1,7 @@
 import { Address, BigInt } from "@graphprotocol/graph-ts";
 
-import { DepositedBalance } from "../../generated/schema";
-import { getDepositedBalanceId } from "../utils";
+import { DepositedBalance } from "../../../generated/schema";
+import { getDepositedBalanceId } from "../../utils";
 
 export function createOrUpdateDepositedBalance(
   userAddress: Address,

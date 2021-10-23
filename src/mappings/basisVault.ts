@@ -1,13 +1,13 @@
 import { BigInt, dataSource } from "@graphprotocol/graph-ts";
+
 import { ERC20Detailed } from "../../generated/Contracts/ERC20Detailed";
 import { User } from "../../generated/schema";
-import { Deposit, Withdraw } from "../../generated/templates/BasisVault/BasisVault";
 import {
-  activateUser,
-  deactivateUserIfZeroBalance,
-  loadOrCreateUser,
-  loadUser,
-} from "../entities";
+  Deposit,
+  Withdraw,
+} from "../../generated/templates/BasisVault/BasisVault";
+import { loadOrCreateUser, loadUser } from "../entities/shared";
+import { activateUser, deactivateUserIfZeroBalance } from "../entities/globalStats";
 import { addUniq, exclude } from "../utils";
 
 export function handleDeposit(event: Deposit): void {

@@ -1,7 +1,8 @@
 import { Address, ethereum } from "@graphprotocol/graph-ts";
-import { createToken, loadSubgraphConfig } from "..";
-import { BasisVaultContract } from "../../../generated/Contracts/BasisVaultContract";
+
 import { BasisVault } from "../../../generated/schema";
+import { BasisVault as BasisVaultContract } from "../../../generated/templates/BasisVault/BasisVault";
+import { createToken, loadSubgraphConfig } from "../shared";
 
 export function createOrUpdateBasisVault(
   block: ethereum.Block,
@@ -14,7 +15,7 @@ export function createOrUpdateBasisVault(
 
   if (!basisVault) {
     basisVault = new BasisVault(basisVaultAddress.toHex());
-    basisVault.lpToken = createToken(contract.want()).id;
+    basisVault.lpToken = createToken(basisVaultAddress).id;
     basisVault.depositToken = createToken(contract.want()).id;
     basisVault.createdAt = block.timestamp;
   }

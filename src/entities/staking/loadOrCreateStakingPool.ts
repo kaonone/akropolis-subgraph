@@ -2,9 +2,8 @@ import { Address } from "@graphprotocol/graph-ts";
 
 import { StakingPool } from "../../../generated/schema";
 
-import { loadToken } from "../loadToken";
-import { loadSubgraphConfig } from "../loadSubgraphConfig";
-import { StakingPool as PoolContract } from "../../../generated/Contracts/StakingPool";
+import { loadToken, loadSubgraphConfig } from "../shared";
+import { StakingPool as PoolContract } from "../../../generated/AKROStakingPool/StakingPool";
 
 export function loadOrCreateStakingPool(poolAddress: Address): StakingPool {
   loadSubgraphConfig(); // create config subgraph if it doesn't exist

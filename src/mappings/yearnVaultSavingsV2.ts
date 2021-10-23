@@ -8,11 +8,10 @@ import {
 import { YearnVaultV2 } from "../../generated/templates";
 import {
   createOrUpdateDepositedBalance,
-  createVault,
   loadOrCreateUser,
-  loadVault,
-  activateUser,
-} from "../entities";
+} from "../entities/shared";
+import { activateUser } from "../entities/globalStats";
+import { createVault, loadVault } from "../entities/yearnVaultSavings";
 
 import { addUniq } from "../utils";
 

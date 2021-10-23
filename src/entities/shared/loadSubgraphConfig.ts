@@ -1,5 +1,5 @@
-import { SubgraphConfig } from "../../generated/schema";
-import { SINGLE_ENTITY_ID } from "../utils";
+import { SubgraphConfig } from "../../../generated/schema";
+import { SINGLE_ENTITY_ID } from "../../utils";
 
 export function loadSubgraphConfig(): SubgraphConfig {
   let config = SubgraphConfig.load(SINGLE_ENTITY_ID);
