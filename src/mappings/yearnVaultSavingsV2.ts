@@ -3,9 +3,9 @@ import {
   VaultActivated,
   VaultDisabled,
   VaultRegistered,
-} from "../../generated/YEarnVaultSavings/YEarnVaultSavings";
+} from "../../generated/YearnVaultSavings/YearnVaultSavings";
 
-import { YEarnVaultV2 } from "../../generated/templates";
+import { YearnVaultV2 } from "../../generated/templates";
 import {
   createOrUpdateDepositedBalance,
   createVault,
@@ -18,7 +18,7 @@ import { addUniq } from "../utils";
 
 export function handleVaultRegistered(event: VaultRegistered): void {
   createVault(event.block, event.params.vault, event.params.baseToken);
-  YEarnVaultV2.create(event.params.vault);
+  YearnVaultV2.create(event.params.vault);
 }
 
 export function handleVaultDisabled(event: VaultDisabled): void {
@@ -35,7 +35,7 @@ export function handleVaultActivated(event: VaultActivated): void {
 
 export function handleDeposit(event: Deposit): void {
   let user = loadOrCreateUser(event.params.user);
-  user.yEarnVaults = addUniq(user.yEarnVaults, event.params.vault.toHex());
+  user.yearnVaults = addUniq(user.yearnVaults, event.params.vault.toHex());
   activateUser(user);
   user.save();
 

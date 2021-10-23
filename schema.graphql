@@ -15,7 +15,7 @@ type StakingPool @entity {
 ### VAULTS ###
 ##############
 
-type YEarnVault @entity {
+type YearnVault @entity {
   "address"
   id: ID!
   isActive: Boolean!
@@ -24,7 +24,7 @@ type YEarnVault @entity {
   totalTVL: BigInt!
   createdAt: BigInt!
 
-  users: [User!]! @derivedFrom(field: "yEarnVaults")
+  users: [User!]! @derivedFrom(field: "yearnVaults")
 }
 
 type BasisVault @entity {
@@ -48,7 +48,7 @@ type User @entity {
   active: Boolean!
 
   stakingPools: [StakingPool!]!
-  yEarnVaults: [YEarnVault!]!
+  yearnVaults: [YearnVault!]!
   basisVaults: [BasisVault!]!
 }
 
@@ -75,7 +75,6 @@ type Token @entity {
 type GlobalStat @entity {
   id: ID!
   activeMembersCount: Int!
-  totalYieldEarned: BigInt!
 }
 
 type SubgraphConfig @entity {

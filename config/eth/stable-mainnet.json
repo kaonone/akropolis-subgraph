@@ -3,7 +3,7 @@
   "startBlock": 10644300,
   "network": "mainnet",
   "modules": {
-    "yEarnVaultSavingsV2": "0x6511D8686EB43Eac9D4852458435c1beC4D67bc6",
+    "yearnVaultSavingsV2": "0x6511D8686EB43Eac9D4852458435c1beC4D67bc6",
     "akroStakingPool": "0x3501Ec11d205fa249f2C42f5470e137b529b35D0",
     "adelStakingPool": "0x1A547c3dd03c39Fb2b5aEaFC524033879bD28F13"
   },

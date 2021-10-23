@@ -1,7 +1,7 @@
 {
   "subgraphName": "in19farkt/delphi-sandbox-mainnet-arbitrum",
-  "startBlock": 13466938,
-  "network": "arbitrum",
+  "startBlock": 2465385,
+  "network": "arbitrum-one",
   "modules": {
     "basisVaultsRegistry": "0x0000000000000000000000000000000000000000"
   },

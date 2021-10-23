@@ -3,7 +3,7 @@ export * from "./loadSubgraphConfig";
 export * from "./loadToken";
 export * from "./loadUser";
 export * from "./staking";
-export * from "./yEarnVaultSavings";
+export * from "./yearnVaultSavings";
 export * from "./globalStats";
 export * from "./loadDepositedBalance";
 export * from "./createOrUpdateDepositedBalance";
