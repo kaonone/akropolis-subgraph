@@ -1,7 +1,7 @@
 {
-  "subgraphName": "in19farkt/delphi-stable-mainnet-bsc",
-  "startBlock": 12015134,
-  "network": "bsc",
+  "subgraphName": "in19farkt/delphi-stable-mainnet-arbitrum",
+  "startBlock": 2465385,
+  "network": "arbitrum-one",
   "modules": {
     "basisVaultsRegistry": "0x0000000000000000000000000000000000000000"
   },

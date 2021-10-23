@@ -4,23 +4,23 @@ import { Staked, Unstaked } from "../../generated/AKROStakingPool/StakingPool";
 import {
   createOrUpdateDepositedBalance,
   loadOrCreateUser,
+  loadDepositedBalance,
+} from "../entities/shared";
+import {
   activateUser,
   deactivateUserIfZeroBalance,
+} from "../entities/globalStats";
+import {
   increaseStakingUsersCount,
   decreaseStakingUsersCount,
-  loadDepositedBalance,
-} from "../entities";
-import { addUniq, exclude, Modules } from "../utils";
+} from "../entities/staking";
+import { addUniq, exclude } from "../utils";
 
 export function handleStaked(event: Staked): void {
   let stakingPoolAddress = dataSource.address().toHex();
 
   let user = loadOrCreateUser(event.params.user);
-  let deposited = loadDepositedBalance(
-    event.params.user,
-    dataSource.address(),
-    Modules.staking
-  );
+  let deposited = loadDepositedBalance(event.params.user, dataSource.address());
   let isFirstStake = deposited.value.isZero();
 
   user.stakingPools = addUniq(user.stakingPools, stakingPoolAddress);
@@ -34,8 +34,7 @@ export function handleStaked(event: Staked): void {
   createOrUpdateDepositedBalance(
     event.params.user,
     dataSource.address(),
-    event.params.amount,
-    Modules.staking
+    event.params.amount
   );
 }
 
@@ -48,8 +47,7 @@ export function handleUnstake(event: Unstaked): void {
   let deposited = createOrUpdateDepositedBalance(
     event.params.user,
     dataSource.address(),
-    event.params.amount.neg(),
-    Modules.staking
+    event.params.amount.neg()
   );
 
   let isLastUnstake = deposited.value.isZero();

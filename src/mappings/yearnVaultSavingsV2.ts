@@ -3,23 +3,21 @@ import {
   VaultActivated,
   VaultDisabled,
   VaultRegistered,
-} from "../../../generated/VaultSavings/VaultSavings";
-import { Vault } from "../../../generated/templates";
+} from "../../generated/YearnVaultSavings/YearnVaultSavings";
+
+import { YearnVaultV2 } from "../../generated/templates";
 import {
   createOrUpdateDepositedBalance,
-  createVault,
   loadOrCreateUser,
-  loadVault,
-  activateUser,
-} from "../../entities";
-import { addUniq } from "../../utils";
+} from "../entities/shared";
+import { activateUser } from "../entities/globalStats";
+import { createVault, loadVault } from "../entities/yearnVaultSavings";
 
-export function handleVaultRegistered(
-  event: VaultRegistered,
-  module: string
-): void {
-  createVault(event.block, event.params.vault, event.params.baseToken, module);
-  Vault.create(event.params.vault);
+import { addUniq } from "../utils";
+
+export function handleVaultRegistered(event: VaultRegistered): void {
+  createVault(event.block, event.params.vault, event.params.baseToken);
+  YearnVaultV2.create(event.params.vault);
 }
 
 export function handleVaultDisabled(event: VaultDisabled): void {
@@ -34,17 +32,16 @@ export function handleVaultActivated(event: VaultActivated): void {
   vault.save();
 }
 
-export function handleDeposit(event: Deposit, module: string): void {
+export function handleDeposit(event: Deposit): void {
   let user = loadOrCreateUser(event.params.user);
-  user.vaults = addUniq(user.vaults, event.params.vault.toHex());
+  user.yearnVaults = addUniq(user.yearnVaults, event.params.vault.toHex());
   activateUser(user);
   user.save();
 
   createOrUpdateDepositedBalance(
     event.params.user,
     event.params.vault,
-    event.params.lpAmount,
-    module
+    event.params.lpAmount
   );
 
   let vaultPool = loadVault(event.params.vault);

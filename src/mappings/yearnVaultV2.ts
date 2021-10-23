@@ -1,25 +1,25 @@
 import { BigInt, dataSource } from "@graphprotocol/graph-ts";
 
-import { User } from "../../../generated/schema";
+import { User } from "../../generated/schema";
 import {
   Transfer,
   ERC20Detailed,
-} from "../../../generated/Contracts/ERC20Detailed";
+} from "../../generated/Contracts/ERC20Detailed";
 import {
   createOrUpdateDepositedBalance,
   loadDepositedBalance,
   loadUser,
-  loadVault,
-  deactivateUserIfZeroBalance,
-} from "../../entities";
-import { exclude } from "../../utils";
+} from "../entities/shared";
+import { deactivateUserIfZeroBalance } from "../entities/globalStats";
+import { loadVault } from "../entities/yearnVaultSavings";
+import { exclude } from "../utils";
 
-export function handleTransfer(event: Transfer, module: string): void {
+export function handleTransfer(event: Transfer): void {
   let vaultAddress = dataSource.address();
   let userAddress = event.params.from;
   let user = loadUser(userAddress);
 
-  if (!user || !user.vaults.includes(vaultAddress.toHex())) {
+  if (!user || !user.yearnVaults.includes(vaultAddress.toHex())) {
     return;
   }
 
@@ -27,13 +27,13 @@ export function handleTransfer(event: Transfer, module: string): void {
   let userBalance = contract.balanceOf(userAddress);
 
   if (userBalance.le(BigInt.fromI32(0))) {
-    user.vaults = exclude(user.vaults, vaultAddress.toHex());
+    user.yearnVaults = exclude(user.yearnVaults, vaultAddress.toHex());
     deactivateUserIfZeroBalance(user as User);
     user.save();
   }
 
   // TODO what if there is multiple withdraws in one transaction
-  let deposited = loadDepositedBalance(userAddress, vaultAddress, module);
+  let deposited = loadDepositedBalance(userAddress, vaultAddress);
 
   let balanceBeforeTransfer = userBalance.plus(event.params.value);
   let shareMultiplier = BigInt.fromI32(1000000000);
@@ -45,8 +45,7 @@ export function handleTransfer(event: Transfer, module: string): void {
   createOrUpdateDepositedBalance(
     userAddress,
     vaultAddress,
-    withdrawTVLAmount.neg(),
-    module
+    withdrawTVLAmount.neg()
   );
 
   let pool = loadVault(vaultAddress);

@@ -1,5 +1,5 @@
 import { Address } from "@graphprotocol/graph-ts";
-import { User } from "../../generated/schema";
+import { User } from "../../../generated/schema";
 
 export function loadOrCreateUser(address: Address): User {
   let id = address.toHex();
@@ -8,9 +8,9 @@ export function loadOrCreateUser(address: Address): User {
   if (!user) {
     user = new User(id);
     user.active = false;
-    user.savingsPools = [];
     user.stakingPools = [];
-    user.vaults = [];
+    user.yearnVaults = [];
+    user.basisVaults = [];
     user.save();
   }
 
