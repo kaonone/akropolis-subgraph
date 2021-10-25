@@ -15,6 +15,7 @@ export function createOrUpdateBasisVault(
 
   if (!basisVault) {
     basisVault = new BasisVault(basisVaultAddress.toHex());
+    basisVault.name = contract.name();
     basisVault.lpToken = createToken(basisVaultAddress).id;
     basisVault.depositToken = createToken(contract.want()).id;
     basisVault.createdAt = block.timestamp;

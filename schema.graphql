@@ -30,6 +30,7 @@ type YearnVault @entity {
 type BasisVault @entity {
   "address"
   id: ID!
+  name: String!
   isActive: Boolean!
   lpToken: Token!
   depositToken: Token!
