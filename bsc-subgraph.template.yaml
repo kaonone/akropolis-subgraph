@@ -36,6 +36,8 @@ dataSources:
       entities:
         - User
       abis:
+        - name: BasisVault
+          file: ./abis/BasisVault.json
         - name: BasisVaultsRegistry
           file: ./abis/BasisVaultsRegistry.json
         - name: ERC20Detailed
