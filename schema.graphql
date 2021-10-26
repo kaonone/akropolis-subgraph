@@ -11,9 +11,9 @@ type StakingPool @entity {
   users: [User!]! @derivedFrom(field: "stakingPools")
 }
 
-##############
-### VAULTS ###
-##############
+####################
+### YEARN VAULTS ###
+####################
 
 type YearnVault @entity {
   "address"
@@ -27,6 +27,10 @@ type YearnVault @entity {
   users: [User!]! @derivedFrom(field: "yearnVaults")
 }
 
+####################
+### BASIS VAULTS ###
+####################
+
 type BasisVault @entity {
   "address"
   id: ID!
@@ -38,6 +42,25 @@ type BasisVault @entity {
   createdBlock: BigInt!
 
   users: [User!]! @derivedFrom(field: "basisVaults")
+  aprs: [BasisVaultAPR!]! @derivedFrom(field: "vault")
+}
+
+type BasisVaultState @entity {
+  "vault address"
+  id: ID!
+  updatedAtBlock: BigInt!
+  updatedAtDate: BigInt!
+  totalShares: BigInt!
+  totalAssets: BigInt!
+}
+
+type BasisVaultAPR @entity {
+  "address + block number"
+  id: ID!
+  fromDate: BigInt!
+  toDate: BigInt!
+  value: BigInt!
+  vault: BasisVault!
 }
 
 ############
