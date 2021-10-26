@@ -1,9 +1,9 @@
 {
   "subgraphName": "in19farkt/delphi-sandbox-staging-bsc",
-  "startBlock": 13526834,
+  "startBlock": 13561026,
   "network": "chapel",
   "modules": {
-    "basisVaultsRegistry": "0x0000000000000000000000000000000000000000"
+    "basisVaultsRegistry": "0x4C2EB128032D01a32ACBE823e6Ec72ed67602996"
   },
   "callSupported": false
 }
