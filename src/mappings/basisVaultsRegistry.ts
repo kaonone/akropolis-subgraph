@@ -9,7 +9,7 @@ export function handleVaultRegistered(
   BasisVault.create(event.params.vault);
 }
 
-export function handleBasisVaultDeactivated(
+export function handleVaultDeactivated(
   event: VaultDeactivated,
 ): void {
   createOrUpdateBasisVault(event.block, event.params.vault, false);

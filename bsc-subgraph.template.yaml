@@ -42,9 +42,9 @@ dataSources:
           file: ./abis/ERC20Detailed.json
       eventHandlers:
         - event: VaultRegistered(indexed address)
-          handler: handleBasisVaultRegistered
+          handler: handleVaultRegistered
         - event: VaultDeactivated(indexed address)
-          handler: handleBasisVaultDeactivated
+          handler: handleVaultDeactivated
       file: ./src/mappings/basisVaultsRegistry.ts
 templates:
   - kind: ethereum/contract
