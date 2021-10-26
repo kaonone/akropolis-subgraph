@@ -3,7 +3,7 @@
   "startBlock": 5998032,
   "network": "arbitrum-rinkeby",
   "modules": {
-    "basisVaultsRegistry": "0xE40122B0f1382694443715bB659eFAaa7285A2B6"
+    "basisVaultsRegistry": "0x5180E8c9c5026f112FBc973C00Fc57D4D4AAC4D7"
   },
   "callSupported": false
 }
