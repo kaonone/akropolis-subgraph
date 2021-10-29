@@ -85,6 +85,30 @@ type DepositedBalance @entity {
   pool: Bytes!
 }
 
+############
+### LOGS ###
+############
+
+type EventLog @entity {
+  id: ID!
+  type: EventType!
+  contract: Bytes!
+  createdAtBlock: BigInt!
+  createdAtDate: BigInt!
+  txHash: Bytes!
+  user: User!
+  data: String! # or Bytes!
+}
+
+enum EventType {
+  STACKING_POOL_STAKE
+  STACKING_POOL_UNSTAKE
+  YEARN_VAULT_SAVINGS_DEPOSIT
+  YEARN_VAULT_SAVINGS_WITHDRAW
+  BASIS_VAULT_DEPOSIT
+  BASIS_VAULT_WITHDRAW
+}
+
 #############
 ### OTHER ###
 #############

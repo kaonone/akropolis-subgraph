@@ -13,6 +13,7 @@ import {
   StrategyUpdate,
   Withdraw,
 } from "../../generated/templates/BasisVault/BasisVault";
+
 import {
   loadOrCreateUser,
   loadSubgraphConfig,
@@ -22,11 +23,12 @@ import {
   activateUser,
   deactivateUserIfZeroBalance,
 } from "../entities/globalStats";
-import { addUniq, exclude } from "../utils";
 import {
   loadBasisVaultState,
   createOrUpdateBasisVaultState,
 } from "../entities/basisVaults";
+import { createEventLog } from "../entities/logs";
+import { addUniq, EventType, exclude } from "../utils";
 import { getVaultAprId } from "../utils/getVaultAprId";
 
 export function handleDeposit(event: Deposit): void {
@@ -35,6 +37,13 @@ export function handleDeposit(event: Deposit): void {
   user.basisVaults = addUniq(user.basisVaults, basisVaultAddress.toHex());
   activateUser(user);
   user.save();
+
+  createEventLog(
+    event,
+    basisVaultAddress,
+    event.params.user,
+    EventType.BASIS_VAULT_DEPOSIT
+  );
 }
 
 export function handleWithdraw(event: Withdraw): void {
@@ -56,6 +65,13 @@ export function handleWithdraw(event: Withdraw): void {
     deactivateUserIfZeroBalance(user as User);
     user.save();
   }
+
+  createEventLog(
+    event,
+    basisVaultAddress,
+    event.params.user,
+    EventType.BASIS_VAULT_WITHDRAW
+  );
 }
 
 export function handleStrategyUpdate(event: StrategyUpdate): void {
