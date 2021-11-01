@@ -13,8 +13,8 @@ export function createEventLog(
 
   eventLog.type = type;
   eventLog.contract = contract;
-  eventLog.createdAtBlock = event.block.timestamp;
-  eventLog.createdAtDate = event.block.number;
+  eventLog.createdAtBlock = event.block.number;
+  eventLog.createdAtDate = event.block.timestamp;
   eventLog.txHash = event.transaction.hash;
   eventLog.user = userAddress.toHex();
   eventLog.data = getEventData(event.parameters);

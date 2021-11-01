@@ -49,6 +49,8 @@ dataSources:
           handler: handleVaultActivated
         - event: Deposit(indexed address,indexed address,uint256,uint256)
           handler: handleDeposit
+        - event: Withdraw(indexed address,indexed address,uint256,uint256)
+          handler: handleWithdraw
       file: ./src/mappings/yearnVaultSavingsV2.ts
   - kind: ethereum/contract
     name: AKROStakingPool
