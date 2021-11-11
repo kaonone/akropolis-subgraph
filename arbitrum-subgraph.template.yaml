@@ -70,4 +70,6 @@ templates:
           handler: handleDeposit
         - event: Withdraw(indexed address,uint256,uint256)
           handler: handleWithdraw
+        - event: StrategyUpdate(uint256,bool,uint256)
+          handler: handleStrategyUpdate
       file: ./src/mappings/basisVault.ts
