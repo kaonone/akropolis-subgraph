@@ -40,6 +40,7 @@ type BasisVault @entity {
   depositToken: Token!
   createdAt: BigInt!
   createdBlock: BigInt!
+  totalEarnings: BigInt!
 
   users: [User!]! @derivedFrom(field: "basisVaults")
   aprs: [BasisVaultAPR!]! @derivedFrom(field: "vault")

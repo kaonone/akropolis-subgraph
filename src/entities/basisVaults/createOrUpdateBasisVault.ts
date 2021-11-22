@@ -1,4 +1,4 @@
-import { Address, ethereum } from "@graphprotocol/graph-ts";
+import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts";
 
 import { BasisVault } from "../../../generated/schema";
 import { BasisVault as BasisVaultContract } from "../../../generated/templates/BasisVault/BasisVault";
@@ -20,6 +20,7 @@ export function createOrUpdateBasisVault(
     basisVault.depositToken = createToken(contract.want()).id;
     basisVault.createdAt = block.timestamp;
     basisVault.createdBlock = block.number;
+    basisVault.totalEarnings = BigInt.fromI32(0 as i32);
   }
 
   basisVault.isActive = isActive;

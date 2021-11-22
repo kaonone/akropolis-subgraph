@@ -26,6 +26,7 @@ import {
 import {
   loadBasisVaultState,
   createOrUpdateBasisVaultState,
+  loadBasisVault,
 } from "../entities/basisVaults";
 import { createEventLog } from "../entities/logs";
 import { addUniq, EventType, exclude } from "../utils";
@@ -77,6 +78,20 @@ export function handleWithdraw(event: Withdraw): void {
 export function handleStrategyUpdate(event: StrategyUpdate): void {
   let basisVaultAddress = dataSource.address();
   makeAprSnapshot(event.block, basisVaultAddress);
+  updateTotalEarnings(basisVaultAddress, event.params.profitOrLoss, event.params.isLoss);
+}
+
+function updateTotalEarnings(
+  vaultAddress: Address,
+  profitOrLoss: BigInt,
+  isLoss: boolean
+): void {
+  let vault = loadBasisVault(vaultAddress);
+
+  let amount = isLoss ? profitOrLoss.neg() : profitOrLoss;
+  vault.totalEarnings = vault.totalEarnings.plus(amount);
+
+  vault.save();
 }
 
 function makeAprSnapshot(block: ethereum.Block, vaultAddress: Address): void {
