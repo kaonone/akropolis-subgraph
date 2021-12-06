@@ -1,10 +1,11 @@
 export let ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 export let SINGLE_ENTITY_ID = "ID";
 
-export class Modules {
-  static staking: string = "staking";
-  static savings: string = "savings";
-  static ethVaultsV1: string = "ethVaultsV1";
-  static ethVaultsV2: string = "ethVaultsV2";
-  static bscVaultsV2: string = "bscVaultsV2";
+export class EventType {
+  static STACKING_POOL_STAKE: string = "STACKING_POOL_STAKE";
+  static STACKING_POOL_UNSTAKE: string = "STACKING_POOL_UNSTAKE";
+  static YEARN_VAULT_SAVINGS_DEPOSIT: string = "YEARN_VAULT_SAVINGS_DEPOSIT";
+  static YEARN_VAULT_SAVINGS_WITHDRAW: string = "YEARN_VAULT_SAVINGS_WITHDRAW";
+  static BASIS_VAULT_DEPOSIT: string = "BASIS_VAULT_DEPOSIT";
+  static BASIS_VAULT_WITHDRAW: string = "BASIS_VAULT_WITHDRAW";
 }

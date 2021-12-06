@@ -1,0 +1,9 @@
+{
+  "subgraphName": "in19farkt/delphi-stable-staging-arbitrum",
+  "startBlock": 5998032,
+  "network": "arbitrum-rinkeby",
+  "modules": {
+    "basisVaultsRegistry": "0x5180E8c9c5026f112FBc973C00Fc57D4D4AAC4D7"
+  },
+  "callSupported": false
+}

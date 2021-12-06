@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        network: ['eth', 'bsc']
+        network: ['eth', 'bsc', 'arbitrum']
         type: ${{ github.ref == 'refs/heads/stable' && fromJson('["stable-mainnet", "stable-testnet"]') || github.ref == 'refs/heads/sandbox' && fromJson('["sandbox-mainnet", "sandbox-testnet"]') || fromJson('["unknown-type"]') }}
 
     env:
