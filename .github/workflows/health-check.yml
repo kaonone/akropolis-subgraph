@@ -1,0 +1,59 @@
+name: Subgraphs health check
+
+on:
+  schedule:
+    - cron: '25 * * * *'
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        subgraph:
+          [
+            "in19farkt/delphi-sandbox-mainnet-arbitrum",
+            "in19farkt/delphi-sandbox-staging-arbitrum",
+            "in19farkt/delphi-stable-mainnet-arbitrum",
+            "in19farkt/delphi-stable-staging-arbitrum",
+            "in19farkt/delphi-sandbox-mainnet-bsc",
+            "in19farkt/delphi-sandbox-staging-bsc",
+            "in19farkt/delphi-stable-mainnet-bsc",
+            "in19farkt/delphi-stable-staging-bsc",
+            "in19farkt/delphi-sandbox-mainnet",
+            "in19farkt/delphi-sandbox-rinkeby",
+            "in19farkt/delphi-stable-mainnet",
+            "in19farkt/delphi-stable-rinkeby",
+          ]
+        version: ["current", "pending"]
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get subgraph status
+        id: check
+        uses: akropolisio/subgraph-status-action@v1.0.2
+        with:
+          subgraph: ${{ matrix.subgraph }}
+          version: ${{ matrix.version }}
+          fail-on-error: true
+
+      - name: Display output
+        run: echo '${{ toJSON(steps.check.outputs) }}'
+
+      # - name: Do something if subgraph failed
+      #   if: ${{ fromJSON(steps.check.outputs.hasError) }}
+      #   run: |
+      #     echo 'Error code ${{ steps.check.outputs.errorCode }}'
+      #     echo 'Message ${{ steps.check.outputs.message }}'
+      #   env:
+      #     ERROR_CODE: ${{ steps.check.outputs.errorCode }}
+      #     ERROR_MESSAGE: ${{ steps.check.outputs.message }}
+      # - name: Do something if subgraph healthy
+      #   if: ${{ !fromJSON(steps.check.outputs.hasError) }}
+      #   run: |
+      #     echo 'Chain head block ${{ steps.check.outputs.chainHeadBlock }}'
+      #     echo 'Latest synced block ${{ steps.check.outputs.latestBlock }}'
+      #   env:
+      #     CHAIN_HEAD_BLOCK: ${{ steps.check.outputs.chainHeadBlock }}
+      #     LATEST_BLOCK: ${{ steps.check.outputs.latestBlock }}
