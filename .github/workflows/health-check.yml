@@ -2,7 +2,7 @@ name: Subgraphs health check
 
 on:
   schedule:
-    - cron: '25 * * * *'
+    - cron: '8 * * * *'
 
 jobs:
   health-check:
@@ -36,24 +36,30 @@ jobs:
         with:
           subgraph: ${{ matrix.subgraph }}
           version: ${{ matrix.version }}
-          fail-on-error: true
 
-      - name: Display output
-        run: echo '${{ toJSON(steps.check.outputs) }}'
-
-      # - name: Do something if subgraph failed
-      #   if: ${{ fromJSON(steps.check.outputs.hasError) }}
-      #   run: |
-      #     echo 'Error code ${{ steps.check.outputs.errorCode }}'
-      #     echo 'Message ${{ steps.check.outputs.message }}'
-      #   env:
-      #     ERROR_CODE: ${{ steps.check.outputs.errorCode }}
-      #     ERROR_MESSAGE: ${{ steps.check.outputs.message }}
-      # - name: Do something if subgraph healthy
-      #   if: ${{ !fromJSON(steps.check.outputs.hasError) }}
-      #   run: |
-      #     echo 'Chain head block ${{ steps.check.outputs.chainHeadBlock }}'
-      #     echo 'Latest synced block ${{ steps.check.outputs.latestBlock }}'
-      #   env:
-      #     CHAIN_HEAD_BLOCK: ${{ steps.check.outputs.chainHeadBlock }}
-      #     LATEST_BLOCK: ${{ steps.check.outputs.latestBlock }}
+      - name: Post errors to a Slack channel
+        if: ${{ fromJSON(steps.check.outputs.hasError) }}
+        uses: slackapi/slack-github-action@v1.18.0
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        with:
+          channel-id: C032HF0PA5R
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "${{ matrix.version }} version of subgraph <https://thegraph.com/hosted-service/subgraph/in19farkt/delphi-sandbox-mainnet-arbitrum|${{ matrix.subgraph }}> is failed.\n\n• Error code: `${{ steps.check.outputs.errorCode }}`\n• Message:\n"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": ${{ toJSON(steps.check.outputs.message) }}
+                  }
+                }
+              ]
+            }
