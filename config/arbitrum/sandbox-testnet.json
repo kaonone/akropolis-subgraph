@@ -1,9 +1,9 @@
 {
   "subgraphName": "in19farkt/delphi-sandbox-staging-arbitrum",
-  "startBlock": 5998032,
+  "startBlock": 9347108,
   "network": "arbitrum-rinkeby",
   "modules": {
-    "basisVaultsRegistry": "0x5180E8c9c5026f112FBc973C00Fc57D4D4AAC4D7"
+    "basisVaultsRegistry": "0xdb992AC0821fd05E73B45327c06Ca0E6a04995E5"
   },
   "callSupported": false
 }

@@ -10,7 +10,8 @@
     "deploy": "yarn pre-build && yarn graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ ${SUBGRAPH_NAME} --access-token ${THEGRAPH_ACCESS_TOKEN}",
     "pre-build": "yarn prepare-manifest && yarn codegen",
     "prepare-manifest": "mustache ./config/${NETWORK}/${TYPE}.json ${NETWORK}-subgraph.template.yaml > subgraph.yaml",
-    "codegen": "rm -rf ./generated && graph codegen"
+    "codegen": "rm -rf ./generated && graph codegen",
+    "display-pending-errors": "curl --location --request POST 'https://api.thegraph.com/index-node/graphql' --data-raw '{\"query\":\"{ indexingStatusForPendingVersion(subgraphName: \\\"in19farkt/delphi-sandbox-staging-bsc\\\") { subgraph fatalError { message } nonFatalErrors {message } } }\"}'"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "^0.26.0",
