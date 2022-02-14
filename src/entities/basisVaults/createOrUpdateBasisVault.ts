@@ -3,6 +3,7 @@ import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts";
 import { BasisVault } from "../../../generated/schema";
 import { BasisVault as BasisVaultContract } from "../../../generated/templates/BasisVault/BasisVault";
 import { createToken, loadSubgraphConfig } from "../shared";
+import { createOrUpdateSharePrice } from "./createOrUpdateSharePrice";
 
 export function createOrUpdateBasisVault(
   block: ethereum.Block,
@@ -21,6 +22,11 @@ export function createOrUpdateBasisVault(
     basisVault.createdAt = block.timestamp;
     basisVault.createdBlock = block.number;
     basisVault.totalEarnings = BigInt.fromI32(0 as i32);
+    basisVault.firstSharePrice = createOrUpdateSharePrice(
+      basisVaultAddress,
+      block.timestamp
+    ).id;
+    basisVault.currentSharePrice = basisVault.firstSharePrice;
   }
 
   basisVault.isActive = isActive;
