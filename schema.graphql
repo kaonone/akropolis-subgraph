@@ -41,27 +41,24 @@ type BasisVault @entity {
   createdAt: BigInt!
   createdBlock: BigInt!
   totalEarnings: BigInt!
+  firstSharePrice: SharePrice!
+  currentSharePrice: SharePrice!
 
   users: [User!]! @derivedFrom(field: "basisVaults")
-  aprs: [BasisVaultAPR!]! @derivedFrom(field: "vault")
+  sharePrices: [SharePrice!]! @derivedFrom(field: "vault")
 }
 
-type BasisVaultState @entity {
-  "vault address"
+type SharePrice @entity {
+  "{vaultAddress}-{day number: Math.round(unix timestamp / 60 / 60 / 24)}"
   id: ID!
-  updatedAtBlock: BigInt!
-  updatedAtDate: BigInt!
-  totalShares: BigInt!
-  totalAssets: BigInt!
-}
-
-type BasisVaultAPR @entity {
-  "address + block number"
-  id: ID!
-  fromDate: BigInt!
-  toDate: BigInt!
-  value: BigInt!
+  "price with depositToken.decimals"
+  price: BigInt!
+  updatedAt: BigInt!
   vault: BasisVault!
+
+  weekAgo: SharePrice
+  twoWeeksAgo: SharePrice
+  monthAgo: SharePrice
 }
 
 ############
