@@ -1,5 +1,5 @@
 {
-  "subgraphName": "in19farkt/delphi-sandbox-staging-arbitrum",
+  "subgraphName": "in19farkt/delphi-stable-staging-arbitrum",
   "startBlock": 9347108,
   "network": "arbitrum-rinkeby",
   "modules": {

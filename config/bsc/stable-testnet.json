@@ -1,5 +1,5 @@
 {
-  "subgraphName": "in19farkt/delphi-sandbox-staging-bsc",
+  "subgraphName": "in19farkt/delphi-stable-staging-bsc",
   "startBlock": 16575195,
   "network": "chapel",
   "modules": {
