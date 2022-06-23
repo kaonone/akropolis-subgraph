@@ -1,5 +1,5 @@
 {
-  "subgraphName": "in19farkt/delphi-stable-mainnet",
+  "subgraphName": "akropolis-eth",
   "startBlock": 10644300,
   "network": "mainnet",
   "modules": {

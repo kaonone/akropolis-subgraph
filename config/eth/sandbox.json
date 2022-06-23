@@ -1,5 +1,5 @@
 {
-  "subgraphName": "in19farkt/delphi-sandbox-mainnet",
+  "subgraphName": "akropolis-eth-sandbox",
   "startBlock": 10644300,
   "network": "mainnet",
   "modules": {

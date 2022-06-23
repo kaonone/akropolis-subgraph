@@ -1,21 +1,23 @@
 {
-  "name": "delphi",
+  "version": "0.0.1",
+  "name": "akropolis-subgraphs",
   "license": "UNLICENSED",
   "scripts": {
     "prepare-env": "mustache ./config/${NETWORK}/${TYPE}.json .env.template > .env",
-    "build:eth:sandbox-testnet": "NETWORK=eth TYPE=sandbox-testnet yarn build",
-    "build:bsc:sandbox-testnet": "NETWORK=bsc TYPE=sandbox-testnet yarn build",
-    "build:arbitrum:sandbox-testnet": "NETWORK=arbitrum TYPE=sandbox-testnet yarn build",
+    "build:eth:sandbox": "NETWORK=eth TYPE=sandbox yarn build",
+    "build:bsc:sandbox": "NETWORK=bsc TYPE=sandbox yarn build",
+    "build:arbitrum:sandbox": "NETWORK=arbitrum TYPE=sandbox yarn build",
     "build": "yarn pre-build && graph build",
-    "deploy": "yarn pre-build && yarn graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ ${SUBGRAPH_NAME} --access-token ${THEGRAPH_ACCESS_TOKEN}",
+    "deploy-hosted": "yarn pre-build && yarn graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ ${SUBGRAPH_NAME} --access-token ${THEGRAPH_ACCESS_TOKEN}",
+    "deploy-studio": "yarn pre-build && graph deploy --studio --version-label ${VERSION} ${SUBGRAPH_NAME} --deploy-key ${STUDIO_DEPLOY_KEY}",
     "pre-build": "yarn prepare-manifest && yarn codegen",
     "prepare-manifest": "mustache ./config/${NETWORK}/${TYPE}.json ${NETWORK}-subgraph.template.yaml > subgraph.yaml",
     "codegen": "rm -rf ./generated && graph codegen",
     "display-pending-errors": "curl --location --request POST 'https://api.thegraph.com/index-node/graphql' --data-raw '{\"query\":\"{ indexingStatusForPendingVersion(subgraphName: \\\"in19farkt/delphi-sandbox-staging-bsc\\\") { subgraph fatalError { message } nonFatalErrors {message } } }\"}'"
   },
   "dependencies": {
-    "@graphprotocol/graph-cli": "^0.26.0",
-    "@graphprotocol/graph-ts": "^0.24.1"
+    "@graphprotocol/graph-cli": "^0.31.0",
+    "@graphprotocol/graph-ts": "^0.27.0"
   },
   "devDependencies": {
     "mustache": "^4.0.1"

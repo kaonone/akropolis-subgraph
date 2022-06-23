@@ -2,7 +2,7 @@ name: Subgraphs health check
 
 on:
   schedule:
-    - cron: '8 * * * *'
+    - cron: "8 * * * *"
 
 jobs:
   health-check:
@@ -13,17 +13,9 @@ jobs:
         subgraph:
           [
             "in19farkt/delphi-sandbox-mainnet-arbitrum",
-            "in19farkt/delphi-sandbox-staging-arbitrum",
             "in19farkt/delphi-stable-mainnet-arbitrum",
-            "in19farkt/delphi-stable-staging-arbitrum",
             "in19farkt/delphi-sandbox-mainnet-bsc",
-            "in19farkt/delphi-sandbox-staging-bsc",
             "in19farkt/delphi-stable-mainnet-bsc",
-            "in19farkt/delphi-stable-staging-bsc",
-            "in19farkt/delphi-sandbox-mainnet",
-            "in19farkt/delphi-sandbox-rinkeby",
-            "in19farkt/delphi-stable-mainnet",
-            "in19farkt/delphi-stable-rinkeby",
           ]
         version: ["current", "pending"]
 

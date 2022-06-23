@@ -7,13 +7,13 @@ on:
       - sandbox
 
 jobs:
-  deploy:
+  deploy-hosted:
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        network: ['eth', 'bsc', 'arbitrum']
-        type: ${{ github.ref == 'refs/heads/stable' && fromJson('["stable-mainnet", "stable-testnet"]') || github.ref == 'refs/heads/sandbox' && fromJson('["sandbox-mainnet", "sandbox-testnet"]') || fromJson('["unknown-type"]') }}
+        network: ["bsc", "arbitrum"]
+        type: ${{ github.ref == 'refs/heads/stable' && fromJson('["stable"]') || github.ref == 'refs/heads/sandbox' && fromJson('["sandbox"]') || fromJson('["unknown-type"]') }}
 
     env:
       NETWORK: ${{ matrix.network }}
@@ -36,4 +36,40 @@ jobs:
         uses: xom9ikk/dotenv@v1.0.2
 
       - name: Build and deploy ${{ matrix.network }} ${{ matrix.type }}
-        run: yarn deploy
+        run: yarn deploy-hosted
+
+  deploy-studio:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        network: ["eth"]
+        type: ${{ github.ref == 'refs/heads/stable' && fromJson('["stable"]') || github.ref == 'refs/heads/sandbox' && fromJson('["sandbox"]') || fromJson('["unknown-type"]') }}
+
+    env:
+      NETWORK: ${{ matrix.network }}
+      TYPE: ${{ matrix.type }}
+      STUDIO_DEPLOY_KEY: ${{ secrets.STUDIO_DEPLOY_KEY }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10
+
+      - name: Install dependencies
+        run: yarn
+
+      - run: yarn prepare-env
+
+      - name: Load .env file
+        uses: xom9ikk/dotenv@v1.0.2
+
+      - name: Save package version from package.json to env.PACKAGE_VERSION
+        uses: nyaa8/package-version@v1
+
+      - name: Build and deploy ${{ matrix.network }} ${{ matrix.type }}
+        run: yarn deploy-studio
+        env:
+          VERSION: v${{ env.PACKAGE_VERSION }}
